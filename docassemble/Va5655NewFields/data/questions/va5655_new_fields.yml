@@ -1,0 +1,1638 @@
+---
+include:
+  - docassemble.AssemblyLine:assembly_line.yml
+  - custom_ssl_theme.yml
+  
+features:
+   navbar-brand: Stateside-Legal-logopng.png
+---
+metadata:
+  title: >-
+    VA Form 5655 - Financial Status Report
+  short title: >-
+    VA Form 5655 - Financial Status Report 
+  authors:
+    - Nicole Golden-Bouchard
+  help_page_url: >-
+    https://www.va.gov/resources/submitting-a-financial-status-report-va-form-5655/
+  help_page_title: >-
+    Submitting a VA Financial Status Report
+  allowed_courts: []
+  typical_role: "na"
+  al_weaver_version: "1.10.2"
+  generated_on: "2024-03-26"
+---
+code: |
+  # This controls the default country and list of states in address field questions
+  AL_DEFAULT_COUNTRY = "US"
+---
+code: |
+  # This controls the default state in address field questions
+  AL_DEFAULT_STATE = "ME"
+---
+code: |
+  github_repo_name =  'docassemble-Va5655NewFields'
+---
+code: |
+  interview_short_title = "Include this form to Request a waiver or Dispute a VA overpayment"
+---
+code: |
+  al_form_type = "other_form" 
+---
+objects:
+  - users: ALPeopleList.using(ask_number=True,target_number=1)
+  - users1_past_employer: ALPeopleList
+  - users1_current_employer: ALPeopleList
+  - spouses_current_employer: ALPeopleList
+  - spouses__past_employer: ALPeopleList
+---
+sections:
+  - review_va5655_new_fields: Review your answers
+---
+#################### Interview order #####################
+comment: |
+  Controls order and branching logic for questions specific to this form
+id: interview_order_va5655_new_fields
+code: |
+  # Set the allowed courts for this interview
+  nav.set_section("review_va5655_new_fields")
+  user_role = "na"
+  user_ask_role = "na"
+  users.gather()
+  set_parts(subtitle=str(users))
+  users1_ssn
+  users1_va_file_number
+  currently_have_job
+  users1_past_kind_of_job
+  set_progress(14)
+  spouses_current_kind_of_job
+  spouses_past_kind_of_job
+  users1_mo_salary_amount
+  spouses_mo_salary_amount
+  source_of_other_income
+  set_progress(28)
+  rent_mortgage_amount
+  mo_pay_to_debt
+  bank_amount
+  creditor1_date
+  is_bankruptcy
+  set_progress(42)
+  discharge_date
+  additional_info
+  users1_signature_date
+  users1_total_deduct_amount
+  users[0].address.address
+  set_progress(56)
+  users[0].phone_number
+  users[0].birthdate
+  spouses.gather()
+  creditors.gather()
+  interview_order_va5655_new_fields = True
+---
+###################### Main order ######################
+comment: |
+  This block includes the logic for standalone interviews.
+  Delete mandatory: True to include in another interview
+mandatory: True
+code: |
+  al_intro_screen
+  va5655_new_fields_intro
+  interview_order_va5655_new_fields
+  signature_date
+  # Store anonymous data for analytics / statistics
+  store_variables_snapshot(
+      persistent=True,
+      data={
+          "zip": showifdef("users[0].address.zip"),
+          "reached_interview_end": True,
+      },
+  )
+  va5655_new_fields_download
+---
+comment: |
+  This question is used to introduce your interview. Please customize
+id: VA_Form_5655__Financial_Status_Report
+continue button field: va5655_new_fields_intro
+question: |
+  VA Form 5655 - Financial Status Report
+subquestion: |
+  This interview will help you complete VA form 5655 - Financial STatus Report. This form must be submitted to the VA when asking for a VA overpayment waiver.
+  
+  Please note that this form requires sensitive personal information. To protect your privacy, StatesideLegal.org will not retain your information on our servers for longer than 14 days. We do not share this info with ant third party. Please be sure to complete this interview in one visit or your work will be lost and you will have to start over.
+  
+  Before you get started, please gather:
+  
+  1. Your social security number
+  2.  Your VA file number
+  3.  You and your spouse's (if applicable):
+        - Work history for the past 2 years. You'll need the employer name, start and end dates, and monthly income for each job.
+         - Income. This includes money you earn from a job, VA or Social Security benefits, or other sources. You’ll find the details you’ll need on a recent paycheck.
+         - Assets. These include your cash, bank accounts, stocks and bonds, real estate, cars, jewelry, and other items of value.
+         - Expenses and Debts. These include:
+           - Monthly living expenses. These include housing, food, and utilities (like gas, electricity, and water).
+           - Other living expenses. These include expenses like clothing, transportation, child care, or health care.
+           - Installment contracts or other debts. These include car loans, student loans, credit card debt, and other debts or purchase payment plans.
+         - Bankruptcy information. If you've ever declared bankruptcy, you'll need the date discharged, court location, and docket number.
+  
+  When you are finished, you will need to:
+  
+  1. Download and print your completed form
+  
+  ** Remember, your information and answers will NOT be stored. If you leave the session without completing and downloading the interview, your information and answers will be lost and you will have to start over.**
+  
+  
+  Most people take about **60 minutes** to finish this interview.
+  
+  
+---
+id: About the Debtor
+question: |
+  About the Debtor
+subquestion: |
+  It is assumed that the veteran is responsible for the debt. If this is not the case here, please answer these questions for the person responsible for the debt.
+  
+fields:
+  - "What is your Social Security Number?": users1_ssn
+    maxlength: 11
+  - "Are you married?": is_married
+    datatype: yesnoradio
+  - "If you have Dependents, what are their ages?": dependents1_age_1
+    maxlength: 24
+    required: False
+---
+id: About your issue
+question: |
+  About your issue
+subquestion: |
+  These questions are asking about the file at issue and why you need to fill out this form.
+fields:
+  - "What is your VA File Number?": users1_va_file_number
+    maxlength: 28
+  - "Why are you completing this form? (ex. Requesting a waiver of a VA overpayment)": users1_reason_filing
+    maxlength: 76
+---
+id: Your Employment
+question: |
+  Your Employment
+fields:
+  - "Are you currently employed?": currently_have_job
+    datatype: yesnoradio
+  - "Have you been employed within the last two years?": employed_two_years
+    datatype: yesnoradio
+    show if:
+      variable: currently_have_job
+      is: False
+  - "What kind of job do you currently do? (ex. Postal Worker, CEO, Mechanic, Security, etc.)": users1_current_kind_of_job
+    maxlength: 50
+    show if:
+      variable: currently_have_job
+      is: True
+  - "When did you start this job?": user1_current_start_date_mmyyyy
+    datatype: date
+    show if:
+      variable: currently_have_job
+      is: True
+  - "Who is your employer for this job?": users1_current_employer1_name
+    maxlength: 16
+    show if:
+      variable: currently_have_job
+      is: True
+  - "What is your employer's address?": users1_current_employer__address_on_one_line
+    maxlength: 99
+    show if:
+      variable: currently_have_job
+      is: True
+  - "Have you been employed in another job within the last two years?": users1_other_job
+    datatype: yesnoradio
+    show if:
+      variable: currently_have_job
+      is: True
+  
+---
+id: Your additional employment within the last two years
+question: |
+  Your additional employment within the last two (2) years
+fields:
+  - "What kind of work did you do (or are doing) at this job?": users1_past_kind_of_job
+    maxlength: 19
+  - "When did you start this job?": users1_past_start_date_mmyyyy
+    datatype: date
+  - "Are you still at this job?": users1_still_at_job
+    datatype: yesnoradio
+  - "When did this job end? Please use the MM-YYYY format": users1_past_end_date_mmyyyy
+    datatype: text
+    show if: 
+      variable: users1_still_at_job
+      is: False
+  - "What is this employer's name?": users1_past_employer_name
+    maxlength: 16
+  - "What is this employer's address?": users1_past_employer__address_on_one_line
+    maxlength: 99
+---
+code: |
+  if users1_still_at_job:
+    users1_past_end_date_mmyyyy = "Present Time"
+  else:
+    # Assume users1_past_end_date_mmyyyy is already captured elsewhere if they're not currently employed there
+    pass
+---
+id: Spouse s Employment within the last two 2 years
+question: |
+  Spouse's Employment within the last two (2) years
+subquestion: |
+  These questions are asking about your spouse's employment within the last two (2) years
+fields:
+  - "What kind of job does your spouse do now? (ex. Postal Worker, CEO, Mechanic, Security, etc.)": spouses_current_kind_of_job
+    maxlength: 19
+  - "When did your spouse start this job?": spouses__current_start_date_mmyyyy
+    datatype: date
+  - "What is your spouse's current employer's name?": spouses_current_employer1_name
+    maxlength: 16
+  - "What is your spouse's current employer's address?": spouses__current_employer__address_on_one_line
+    maxlength: 99
+  - "Is your spouse currently employed?": spouses_current_employed
+    datatype: yesnoradio
+  - "Has your spouse been employed in any other job over the last two years?": spouses_other_job
+    datatype: yesnoradio
+  - "Has your spouse been employed within the last two years?": spouses_employed_two_years
+    datatype: yesnoradio
+---
+id: Spouse s other employment within the last two 2 years
+question: |
+  Spouse's other employment within the last two (2) years.
+fields:
+  - "What kind of work did your spouse do (or is doing) at this job?": spouses_past_kind_of_job
+    maxlength: 19
+  - "When did your spouse start this job?": spouses__past_start_date_mmyyyy
+    datatype: date
+  - "When did your spouse end this job?": spouses_past_end_date_mmyyyy
+    datatype: date
+  - "What is this employer's name?": spouses__past_employer_name
+    maxlength: 16
+  - "What is this employer's address?": spouses_past_employer__address_on_one_line
+    maxlength: 99
+  - "Is your spouse still at this job?": spouses_still_at_job
+    datatype: yesnoradio
+---
+id: Your Income
+question: |
+  Your Income
+subquestion: |
+  These questions are only about your monthly income and payroll deductions from employment. We will get to other people's income and deductions later if that applies to you. 
+  
+  If you collect VA benefits, Social Security, or other means of income outside of employment, we'll ask about that later.
+fields:
+  - "What is your gross monthly salary amount?": users1_mo_salary_amount
+    datatype: currency
+    min: 0
+  - "How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.": users1_income_tax_deduct_amount
+    datatype: currency
+    min: 0
+  - "How much is taken out of your monthly salary for retirement?": users1_retire_deduct_amount
+    datatype: currency
+    min: 0
+  - "How much is taken out of your monthly salary for social security?": users1_ss_deduct_amount
+    datatype: currency
+    min: 0
+  - "What other deductions do your and/or your spouse have taken out of your monthly salary?": other_deduction_type
+    maxlength: 99
+  - "How much is taken out of your monthly salary for your other deductions?": users1_other_deduct_amount
+    datatype: currency
+    min: 0
+  - "Do you have any other deductions being taken out of your monthly salary?": users1_more_deductions
+    datatype: yesnoradio
+---
+id: Your Spouses Income and Payroll Deductions
+question: |
+  Your Spouses Income and Payroll Deductions
+subquestion: |
+  These questions focus on your spouse's monthly income and payroll deductions from employment only. If they collect VA benefits, Social Security, or income from other sources, we'll ask about that later.
+fields:
+  - "What is your spouse's gross monthly salary amount?": spouses_mo_salary_amount
+    datatype: currency
+    min: 0
+  - "How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.": spouses_income_tax_deduct_amount
+    datatype: currency
+    min: 0
+  - "How much is taken out of your spouse's monthly salary for retirement?": spouses_retire_deduct_amount
+    datatype: currency
+    min: 0
+  - "How much is taken out of your spouse's monthly salary for social security?": spouses_ss_deduct_amount
+    datatype: currency
+    min: 0
+  - "How much is taken out of your spouse's monthly salary for their other deductions?": spouses_other_deduct_amount
+    datatype: currency
+    min: 0
+  - "Does your spouse have any other deductions coming out of their monthly salary?": spouses_more_deductions
+    datatype: yesnoradio
+---
+id: Other sources of income
+question: |
+  Other sources of income
+subquestion: |
+  Other sources of income include Social Security, VA Benefits, etc. These questions are about your other sources of income, and your spouse's if that applies to you.
+fields:
+  - "What is the sources of your other income? (ex. VA benefits": source_of_other_income
+    maxlength: 99
+  - "How much are you getting a month from this other income?": users1_other_income_amount
+    datatype: currency
+    min: 0
+  - "How much is your spouse getting a month from this other income?": spouses_other_income_amount
+    datatype: currency
+    min: 0
+  - "Do you have any other source of income? (ex. VA Benefits, Social Security, etc.)": users1_other_income
+    datatype: yesnoradio
+  - "Does your spouse have any other source of income? (ex. VA Benefits, Social Security, etc.)": spouses_other_income
+    datatype: yesnoradio
+---
+id: Your household monthly expenses
+question: |
+  Your household monthly expenses
+subquestion: |
+  These questions ask about your monthly expenses. If you are married, this includes your spouses expenses too.
+fields:
+  - "What is your monthly rent or mortgage amount?": rent_mortgage_amount
+    datatype: currency
+    min: 0
+  - "How much is spent for food in a month?": mo_food_amount
+    datatype: currency
+    min: 0
+  - "How much are your household utilities a month?": mo_utility_amount
+    datatype: currency
+    min: 0
+  - "What are your other household living expenses?": other_living
+    input type: area
+  - "How much are your other living expenses a month?": other_living_amount
+    datatype: currency
+    min: 0
+  - "Do you have any other living expenses to include?": living_expenses
+    datatype: yesnoradio
+---
+id: Paying toward your VA debt
+question: |
+  Paying toward your VA debt
+fields:
+  - "How much can you pay monthly towards your VA debt? (this can be $0.00)": mo_pay_to_debt
+    datatype: currency
+    min: 0
+---
+id: Assets
+question: |
+  Assets
+subquestion: |
+  These questions are asking about your current assets. If you don't have any money or value in the asset, just type in 0 (zero). These assets include your spouse's assets, if that applies.
+fields:
+  - "How much do you have in all your bank accounts?": bank_amount
+    datatype: currency
+    min: 0
+  - "What is the current value of your US Savings Bonds?": bond_amount
+    datatype: currency
+    min: 0
+  - "How much cash on hand do you have?": cash_amount
+    datatype: currency
+    min: 0
+  - "What is the current value of your Stocks and bonds (other than US Savings Bonds)?": stocks_amount
+    datatype: currency
+    min: 0
+  - "What is the resale value of the real estate you own?": real_estate_amount
+    datatype: currency
+    min: 0
+  - "What is the make of this first car?": car1_make
+    maxlength: 99
+  - "What year was this first car built?": car1_year
+    maxlength: 4
+  - "What is the model of this first car?": car1_model
+    maxlength: 99
+  - "What is the resale value of this first car?": car1_resale_amount
+    datatype: currency
+    min: 0
+  - "How much is this first asset?": otherasset1_amount
+    datatype: currency
+    min: 0
+  - "What is the make of this second car?": car2_make
+    maxlength: 99
+  - "What year was this second car built?": car2_year
+    maxlength: 4
+  - "What is the model of this second car?": car2_model
+    maxlength: 99
+  - "What is the resale value of this second car?": car2_resale_amount
+    datatype: currency
+    min: 0
+  - "How much is the value of this second asset?": otherasset2_amount
+    datatype: currency
+    min: 0
+  - "What is the make of this third car?": car3_make
+    maxlength: 99
+  - "What year was this third car built?": car3_year
+    maxlength: 4
+  - "What is the model of this third car?": car3_model
+    maxlength: 99
+  - "What is the resale value of this third car?": car3_resale_amount
+    datatype: currency
+    min: 0
+  - "How much is the value of this third asset?": otherasset3_amount
+    datatype: currency
+    min: 0
+  - "What is the total resale value of your boats, trailers, and campers combined?": trailer_camper_boat_resale_amount
+    datatype: currency
+    min: 0
+  - "Do you own any automobiles?": own_cars
+    datatype: yesnoradio
+  - "Do you own additional vehicles?": more_cars
+    datatype: yesnoradio
+---
+id: Installment Contracts and Other Debts
+question: |
+  Installment Contracts and Other Debts
+subquestion: |
+  These questions are about any debts you are supposed to pay regular monthly installments on, such as for a car, television, to banks, credit card companies, or for doctor bills, hospital bills, etc.)
+fields:
+  - "When did you start this first debt?": creditor1_date
+    datatype: date
+  - "What was the original amount of this first debt?": creditor1_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this first debt?": creditor1_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is past due on this first debt?": creditor1_past_due_amount
+    datatype: currency
+    min: 0
+  - "How much is due each month for this first debt?": creditor1_mo_due_amount
+    datatype: currency
+    min: 0
+  - "What is the creditor's address on this first debt?": creditor1__address_on_one_line
+    maxlength: 99
+  - "What was the purpose of this first debt?": creditor1_purpose
+    maxlength: 99
+  - "When did you start this 2nd debt?": creditor2_date
+    datatype: date
+  - "What is the creditor's address on this 2nd debt?": creditor2__address_on_one_line
+    maxlength: 99
+  - "What was the original amount of this 2nd debt?": creditor2_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this 2nd debt?": creditor2_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is past due on this 2nd debt?": creditor2_past_due_amount
+    datatype: currency
+    min: 0
+  - "How much is due each month for this 2nd debt?": creditor2_mo_due_amount
+    datatype: currency
+    min: 0
+  - "What was the purpose of this 2nd debt?": creditor2_purpose
+    maxlength: 99
+  - "When did you start this 3rd debt?": creditor3_date
+    datatype: date
+  - "What is the creditor's address on this 3rd debt?": creditor3__address_on_one_line
+    maxlength: 99
+  - "What was the original amount of this 3rd debt?": creditor3_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this 3rd debt?": creditor3_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is past due on this 3rd debt?": creditor3_past_due_amount
+    datatype: currency
+    min: 0
+  - "How much is due each month for this 3rd debt?": creditor3_mo_due_amount
+    datatype: currency
+    min: 0
+  - "What was the purpose of this 3rd debt?": creditor3_purpose
+    maxlength: 99
+  - "When did you start this 4th debt?": creditor4_date
+    datatype: date
+  - "What is the creditor's address on this 4th debt?": creditor4__address_on_one_line
+    maxlength: 99
+  - "What was the original amount of this 4th debt?": creditor4_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this 4th debt?": creditor4_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is past due on this 4th debt?": creditor4_past_due_amount
+    datatype: currency
+    min: 0
+  - "How much is due each month for this 4th debt?": creditor4_mo_due_amount
+    datatype: currency
+    min: 0
+  - "What was the purpose of this 4th debt?": creditor4_purpose
+    maxlength: 99
+  - "When did you start this 5th debt?": creditor5_date
+    datatype: date
+  - "What was the original amount of this 5th debt?": creditor5_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this 5th debt?": creditor5_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is due each month for this 5th debt?": creditor5_mo_due_amount
+    datatype: currency
+    min: 0
+  - "How much is past due on this 5th debt?": creditor5_past_due_amount
+    datatype: currency
+    min: 0
+  - "What is the creditor's address on this 5th debt?": creditor5__address_on_one_line
+    maxlength: 99
+  - "What was the purpose of this 5th debt?": creditor5_purpose
+    maxlength: 99
+  - "When did you start this 6th debt?": creditor6_date
+    datatype: date
+  - "What is the creditor's address on this 6th debt?": creditor6__address_on_one_line
+    maxlength: 99
+  - "How much is past due on this 6th debt?": creditor6_past_due_amount
+    datatype: currency
+    min: 0
+  - "What was the original amount of this 6th debt?": creditor6_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this 6th debt?": creditor6_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is due each month for this 6th debt?": creditor6_mo_due_amount
+    datatype: currency
+    min: 0
+  - "What was the purpose of this 6th debt?": creditor6_purpose
+    maxlength: 99
+  - "When did you start this 7th debt?": creditor7_date
+    datatype: date
+  - "What was the original amount of this 7th debt?": creditor7_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this 7th debt?": creditor7_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is past due on this 7th debt?": creditor7_past_due_amount
+    datatype: currency
+    min: 0
+  - "What is the creditor's address on this 7th debt?": creditor7__address_on_one_line
+    maxlength: 99
+  - "How much is due each month for this 7th debt?": creditor7_mo_due_amount
+    datatype: currency
+    min: 0
+  - "What was the purpose of this 7th debt?": creditor7_purpose
+    maxlength: 99
+  - "When did you start this 8th debt?": creditor8_date
+    datatype: date
+  - "What was the original amount of this 8th debt?": creditor8_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "What is the unpaid balance on this 8th debt?": creditor8_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "How much is past due on this 8th debt?": creditor8_past_due_amount
+    datatype: currency
+    min: 0
+  - "What is the creditor's address on this 8th debt?": creditor8__address_on_one_line
+    maxlength: 99
+  - "How much is due each month for this 8th debt?": creditor8_mo_due_amount
+    datatype: currency
+    min: 0
+  - "What was the purpose of this 8th debt?": creditor8_purpose
+    maxlength: 99
+---
+id: Bankruptcy
+question: |
+  Bankruptcy
+subquestion: |
+  This question is only asking if you have filed and gone through the entire bankruptcy process, and a bankruptcy judge has approved it.
+fields:
+  - "Have you filed for bankruptcy now or in the past?": is_bankruptcy
+    datatype: yesnoradio
+---
+id: Your bankruptcy
+question: |
+  Your bankruptcy
+subquestion: |
+  These questions are about your bankruptcy. If the VA or a mortgage company were involved in your bankruptcy, you need to send the VA all pertinent documentation with this form.
+fields:
+  - "Date of discharge": discharge_date
+    datatype: date
+  - "Court location": court_location
+    maxlength: 99
+  - "Bankruptcy docket number": bankruptcy_docket_number
+    maxlength: 25
+---
+id: Additional Information
+question: |
+  Additional Information
+subquestion: |
+  If you have additional information that you want to include about any of the information asked for or provided, this is where you can add it.
+fields:
+  - "Additional info": additional_info
+    input type: area
+---
+id: Signature dates
+question: |
+  Signature dates
+fields:
+  - "What date are you going to sign this document?": users1_signature_date
+    datatype: date
+  - "What date is your spouse going to sign this document?": spouses_signature_date
+    datatype: date
+---
+id: Totals
+question: |
+  Totals
+fields:
+  - "Users1 total deduct amount - FIGURE": users1_total_deduct_amount
+    datatype: currency
+    min: 0
+  - "Spouses total deduct amount - FIGURE": spouses_total_deduct_amount
+    datatype: currency
+    min: 0
+  - "Users1 net mo pay amount - FIGURE": users1_net_mo_pay_amount
+    datatype: currency
+    min: 0
+  - "Spouses net mo pay amount - FIGURE": spouses_net_mo_pay_amount
+    datatype: currency
+    min: 0
+  - "Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount": mo_payments_debt_amount
+    datatype: currency
+    min: 0
+  - "Total mo expense amount - FIGURE": total_mo_expense_amount
+    datatype: currency
+    min: 0
+  - "Users1 net mo income amount - FIGURE": users1_net_mo_income_amount
+    datatype: currency
+    min: 0
+  - "Spouses net mo income amount - FIGURE": spouses_net_mo_income_amount
+    datatype: currency
+    min: 0
+  - "Net income less expense amount - FIGURE": net_income_less_expense_amount
+    datatype: currency
+    min: 0
+  - "Total asset amount - FIGURE": total_asset_amount
+    datatype: currency
+    min: 0
+  - "Total orig debt amount - FIGURE": total_orig_debt_amount
+    datatype: currency
+    min: 0
+  - "Total unpaid bal amount - FIGURE": total_unpaid_bal_amount
+    datatype: currency
+    min: 0
+  - "Total past due amount - FIGURE": total_past_due_amount
+    datatype: currency
+    min: 0
+  - "Total mo due amount - FIGURE": total_mo_due_amount
+    datatype: currency
+    min: 0
+---
+id: preview va5655_new_fields
+question: |
+  Preview your form before you sign it
+subquestion: |
+  Here is a preview of the form you will sign on the next page.   
+  
+  ${ al_recipient_bundle.as_pdf(key='preview') }
+
+  Click the image to open it in a new tab. Click the "Edit answers" button
+  to edit your answers.
+
+  ${ action_button_html(url_action('review_va5655_new_fields'), label='Edit answers', color='info') }
+  
+  Remember to come back to this window to continue and sign your form.
+continue button field: va5655_new_fields_preview_question    
+---
+code: |
+  signature_fields = ['users[0].signature', 'spouses[0].signature']
+---
+id: va5655 new fields review screen
+event: review_va5655_new_fields
+question: |
+  Review your answers
+review:
+  - Edit: users1_ssn
+    button: |
+      **What is your Social Security Number?**:
+      ${ users1_ssn }
+  - Edit: users1_va_file_number
+    button: |
+      **What is your VA File Number?**:
+      ${ users1_va_file_number }
+  - Edit: users1_reason_filing
+    button: |
+      **Why are you completing this form? (ex. Requesting a waiver of a VA overpayment)**:
+      ${ users1_reason_filing }
+  - Edit: users.revisit
+    button: |
+      **Users**
+
+      % for item in users:
+        * ${ item }
+      % endfor
+  - Edit: is_married
+    button: |
+      **Are you married?**:
+      ${ is_married }
+  - Edit: spouses.revisit
+    button: |
+      **Spouses**
+
+      % for item in spouses:
+        * ${ item }
+      % endfor
+  - Edit: dependents1_age_1
+    button: |
+      **If you have Dependents, what are their ages?**:
+      ${ dependents1_age_1 }
+  - Edit: users1_current_kind_of_job
+    button: |
+      **What kind of job do you currently do? (ex. Postal Worker, CEO, Mechanic, Security, etc.)**:
+      ${ users1_current_kind_of_job }
+  - Edit: user1_current_start_date_mmyyyy
+    button: |
+      **When did you start this job?**:
+      ${ user1_current_start_date_mmyyyy }
+  - Edit: users1_current_employer1_name
+    button: |
+      **Who is your employer for this job?**:
+      ${ users1_current_employer1_name }
+  - Edit: users1_current_employer__address_on_one_line
+    button: |
+      **What is your employer's address?**:
+      ${ users1_current_employer__address_on_one_line }
+  - Edit: users1_past_kind_of_job
+    button: |
+      **What kind of work did you do (or are doing) at this job?**:
+      ${ users1_past_kind_of_job }
+  - Edit: users1_past_start_date_mmyyyy
+    button: |
+      **When do you start this job?**:
+      ${ users1_past_start_date_mmyyyy }
+  - Edit: users1_past_end_date_mmyyyy
+    button: |
+      **When did this job end?**:
+      ${ users1_past_end_date_mmyyyy }
+  - Edit: users1_past_employer_name
+    button: |
+      **What is this employer's name?**:
+      ${ users1_past_employer_name }
+  - Edit: users1_past_employer__address_on_one_line
+    button: |
+      **What is this employer's address?**:
+      ${ users1_past_employer__address_on_one_line }
+  - Edit: spouses_current_kind_of_job
+    button: |
+      **What kind of job does your spouse do now? (ex. Postal Worker, CEO, Mechanic, Security, etc.)**:
+      ${ spouses_current_kind_of_job }
+  - Edit: spouses__current_start_date_mmyyyy
+    button: |
+      **When did your spouse start this job?**:
+      ${ spouses__current_start_date_mmyyyy }
+  - Edit: spouses_current_employer1_name
+    button: |
+      **What is your spouse's current employer's name?**:
+      ${ spouses_current_employer1_name }
+  - Edit: spouses__current_employer__address_on_one_line
+    button: |
+      **What is your spouse's current employer's address?**:
+      ${ spouses__current_employer__address_on_one_line }
+  - Edit: spouses_past_kind_of_job
+    button: |
+      **What kind of work did your spouse do (or is doing) at this job?**:
+      ${ spouses_past_kind_of_job }
+  - Edit: spouses__past_start_date_mmyyyy
+    button: |
+      **When did your spouse start this job?**:
+      ${ spouses__past_start_date_mmyyyy }
+  - Edit: spouses_past_end_date_mmyyyy
+    button: |
+      **When did your spouse end this job?**:
+      ${ spouses_past_end_date_mmyyyy }
+  - Edit: spouses__past_employer_name
+    button: |
+      **What is this employer's name?**:
+      ${ spouses__past_employer_name }
+  - Edit: spouses_past_employer__address_on_one_line
+    button: |
+      **What is this employer's address?**:
+      ${ spouses_past_employer__address_on_one_line }
+  - Edit: spouses_mo_salary_amount
+    button: |
+      **What is your spouse's gross monthly salary amount?**:
+      ${ currency(spouses_mo_salary_amount) }
+  - Edit: users1_mo_salary_amount
+    button: |
+      **What is your gross monthly salary amount?**:
+      ${ currency(users1_mo_salary_amount) }
+  - Edit: rent_mortgage_amount
+    button: |
+      **What is your monthly rent or mortgage amount?**:
+      ${ currency(rent_mortgage_amount) }
+  - Edit: mo_food_amount
+    button: |
+      **How much is spent for food in a month?**:
+      ${ currency(mo_food_amount) }
+  - Edit: spouses_income_tax_deduct_amount
+    button: |
+      **How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.**:
+      ${ currency(spouses_income_tax_deduct_amount) }
+  - Edit: mo_utility_amount
+    button: |
+      **How much are your household utilities a month?**:
+      ${ currency(mo_utility_amount) }
+  - Edit: users1_income_tax_deduct_amount
+    button: |
+      **How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.**:
+      ${ currency(users1_income_tax_deduct_amount) }
+  - Edit: users1_retire_deduct_amount
+    button: |
+      **How much is taken out of your monthly salary for retirement?**:
+      ${ currency(users1_retire_deduct_amount) }
+  - Edit: spouses_retire_deduct_amount
+    button: |
+      **How much is taken out of your spouse's monthly salary for retirement?**:
+      ${ currency(spouses_retire_deduct_amount) }
+  - Edit: users1_ss_deduct_amount
+    button: |
+      **How much is taken out of your monthly salary for social security?**:
+      ${ currency(users1_ss_deduct_amount) }
+  - Edit: spouses_ss_deduct_amount
+    button: |
+      **How much is taken out of your spouse's monthly salary for social security?**:
+      ${ currency(spouses_ss_deduct_amount) }
+  - Edit: other_deduction_type
+    button: |
+      **What other deductions do your and/or your spouse have taken out of your monthly salary?**:
+      ${ other_deduction_type }
+  - Edit: users1_other_deduct_amount
+    button: |
+      **How much is taken out of your monthly salary for your other deductions?**:
+      ${ currency(users1_other_deduct_amount) }
+  - Edit: spouses_other_deduct_amount
+    button: |
+      **How much is taken out of your spouse's monthly salary for their other deductions?**:
+      ${ currency(spouses_other_deduct_amount) }
+  - Edit: users1_total_deduct_amount
+    button: |
+      **Users1 total deduct amount - FIGURE**:
+      ${ currency(users1_total_deduct_amount) }
+  - Edit: spouses_total_deduct_amount
+    button: |
+      **Spouses total deduct amount - FIGURE**:
+      ${ currency(spouses_total_deduct_amount) }
+  - Edit: users1_net_mo_pay_amount
+    button: |
+      **Users1 net mo pay amount - FIGURE**:
+      ${ currency(users1_net_mo_pay_amount) }
+  - Edit: spouses_net_mo_pay_amount
+    button: |
+      **Spouses net mo pay amount - FIGURE**:
+      ${ currency(spouses_net_mo_pay_amount) }
+  - Edit: other_living
+    button: |
+      **What are your other household living expenses?**:
+      > ${ single_paragraph(other_living) }
+  - Edit: other_living_amount
+    button: |
+      **How much are your other living expenses a month?**:
+      ${ currency(other_living_amount) }
+  - Edit: source_of_other_income
+    button: |
+      **What is the sources of your other income? (ex. VA benefits**:
+      ${ source_of_other_income }
+  - Edit: users1_other_income_amount
+    button: |
+      **How much are you getting a month from this other income?**:
+      ${ currency(users1_other_income_amount) }
+  - Edit: spouses_other_income_amount
+    button: |
+      **How much is your spouse getting a month from this other income?**:
+      ${ currency(spouses_other_income_amount) }
+  - Edit: mo_payments_debt_amount
+    button: |
+      **Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount**:
+      ${ currency(mo_payments_debt_amount) }
+  - Edit: total_mo_expense_amount
+    button: |
+      **Total mo expense amount - FIGURE**:
+      ${ currency(total_mo_expense_amount) }
+  - Edit: users1_net_mo_income_amount
+    button: |
+      **Users1 net mo income amount - FIGURE**:
+      ${ currency(users1_net_mo_income_amount) }
+  - Edit: spouses_net_mo_income_amount
+    button: |
+      **Spouses net mo income amount - FIGURE**:
+      ${ currency(spouses_net_mo_income_amount) }
+  - Edit: net_income_less_expense_amount
+    button: |
+      **Net income less expense amount - FIGURE**:
+      ${ currency(net_income_less_expense_amount) }
+  - Edit: mo_pay_to_debt
+    button: |
+      **How much can you pay monthly towards your VA debt? (this can be $0.00)**:
+      ${ currency(mo_pay_to_debt) }
+  - Edit: bank_amount
+    button: |
+      **How much do you have in all your bank accounts?**:
+      ${ currency(bank_amount) }
+  - Edit: bond_amount
+    button: |
+      **What is the current value of your US Savings Bonds?**:
+      ${ currency(bond_amount) }
+  - Edit: cash_amount
+    button: |
+      **How much cash on hand do you have?**:
+      ${ currency(cash_amount) }
+  - Edit: stocks_amount
+    button: |
+      **What is the current value of your Stocks and bonds (other than US Savings Bonds)?**:
+      ${ currency(stocks_amount) }
+  - Edit: real_estate_amount
+    button: |
+      **What is the resale value of the real estate you own?**:
+      ${ currency(real_estate_amount) }
+  - Edit: car1_make
+    button: |
+      **What is the make of this first car?**:
+      ${ car1_make }
+  - Edit: car1_year
+    button: |
+      **What year was this first car built?**:
+      ${ car1_year }
+  - Edit: car1_model
+    button: |
+      **What is the model of this first car?**:
+      ${ car1_model }
+  - Edit: car1_resale_amount
+    button: |
+      **What is the resale value of this first car?**:
+      ${ currency(car1_resale_amount) }
+  - Edit: otherasset1_amount
+    button: |
+      **How much is this first asset?**:
+      ${ currency(otherasset1_amount) }
+  - Edit: car2_make
+    button: |
+      **What is the make of this second car?**:
+      ${ car2_make }
+  - Edit: car2_year
+    button: |
+      **What year was this second car built?**:
+      ${ car2_year }
+  - Edit: car2_model
+    button: |
+      **What is the model of this second car?**:
+      ${ car2_model }
+  - Edit: car2_resale_amount
+    button: |
+      **What is the resale value of this second car?**:
+      ${ currency(car2_resale_amount) }
+  - Edit: otherasset2_amount
+    button: |
+      **How much is the value of this second asset?**:
+      ${ currency(otherasset2_amount) }
+  - Edit: car3_make
+    button: |
+      **What is the make of this third car?**:
+      ${ car3_make }
+  - Edit: car3_year
+    button: |
+      **What year was this third car built?**:
+      ${ car3_year }
+  - Edit: car3_model
+    button: |
+      **What is the model of this third car?**:
+      ${ car3_model }
+  - Edit: car3_resale_amount
+    button: |
+      **What is the resale value of this third car?**:
+      ${ currency(car3_resale_amount) }
+  - Edit: otherasset3_amount
+    button: |
+      **How much is the value of this third asset?**:
+      ${ currency(otherasset3_amount) }
+  - Edit: trailer_camper_boat_resale_amount
+    button: |
+      **What is the total resale value of your boats, trailers, and campers combined?**:
+      ${ currency(trailer_camper_boat_resale_amount) }
+  - Edit: total_asset_amount
+    button: |
+      **Total asset amount - FIGURE**:
+      ${ currency(total_asset_amount) }
+  - Edit: creditor1_date
+    button: |
+      **When did you start this first debt?**:
+      ${ creditor1_date }
+  - Edit: creditor1_orig_debt_amount
+    button: |
+      **What was the original amount of this first debt?**:
+      ${ currency(creditor1_orig_debt_amount) }
+  - Edit: creditor1_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this first debt?**:
+      ${ currency(creditor1_unpaid_bal_amount) }
+  - Edit: creditor1_past_due_amount
+    button: |
+      **How much is past due on this first debt?**:
+      ${ currency(creditor1_past_due_amount) }
+  - Edit: creditor1_mo_due_amount
+    button: |
+      **How much is due each month for this first debt?**:
+      ${ currency(creditor1_mo_due_amount) }
+  - Edit: creditor1__address_on_one_line
+    button: |
+      **What is the creditor's address on this first debt?**:
+      ${ creditor1__address_on_one_line }
+  - Edit: creditors.revisit
+    button: |
+      **Creditors**
+
+      % for item in creditors:
+        * ${ item }
+      % endfor
+  - Edit: creditor1_purpose
+    button: |
+      **What was the purpose of this first debt?**:
+      ${ creditor1_purpose }
+  - Edit: creditor2_date
+    button: |
+      **When did you start this 2nd debt?**:
+      ${ creditor2_date }
+  - Edit: creditor2__address_on_one_line
+    button: |
+      **What is the creditor's address on this 2nd debt?**:
+      ${ creditor2__address_on_one_line }
+  - Edit: creditor2_orig_debt_amount
+    button: |
+      **What was the original amount of this 2nd debt?**:
+      ${ currency(creditor2_orig_debt_amount) }
+  - Edit: creditor2_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this 2nd debt?**:
+      ${ currency(creditor2_unpaid_bal_amount) }
+  - Edit: creditor2_past_due_amount
+    button: |
+      **How much is past due on this 2nd debt?**:
+      ${ currency(creditor2_past_due_amount) }
+  - Edit: creditor2_mo_due_amount
+    button: |
+      **How much is due each month for this 2nd debt?**:
+      ${ currency(creditor2_mo_due_amount) }
+  - Edit: creditor2_purpose
+    button: |
+      **What was the purpose of this 2nd debt?**:
+      ${ creditor2_purpose }
+  - Edit: creditor3_date
+    button: |
+      **When did you start this 3rd debt?**:
+      ${ creditor3_date }
+  - Edit: creditor3__address_on_one_line
+    button: |
+      **What is the creditor's address on this 3rd debt?**:
+      ${ creditor3__address_on_one_line }
+  - Edit: creditor3_orig_debt_amount
+    button: |
+      **What was the original amount of this 3rd debt?**:
+      ${ currency(creditor3_orig_debt_amount) }
+  - Edit: creditor3_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this 3rd debt?**:
+      ${ currency(creditor3_unpaid_bal_amount) }
+  - Edit: creditor3_past_due_amount
+    button: |
+      **How much is past due on this 3rd debt?**:
+      ${ currency(creditor3_past_due_amount) }
+  - Edit: creditor3_mo_due_amount
+    button: |
+      **How much is due each month for this 3rd debt?**:
+      ${ currency(creditor3_mo_due_amount) }
+  - Edit: creditor3_purpose
+    button: |
+      **What was the purpose of this 3rd debt?**:
+      ${ creditor3_purpose }
+  - Edit: creditor4_date
+    button: |
+      **When did you start this 4th debt?**:
+      ${ creditor4_date }
+  - Edit: creditor4__address_on_one_line
+    button: |
+      **What is the creditor's address on this 4th debt?**:
+      ${ creditor4__address_on_one_line }
+  - Edit: creditor4_orig_debt_amount
+    button: |
+      **What was the original amount of this 4th debt?**:
+      ${ currency(creditor4_orig_debt_amount) }
+  - Edit: creditor4_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this 4th debt?**:
+      ${ currency(creditor4_unpaid_bal_amount) }
+  - Edit: creditor4_past_due_amount
+    button: |
+      **How much is past due on this 4th debt?**:
+      ${ currency(creditor4_past_due_amount) }
+  - Edit: creditor4_mo_due_amount
+    button: |
+      **How much is due each month for this 4th debt?**:
+      ${ currency(creditor4_mo_due_amount) }
+  - Edit: creditor4_purpose
+    button: |
+      **What was the purpose of this 4th debt?**:
+      ${ creditor4_purpose }
+  - Edit: creditor5_date
+    button: |
+      **When did you start this 5th debt?**:
+      ${ creditor5_date }
+  - Edit: creditor5_orig_debt_amount
+    button: |
+      **What was the original amount of this 5th debt?**:
+      ${ currency(creditor5_orig_debt_amount) }
+  - Edit: creditor5_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this 5th debt?**:
+      ${ currency(creditor5_unpaid_bal_amount) }
+  - Edit: creditor5_mo_due_amount
+    button: |
+      **How much is due each month for this 5th debt?**:
+      ${ currency(creditor5_mo_due_amount) }
+  - Edit: creditor5_past_due_amount
+    button: |
+      **How much is past due on this 5th debt?**:
+      ${ currency(creditor5_past_due_amount) }
+  - Edit: creditor5__address_on_one_line
+    button: |
+      **What is the creditor's address on this 5th debt?**:
+      ${ creditor5__address_on_one_line }
+  - Edit: creditor5_purpose
+    button: |
+      **What was the purpose of this 5th debt?**:
+      ${ creditor5_purpose }
+  - Edit: creditor6_date
+    button: |
+      **When did you start this 6th debt?**:
+      ${ creditor6_date }
+  - Edit: creditor6__address_on_one_line
+    button: |
+      **What is the creditor's address on this 6th debt?**:
+      ${ creditor6__address_on_one_line }
+  - Edit: creditor6_past_due_amount
+    button: |
+      **How much is past due on this 6th debt?**:
+      ${ currency(creditor6_past_due_amount) }
+  - Edit: creditor6_orig_debt_amount
+    button: |
+      **What was the original amount of this 6th debt?**:
+      ${ currency(creditor6_orig_debt_amount) }
+  - Edit: creditor6_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this 6th debt?**:
+      ${ currency(creditor6_unpaid_bal_amount) }
+  - Edit: creditor6_mo_due_amount
+    button: |
+      **How much is due each month for this 6th debt?**:
+      ${ currency(creditor6_mo_due_amount) }
+  - Edit: creditor6_purpose
+    button: |
+      **What was the purpose of this 6th debt?**:
+      ${ creditor6_purpose }
+  - Edit: creditor7_date
+    button: |
+      **When did you start this 7th debt?**:
+      ${ creditor7_date }
+  - Edit: creditor7_orig_debt_amount
+    button: |
+      **What was the original amount of this 7th debt?**:
+      ${ currency(creditor7_orig_debt_amount) }
+  - Edit: creditor7_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this 7th debt?**:
+      ${ currency(creditor7_unpaid_bal_amount) }
+  - Edit: creditor7_past_due_amount
+    button: |
+      **How much is past due on this 7th debt?**:
+      ${ currency(creditor7_past_due_amount) }
+  - Edit: creditor7__address_on_one_line
+    button: |
+      **What is the creditor's address on this 7th debt?**:
+      ${ creditor7__address_on_one_line }
+  - Edit: creditor7_mo_due_amount
+    button: |
+      **How much is due each month for this 7th debt?**:
+      ${ currency(creditor7_mo_due_amount) }
+  - Edit: creditor7_purpose
+    button: |
+      **What was the purpose of this 7th debt?**:
+      ${ creditor7_purpose }
+  - Edit: creditor8_date
+    button: |
+      **When did you start this 8th debt?**:
+      ${ creditor8_date }
+  - Edit: creditor8_orig_debt_amount
+    button: |
+      **What was the original amount of this 8th debt?**:
+      ${ currency(creditor8_orig_debt_amount) }
+  - Edit: creditor8_unpaid_bal_amount
+    button: |
+      **What is the unpaid balance on this 8th debt?**:
+      ${ currency(creditor8_unpaid_bal_amount) }
+  - Edit: creditor8_past_due_amount
+    button: |
+      **How much is past due on this 8th debt?**:
+      ${ currency(creditor8_past_due_amount) }
+  - Edit: creditor8__address_on_one_line
+    button: |
+      **What is the creditor's address on this 8th debt?**:
+      ${ creditor8__address_on_one_line }
+  - Edit: creditor8_mo_due_amount
+    button: |
+      **How much is due each month for this 8th debt?**:
+      ${ currency(creditor8_mo_due_amount) }
+  - Edit: creditor8_purpose
+    button: |
+      **What was the purpose of this 8th debt?**:
+      ${ creditor8_purpose }
+  - Edit: total_orig_debt_amount
+    button: |
+      **Total orig debt amount - FIGURE**:
+      ${ currency(total_orig_debt_amount) }
+  - Edit: total_unpaid_bal_amount
+    button: |
+      **Total unpaid bal amount - FIGURE**:
+      ${ currency(total_unpaid_bal_amount) }
+  - Edit: total_past_due_amount
+    button: |
+      **Total past due amount - FIGURE**:
+      ${ currency(total_past_due_amount) }
+  - Edit: total_mo_due_amount
+    button: |
+      **Total mo due amount - FIGURE**:
+      ${ currency(total_mo_due_amount) }
+  - Edit: is_bankruptcy
+    button: |
+      **Have you filed for bankruptcy now or in the past?**:
+      ${ is_bankruptcy }
+  - Edit: discharge_date
+    button: |
+      **Date of discharge**:
+      ${ discharge_date }
+  - Edit: court_location
+    button: |
+      **Court location**:
+      ${ court_location }
+  - Edit: bankruptcy_docket_number
+    button: |
+      **Bankruptcy docket number**:
+      ${ bankruptcy_docket_number }
+  - Edit: additional_info
+    button: |
+      **Additional info**:
+      > ${ single_paragraph(additional_info) }
+  - Edit: users1_signature_date
+    button: |
+      **What date are you going to sign this document?**:
+      ${ users1_signature_date }
+  - Edit: spouses_signature_date
+    button: |
+      **What date is your spouse going to sign this document?**:
+      ${ spouses_signature_date }
+  - Edit: currently_have_job
+    button: |
+      **Are you currently employed?**:
+      ${ currently_have_job }
+  - Edit: spouses_current_employed
+    button: |
+      **Is your spouse currently employed?**:
+      ${ spouses_current_employed }
+  - Edit: users1_other_job
+    button: |
+      **Have you been employed in another job within the last two years?**:
+      ${ users1_other_job }
+  - Edit: spouses_other_job
+    button: |
+      **Has your spouse been employed in any other job over the last two years?**:
+      ${ spouses_other_job }
+  - Edit: users1_still_at_job
+    button: |
+      **Are you still at this job?**:
+      ${ users1_still_at_job }
+  - Edit: spouses_still_at_job
+    button: |
+      **Is your spouse still at this job?**:
+      ${ spouses_still_at_job }
+  - Edit: users1_more_deductions
+    button: |
+      **Do you have any other deductions being taken out of your monthly salary?**:
+      ${ users1_more_deductions }
+  - Edit: spouses_more_deductions
+    button: |
+      **Does your spouse have any other deductions coming out of their monthly salary?**:
+      ${ spouses_more_deductions }
+  - Edit: living_expenses
+    button: |
+      **Do you have any other living expenses to include?**:
+      ${ living_expenses }
+  - Edit: users1_other_income
+    button: |
+      **Do you have any other source of income? (ex. VA Benefits, Social Security, etc.)**:
+      ${ users1_other_income }
+  - Edit: spouses_other_income
+    button: |
+      **Does your spouse have any other source of income? (ex. VA Benefits, Social Security, etc.)**:
+      ${ spouses_other_income }
+  - Edit: own_cars
+    button: |
+      **Do you own any automobiles?**:
+      ${ own_cars }
+  - Edit: more_cars
+    button: |
+      **Do you own additional vehicles?**:
+      ${ more_cars }
+  - Edit: employed_two_years
+    button: |
+      **Have you been employed within the last two years?**:
+      ${ employed_two_years }
+  - Edit: spouses_employed_two_years
+    button: |
+      **Has your spouse been employed within the last two years?**:
+      ${ spouses_employed_two_years }
+---
+continue button field: users.revisit
+question: |
+  Edit users
+subquestion: |
+  ${ users.table }
+
+  ${ users.add_action() }
+---
+table: users.table
+rows: users
+columns:
+  - Name: |
+      row_item.name.full() if defined("row_item.name.first") else ""
+  - Address: |
+      row_item.address.block() if defined("row_item.address.address") else ""
+  - Phone number: |
+      row_item.phone_number if defined("row_item.phone_number") else ""
+  - Birthdate: |
+      row_item.birthdate if defined("row_item.birthdate") else ""
+  - Signature: |
+      row_item.signature if defined("row_item.signature") else ""
+edit:
+  - name.first
+  - address.address
+  - phone_number
+  - birthdate
+  - signature
+confirm: True
+
+---
+continue button field: spouses.revisit
+question: |
+  Edit spouses
+subquestion: |
+  ${ spouses.table }
+
+  ${ spouses.add_action() }
+---
+table: spouses.table
+rows: spouses
+columns:
+  - Name: |
+      row_item.name.full() if defined("row_item.name.first") else ""
+  - Signature: |
+      row_item.signature if defined("row_item.signature") else ""
+edit:
+  - name.first
+  - signature
+confirm: True
+
+---
+continue button field: creditors.revisit
+question: |
+  Edit creditors
+subquestion: |
+  ${ creditors.table }
+
+  ${ creditors.add_action() }
+---
+table: creditors.table
+rows: creditors
+columns:
+  - Name: |
+      row_item.name.full() if defined("row_item.name.first") else ""
+edit:
+  - name.first
+confirm: True
+
+---
+id: download va5655_new_fields
+event: va5655_new_fields_download
+question: |
+  All done
+subquestion: |
+  Thank you ${users}. Your form is ready to download and deliver.
+  
+  View, download and send your form below. Click the "Edit answers" button to fix any mistakes.
+
+  ${ action_button_html(url_action('review_va5655_new_fields'), label='Edit answers', color='info') }
+  
+  
+  ${ al_user_bundle.download_list_html() }
+  
+
+  ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
+
+progress: 100
+---
+# ALDocument objects specify the metadata for each template
+objects:
+  - va5655_new_fields_Post_interview_instructions: ALDocument.using(title="Instructions", filename="va5655_new_fields_next_steps.docx", enabled=True, has_addendum=False)
+  - va5655_new_fields_attachment: ALDocument.using(title="VA Form 5655 - Financial Status Report", filename="va5655_new_fields", enabled=True, has_addendum=True, default_overflow_message=AL_DEFAULT_OVERFLOW_MESSAGE)
+---
+# Bundles group the ALDocuments into separate downloads, such as for court and for the user
+objects:
+  - al_user_bundle: ALDocumentBundle.using(elements=[va5655_new_fields_Post_interview_instructions, va5655_new_fields_attachment], filename="va5655_new_fields", title="All forms to download for your records", enabled=True)
+  - al_recipient_bundle: ALDocumentBundle.using(elements=[va5655_new_fields_attachment],  filename="va5655_new_fields", title="All forms to file", enabled=True)
+---
+# Each attachment defines a key in an ALDocument. We use `i` as the placeholder here so the same template is 
+# used for "preview" and "final" keys, and logic in the template checks the value of 
+# `i` to show or hide the user's signature
+attachment:
+  name: Post-interview-Instructions
+  filename: va5655_new_fields_next_steps
+  docx template file: va5655_new_fields_next_steps.docx
+  variable name: va5655_new_fields_Post_interview_instructions[i]
+  skip undefined: True
+  tagged pdf: True
+---
+attachment:
+  name: va5655 new fields
+  filename: va5655_new_fields
+  variable name: va5655_new_fields_attachment[i]
+  skip undefined: True
+  pdf template file: va5655_new_fields.pdf
+  fields:
+      - "users1_ssn": ${ users1_ssn }
+      - "users1_va_file_number": ${ users1_va_file_number }
+      - "users1_reason_filing": ${ users1_reason_filing }
+      - "users1_name_full": ${ users[0] }
+      - "users1_address_on_one_line": ${ users[0].address.on_one_line() }
+      - "is_married_yes": ${ is_married }
+      - "is_married_no": ${ not is_married }
+      - "users1_phone_number": ${ users[0].phone_number }
+      - "users1_birthdate": ${ users[0].birthdate.format() }
+      - "spouses_name_full": ${ spouses[0] }
+      - "dependents1_age_1": ${ dependents1_age_1 }
+      - "users1_current_kind_of_job__1": ${ users1_current_kind_of_job }
+      - "user1_current_start_date_mmyyyy__1": ${ user1_current_start_date_mmyyyy.format() }
+      - "users1_current_employer1_name__1": ${ users1_current_employer1_name }
+      - "users1_current_employer__address_on_one_line__1": ${ users1_current_employer__address_on_one_line }
+      - "users1_past_kind_of_job__1": ${ users1_past_kind_of_job }
+      - "users1_past_start_date_mmyyyy__1": ${ users1_past_start_date_mmyyyy.format() }
+      - "users1_past_end_date_mmyyyy__1": ${ users1_past_end_date_mmyyyy.format() }
+      - "users1_past_employer_name__1": ${ users1_past_employer_name }
+      - "users1_past_employer__address_on_one_line__1": ${ users1_past_employer__address_on_one_line }
+      - "spouses_current_kind_of_job__1": ${ spouses_current_kind_of_job }
+      - "spouses__current_start_date_mmyyyy__1": ${ spouses__current_start_date_mmyyyy.format() }
+      - "spouses_current_employer1_name__1": ${ spouses_current_employer1_name }
+      - "spouses__current_employer__address_on_one_line__1": ${ spouses__current_employer__address_on_one_line }
+      - "spouses_past_kind_of_job__1": ${ spouses_past_kind_of_job }
+      - "spouses__past_start_date_mmyyyy__1": ${ spouses__past_start_date_mmyyyy.format() }
+      - "spouses_past_end_date_mmyyyy__1": ${ spouses_past_end_date_mmyyyy.format() }
+      - "spouses__past_employer_name__1": ${ spouses__past_employer_name }
+      - "spouses_past_employer__address_on_one_line__1": ${ spouses_past_employer__address_on_one_line }
+      - "spouses_mo_salary_amount": ${ currency(spouses_mo_salary_amount) }
+      - "users1_mo_salary_amount": ${ currency(users1_mo_salary_amount) }
+      - "rent_mortgage_amount": ${ currency(rent_mortgage_amount) }
+      - "mo_food_amount": ${ currency(mo_food_amount) }
+      - "spouses_income_tax_deduct_amount": ${ currency(spouses_income_tax_deduct_amount) }
+      - "mo_utility_amount": ${ currency(mo_utility_amount) }
+      - "users1_income_tax_deduct_amount": ${ currency(users1_income_tax_deduct_amount) }
+      - "users1_retire_deduct_amount": ${ currency(users1_retire_deduct_amount) }
+      - "spouses_retire_deduct_amount": ${ currency(spouses_retire_deduct_amount) }
+      - "users1_ss_deduct_amount": ${ currency(users1_ss_deduct_amount) }
+      - "spouses_ss_deduct_amount": ${ currency(spouses_ss_deduct_amount) }
+      - "other_deduction_type": ${ other_deduction_type }
+      - "users1_other_deduct_amount": ${ currency(users1_other_deduct_amount) }
+      - "spouses_other_deduct_amount": ${ currency(spouses_other_deduct_amount) }
+      - "users1_total_deduct_amount": ${ currency(users1_total_deduct_amount) }
+      - "spouses_total_deduct_amount": ${ currency(spouses_total_deduct_amount) }
+      - "users1_net_mo_pay_amount": ${ currency(users1_net_mo_pay_amount) }
+      - "spouses_net_mo_pay_amount": ${ currency(spouses_net_mo_pay_amount) }
+      - "other_living": ${ va5655_new_fields_attachment.safe_value("other_living") }
+      - "other_living_amount": ${ currency(other_living_amount) }
+      - "source_of_other_income": ${ source_of_other_income }
+      - "users1_other_income_amount": ${ currency(users1_other_income_amount) }
+      - "spouses_other_income_amount": ${ currency(spouses_other_income_amount) }
+      - "mo_payments_debt_amount": ${ currency(mo_payments_debt_amount) }
+      - "total_mo_expense_amount": ${ currency(total_mo_expense_amount) }
+      - "users1_net_mo_income_amount": ${ currency(users1_net_mo_income_amount) }
+      - "spouses_net_mo_income_amount": ${ currency(spouses_net_mo_income_amount) }
+      - "net_income_less_expense_amount": ${ currency(net_income_less_expense_amount) }
+      - "mo_pay_to_debt": ${ currency(mo_pay_to_debt) }
+      - "bank_amount": ${ currency(bank_amount) }
+      - "bond_amount": ${ currency(bond_amount) }
+      - "cash_amount": ${ currency(cash_amount) }
+      - "stocks_amount": ${ currency(stocks_amount) }
+      - "real_estate_amount": ${ currency(real_estate_amount) }
+      - "car1_make": ${ car1_make }
+      - "car1_year": ${ car1_year }
+      - "car1_model": ${ car1_model }
+      - "car1_resale_amount": ${ currency(car1_resale_amount) }
+      - "otherasset1_amount": ${ currency(otherasset1_amount) }
+      - "otherasset1_amount": ${ currency(otherasset1_amount) }
+      - "car2_make": ${ car2_make }
+      - "car2_year": ${ car2_year }
+      - "car2_model": ${ car2_model }
+      - "car2_resale_amount": ${ currency(car2_resale_amount) }
+      - "otherasset2_amount": ${ currency(otherasset2_amount) }
+      - "otherasset2_amount": ${ currency(otherasset2_amount) }
+      - "car3_make": ${ car3_make }
+      - "car3_year": ${ car3_year }
+      - "car3_model": ${ car3_model }
+      - "car3_resale_amount": ${ currency(car3_resale_amount) }
+      - "otherasset3_amount": ${ currency(otherasset3_amount) }
+      - "otherasset3_amount": ${ currency(otherasset3_amount) }
+      - "trailer_camper_boat_resale_amount": ${ currency(trailer_camper_boat_resale_amount) }
+      - "total_asset_amount": ${ currency(total_asset_amount) }
+      - "creditor1_date": ${ creditor1_date.format() }
+      - "creditor1_orig_debt_amount": ${ currency(creditor1_orig_debt_amount) }
+      - "creditor1_unpaid_bal_amount": ${ currency(creditor1_unpaid_bal_amount) }
+      - "creditor1_past_due_amount": ${ currency(creditor1_past_due_amount) }
+      - "creditor1_mo_due_amount": ${ currency(creditor1_mo_due_amount) }
+      - "creditor1__address_on_one_line": ${ creditor1__address_on_one_line }
+      - "creditor1_name": ${ creditors[0] }
+      - "creditor1_purpose": ${ creditor1_purpose }
+      - "creditor2_date": ${ creditor2_date.format() }
+      - "creditor2__address_on_one_line": ${ creditor2__address_on_one_line }
+      - "creditor2_name": ${ creditors[1] }
+      - "creditor2_orig_debt_amount": ${ currency(creditor2_orig_debt_amount) }
+      - "creditor2_unpaid_bal_amount": ${ currency(creditor2_unpaid_bal_amount) }
+      - "creditor2_past_due_amount": ${ currency(creditor2_past_due_amount) }
+      - "creditor2_mo_due_amount": ${ currency(creditor2_mo_due_amount) }
+      - "creditor2_purpose": ${ creditor2_purpose }
+      - "creditor3_date": ${ creditor3_date.format() }
+      - "creditor3__address_on_one_line": ${ creditor3__address_on_one_line }
+      - "creditor3_name": ${ creditors[2] }
+      - "creditor3_orig_debt_amount": ${ currency(creditor3_orig_debt_amount) }
+      - "creditor3_unpaid_bal_amount": ${ currency(creditor3_unpaid_bal_amount) }
+      - "creditor3_past_due_amount": ${ currency(creditor3_past_due_amount) }
+      - "creditor3_mo_due_amount": ${ currency(creditor3_mo_due_amount) }
+      - "creditor3_purpose": ${ creditor3_purpose }
+      - "creditor4_date": ${ creditor4_date.format() }
+      - "creditor4__address_on_one_line": ${ creditor4__address_on_one_line }
+      - "creditor4_name": ${ creditors[3] }
+      - "creditor4_orig_debt_amount": ${ currency(creditor4_orig_debt_amount) }
+      - "creditor4_unpaid_bal_amount": ${ currency(creditor4_unpaid_bal_amount) }
+      - "creditor4_past_due_amount": ${ currency(creditor4_past_due_amount) }
+      - "creditor4_mo_due_amount": ${ currency(creditor4_mo_due_amount) }
+      - "creditor4_purpose": ${ creditor4_purpose }
+      - "creditor5_date": ${ creditor5_date.format() }
+      - "creditor5_orig_debt_amount": ${ currency(creditor5_orig_debt_amount) }
+      - "creditor5_unpaid_bal_amount": ${ currency(creditor5_unpaid_bal_amount) }
+      - "creditor5_mo_due_amount": ${ currency(creditor5_mo_due_amount) }
+      - "creditor5_past_due_amount": ${ currency(creditor5_past_due_amount) }
+      - "creditor5__address_on_one_line": ${ creditor5__address_on_one_line }
+      - "creditor5_name": ${ creditors[4] }
+      - "creditor5_purpose": ${ creditor5_purpose }
+      - "creditor6_date": ${ creditor6_date.format() }
+      - "creditor6__address_on_one_line": ${ creditor6__address_on_one_line }
+      - "creditor6_name": ${ creditors[5] }
+      - "creditor6_past_due_amount": ${ currency(creditor6_past_due_amount) }
+      - "creditor6_orig_debt_amount": ${ currency(creditor6_orig_debt_amount) }
+      - "creditor6_unpaid_bal_amount": ${ currency(creditor6_unpaid_bal_amount) }
+      - "creditor6_mo_due_amount": ${ currency(creditor6_mo_due_amount) }
+      - "creditor6_purpose": ${ creditor6_purpose }
+      - "creditor7_date": ${ creditor7_date.format() }
+      - "creditor7_orig_debt_amount": ${ currency(creditor7_orig_debt_amount) }
+      - "creditor7_unpaid_bal_amount": ${ currency(creditor7_unpaid_bal_amount) }
+      - "creditor7_past_due_amount": ${ currency(creditor7_past_due_amount) }
+      - "creditor7__address_on_one_line": ${ creditor7__address_on_one_line }
+      - "creditor7_name": ${ creditors[6] }
+      - "creditor7_mo_due_amount": ${ currency(creditor7_mo_due_amount) }
+      - "creditor7_purpose": ${ creditor7_purpose }
+      - "creditor8_date": ${ creditor8_date.format() }
+      - "creditor8_name": ${ creditors[7] }
+      - "creditor8_orig_debt_amount": ${ currency(creditor8_orig_debt_amount) }
+      - "creditor8_unpaid_bal_amount": ${ currency(creditor8_unpaid_bal_amount) }
+      - "creditor8_past_due_amount": ${ currency(creditor8_past_due_amount) }
+      - "creditor8__address_on_one_line": ${ creditor8__address_on_one_line }
+      - "creditor8_mo_due_amount": ${ currency(creditor8_mo_due_amount) }
+      - "creditor8_purpose": ${ creditor8_purpose }
+      - "total_orig_debt_amount": ${ currency(total_orig_debt_amount) }
+      - "total_unpaid_bal_amount": ${ currency(total_unpaid_bal_amount) }
+      - "total_past_due_amount": ${ currency(total_past_due_amount) }
+      - "total_mo_due_amount": ${ currency(total_mo_due_amount) }
+      - "is_bankruptcy_yes": ${ is_bankruptcy }
+      - "is_bankruptcy_no": ${ not is_bankruptcy }
+      - "discharge_date": ${ discharge_date.format() }
+      - "court_location": ${ court_location }
+      - "bankruptcy_docket_number": ${ bankruptcy_docket_number }
+      - "additional_info": ${ va5655_new_fields_attachment.safe_value("additional_info") }
+      - "users1_signature": ${ users[0].signature }
+      - "spouses_signature": ${ spouses[0].signature }
+      - "users1_signature_date": ${ users1_signature_date.format() }
+      - "spouses_signature_date": ${ spouses_signature_date.format() }
+---
+code: |
+  va5655_new_fields_attachment.overflow_fields["other_living"].overflow_trigger = 189
+  va5655_new_fields_attachment.overflow_fields["other_living"].label = "What are your other household living expenses?"
+  va5655_new_fields_attachment.overflow_fields["additional_info"].overflow_trigger = 364
+  va5655_new_fields_attachment.overflow_fields["additional_info"].label = "Additional info"
+  va5655_new_fields_attachment.overflow_fields.gathered = True
+
+
+
