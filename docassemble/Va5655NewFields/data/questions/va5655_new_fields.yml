@@ -45,6 +45,7 @@ objects:
   - users1_current_employer: ALPeopleList
   - spouses_current_employer: ALPeopleList
   - spouses__past_employer: ALPeopleList
+  
 ---
 sections:
   - review_va5655_new_fields: Review your answers
@@ -62,27 +63,33 @@ code: |
   set_parts(subtitle=str(users))
   users1_ssn
   users1_va_file_number
-  currently_have_job
-  users1_past_kind_of_job
+  if employed_two_years:
+    currently_have_job
+  if users1_other_job:  
+    users1_past_kind_of_job
   set_progress(14)
-  spouses_current_kind_of_job
-  spouses_past_kind_of_job
-  users1_mo_salary_amount
-  spouses_mo_salary_amount
+  if is_married:
+    spouses_current_kind_of_job
+  if spouses_other_job:
+    spouses_past_kind_of_job
+  if employed_two_years:
+    users1_mo_salary_amount
+  if spouses_employed_two_years: 
+    spouses_mo_salary_amount
   source_of_other_income
-  set_progress(28)
+  set_progress(35)
   rent_mortgage_amount
   mo_pay_to_debt
   bank_amount
   creditor1_date
   is_bankruptcy
-  set_progress(42)
+  set_progress(55)
   discharge_date
   additional_info
   users1_signature_date
   users1_total_deduct_amount
   users[0].address.address
-  set_progress(56)
+  set_progress(80)
   users[0].phone_number
   users[0].birthdate
   spouses.gather()
@@ -116,9 +123,9 @@ continue button field: va5655_new_fields_intro
 question: |
   VA Form 5655 - Financial Status Report
 subquestion: |
-  This interview will help you complete VA form 5655 - Financial STatus Report. This form must be submitted to the VA when asking for a VA overpayment waiver.
+  This interview will help you complete VA form 5655 - Financial Status Report. This form must be submitted to the VA when asking for a VA overpayment waiver.
   
-  Please note that this form requires sensitive personal information. To protect your privacy, StatesideLegal.org will not retain your information on our servers for longer than 14 days. We do not share this info with ant third party. Please be sure to complete this interview in one visit or your work will be lost and you will have to start over.
+  <b> Please note that this form requires sensitive personal information. </b> To protect your privacy, StatesideLegal.org will not retain your information on our servers for longer than 14 days. We do not share your info with third parties. Please be sure to complete this interview in one visit or your work will be lost and you will have to start over.
   
   Before you get started, please gather:
   
@@ -138,12 +145,11 @@ subquestion: |
   
   1. Download and print your completed form
   
-  ** Remember, your information and answers will NOT be stored. If you leave the session without completing and downloading the interview, your information and answers will be lost and you will have to start over.**
+  ** Remember, your information and answers will NOT be stored longer than 14 days. If you leave the session without completing and downloading the interview, your information and answers will be lost and you will have to start over.** 
   
   
   Most people take about **60 minutes** to finish this interview.
-  
-  
+
 ---
 id: About the Debtor
 question: |
@@ -165,6 +171,7 @@ question: |
   About your issue
 subquestion: |
   These questions are asking about the file at issue and why you need to fill out this form.
+
 fields:
   - "What is your VA File Number?": users1_va_file_number
     maxlength: 28
@@ -175,13 +182,13 @@ id: Your Employment
 question: |
   Your Employment
 fields:
-  - "Are you currently employed?": currently_have_job
-    datatype: yesnoradio
   - "Have you been employed within the last two years?": employed_two_years
     datatype: yesnoradio
+  - "Are you currently employed?": currently_have_job
+    datatype: yesnoradio
     show if:
-      variable: currently_have_job
-      is: False
+      variable: employed_two_years
+      is: True
   - "What kind of job do you currently do? (ex. Postal Worker, CEO, Mechanic, Security, etc.)": users1_current_kind_of_job
     maxlength: 50
     show if:
@@ -207,11 +214,12 @@ fields:
     show if:
       variable: currently_have_job
       is: True
-  
 ---
+
 id: Your additional employment within the last two years
 question: |
   Your additional employment within the last two (2) years
+if: employed_two_years or users1_other_job
 fields:
   - "What kind of work did you do (or are doing) at this job?": users1_past_kind_of_job
     maxlength: 19
@@ -242,37 +250,81 @@ question: |
 subquestion: |
   These questions are asking about your spouse's employment within the last two (2) years
 fields:
-  - "What kind of job does your spouse do now? (ex. Postal Worker, CEO, Mechanic, Security, etc.)": spouses_current_kind_of_job
-    maxlength: 19
-  - "When did your spouse start this job?": spouses__current_start_date_mmyyyy
-    datatype: date
-  - "What is your spouse's current employer's name?": spouses_current_employer1_name
-    maxlength: 16
-  - "What is your spouse's current employer's address?": spouses__current_employer__address_on_one_line
-    maxlength: 99
-  - "Is your spouse currently employed?": spouses_current_employed
-    datatype: yesnoradio
-  - "Has your spouse been employed in any other job over the last two years?": spouses_other_job
-    datatype: yesnoradio
   - "Has your spouse been employed within the last two years?": spouses_employed_two_years
     datatype: yesnoradio
+  - "Is your spouse currently employed?": spouses_current_employed
+    datatype: yesnoradio
+    show if:
+      variable: spouses_employed_two_years
+      is: True
+  - "What kind of job does your spouse do now? (ex. Postal Worker, CEO, Mechanic, Security, etc.)": spouses_current_kind_of_job
+    maxlength: 19
+    show if:
+      variable: spouses_current_employed
+      is: True
+  - "When did your spouse start this job?": spouses__current_start_date_mmyyyy
+    datatype: date
+    show if:
+      variable: spouses_current_employed
+      is: True
+  - "What is your spouse's current employer's name?": spouses_current_employer1_name
+    maxlength: 16
+    show if:
+      variable: spouses_current_employed
+      is: True
+  - "What is your spouse's current employer's address?": spouses__current_employer__address_on_one_line
+    maxlength: 99
+    show if:
+      variable: spouses_current_employed
+      is: True
+  - "Has your spouse been employed in any other job over the last two years?": spouses_other_job
+    datatype: yesnoradio
+    show if:
+      variable: spouses_current_employed
+      is: True
 ---
+
 id: Spouse s other employment within the last two 2 years
 question: |
   Spouse's other employment within the last two (2) years.
 fields:
   - "What kind of work did your spouse do (or is doing) at this job?": spouses_past_kind_of_job
     maxlength: 19
+    show if: 
+      variable: is_married
+      is: True
   - "When did your spouse start this job?": spouses__past_start_date_mmyyyy
     datatype: date
+    show if: 
+      variable: is_married
+      is: True
   - "When did your spouse end this job?": spouses_past_end_date_mmyyyy
     datatype: date
+    show if: 
+      variable: is_married
+      is: True
   - "What is this employer's name?": spouses__past_employer_name
     maxlength: 16
+    show if: 
+      variable: is_married
+      is: True
   - "What is this employer's address?": spouses_past_employer__address_on_one_line
     maxlength: 99
+    show if: 
+      variable: is_married
+      is: True
   - "Is your spouse still at this job?": spouses_still_at_job
     datatype: yesnoradio
+    show if: 
+      variable: is_married
+      is: True
+---
+code: |
+  if spouses_still_at_job:
+    spouses_past_end_date_mmyyyy = "Present Time"
+  else:
+    # Assume users1_past_end_date_mmyyyy is already captured elsewhere if they're not currently employed there
+    pass
 ---
 id: Your Income
 question: |
@@ -285,7 +337,7 @@ fields:
   - "What is your gross monthly salary amount?": users1_mo_salary_amount
     datatype: currency
     min: 0
-  - "How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.": users1_income_tax_deduct_amount
+  - "How much is taken out of your monthly salary for taxes? This includes federal, state, and local taxes.": users1_income_tax_deduct_amount
     datatype: currency
     min: 0
   - "How much is taken out of your monthly salary for retirement?": users1_retire_deduct_amount
@@ -294,13 +346,20 @@ fields:
   - "How much is taken out of your monthly salary for social security?": users1_ss_deduct_amount
     datatype: currency
     min: 0
+  - "Do you have any other deductions being taken out of your monthly salary?": users1_more_deductions
+    datatype: yesnoradio
   - "What other deductions do your and/or your spouse have taken out of your monthly salary?": other_deduction_type
     maxlength: 99
+    show if:
+      variable: users1_more_deductions
+      is: True
   - "How much is taken out of your monthly salary for your other deductions?": users1_other_deduct_amount
     datatype: currency
     min: 0
-  - "Do you have any other deductions being taken out of your monthly salary?": users1_more_deductions
-    datatype: yesnoradio
+    show if:
+      variable: users1_more_deductions
+      is: True
+ 
 ---
 id: Your Spouses Income and Payroll Deductions
 question: |
@@ -320,30 +379,47 @@ fields:
   - "How much is taken out of your spouse's monthly salary for social security?": spouses_ss_deduct_amount
     datatype: currency
     min: 0
+  - "Does your spouse have any other deductions coming out of their monthly salary?": spouses_more_deductions
+    datatype: yesnoradio
   - "How much is taken out of your spouse's monthly salary for their other deductions?": spouses_other_deduct_amount
     datatype: currency
     min: 0
-  - "Does your spouse have any other deductions coming out of their monthly salary?": spouses_more_deductions
-    datatype: yesnoradio
+    show if: 
+      variable: spouses_more_deductions
+      is: True
+ 
 ---
 id: Other sources of income
 question: |
   Other sources of income
 subquestion: |
-  Other sources of income include Social Security, VA Benefits, etc. These questions are about your other sources of income, and your spouse's if that applies to you.
+  Other sources of income include <b>Social Security, VA Benefits, Alimony, etc.</b> These questions are about other sources of income.
 fields:
-  - "What is the sources of your other income? (ex. VA benefits": source_of_other_income
+  - "Do you (or your spouse, if applicable) have any other sources of income?": users1_other_income
+    datatype: yesnoradio
+  - "What are the sources of the other income? (ex. VA benefits, Social Security, Alimony, etc.)": source_of_other_income
     maxlength: 99
-  - "How much are you getting a month from this other income?": users1_other_income_amount
+    show if:
+      variable: users1_other_income
+      is: True
+  - "How much are <b>you</b> getting a month directly from this other income?": users1_other_income_amount
     datatype: currency
     min: 0
-  - "How much is your spouse getting a month from this other income?": spouses_other_income_amount
+    show if:
+      variable: users1_other_income
+      is: True
+  - "If you have a spouse, does your spouse get income from the source your listed?": spouses_other_income
+    datatype: yesnoradio
+    show if:
+      variable: users1_other_income
+      is: True
+  - "How much is your spouse getting a month directly from this other income?": spouses_other_income_amount
     datatype: currency
     min: 0
-  - "Do you have any other source of income? (ex. VA Benefits, Social Security, etc.)": users1_other_income
-    datatype: yesnoradio
-  - "Does your spouse have any other source of income? (ex. VA Benefits, Social Security, etc.)": spouses_other_income
-    datatype: yesnoradio
+    show if: 
+      variable: spouses_other_income
+      is: True
+       
 ---
 id: Your household monthly expenses
 question: |
@@ -360,13 +436,20 @@ fields:
   - "How much are your household utilities a month?": mo_utility_amount
     datatype: currency
     min: 0
+  - "Do you have any other living expenses to include? (Gas, Internet, Cable, Cell Service, etc.)": living_expenses
+    datatype: yesnoradio
   - "What are your other household living expenses?": other_living
     input type: area
+    show if:
+      variable: living_expenses
+      is: True
   - "How much are your other living expenses a month?": other_living_amount
     datatype: currency
     min: 0
-  - "Do you have any other living expenses to include?": living_expenses
-    datatype: yesnoradio
+    show if:
+      variable: living_expenses
+      is: True
+  
 ---
 id: Paying toward your VA debt
 question: |
@@ -380,9 +463,9 @@ id: Assets
 question: |
   Assets
 subquestion: |
-  These questions are asking about your current assets. If you don't have any money or value in the asset, just type in 0 (zero). These assets include your spouse's assets, if that applies.
+  These questions are asking about your current assets. If you don't have any money or value in the asset, just type in 0 (zero). If you are married, this includes your spouses assets too.
 fields:
-  - "How much do you have in all your bank accounts?": bank_amount
+  - "How much in total do you have in all your bank accounts?": bank_amount
     datatype: currency
     min: 0
   - "What is the current value of your US Savings Bonds?": bond_amount
@@ -391,61 +474,146 @@ fields:
   - "How much cash on hand do you have?": cash_amount
     datatype: currency
     min: 0
-  - "What is the current value of your Stocks and bonds (other than US Savings Bonds)?": stocks_amount
+  - "What is the current value of your stocks and bonds (other than US Savings Bonds)?": stocks_amount
     datatype: currency
     min: 0
-  - "What is the resale value of the real estate you own?": real_estate_amount
+  - "What is the resale value of all the real estate you own?": real_estate_amount
     datatype: currency
     min: 0
-  - "What is the make of this first car?": car1_make
-    maxlength: 99
-  - "What year was this first car built?": car1_year
+  - "Do you own a vehicle?": own_cars
+    datatype: yesnoradio
+  - "What year was this car built?": car1_year
     maxlength: 4
-  - "What is the model of this first car?": car1_model
+    show if:
+      variable: own_cars
+      is: True
+  - "What is the make of this car?": car1_make
     maxlength: 99
-  - "What is the resale value of this first car?": car1_resale_amount
+    show if:
+      variable: own_cars
+      is: True
+  - "What is the model of this car?": car1_model
+    maxlength: 99
+    show if:
+      variable: own_cars
+      is: True
+  - "What is the resale value of this car?": car1_resale_amount
     datatype: currency
     min: 0
-  - "How much is this first asset?": otherasset1_amount
-    datatype: currency
-    min: 0
-  - "What is the make of this second car?": car2_make
-    maxlength: 99
+    show if:
+      variable: own_cars
+      is: True
+  - "Do you own an additional vehicle?": more_cars
+    datatype: yesnoradio
+    show if:
+      variable: own_cars
+      is: True
   - "What year was this second car built?": car2_year
     maxlength: 4
+    show if:
+      variable: more_cars
+      is: True
+  - "What is the make of this second car?": car2_make
+    maxlength: 99
+    show if:
+      variable: more_cars
+      is: True
   - "What is the model of this second car?": car2_model
     maxlength: 99
+    show if:
+      variable: more_cars
+      is: True
   - "What is the resale value of this second car?": car2_resale_amount
     datatype: currency
     min: 0
-  - "How much is the value of this second asset?": otherasset2_amount
-    datatype: currency
-    min: 0
-  - "What is the make of this third car?": car3_make
-    maxlength: 99
+    show if:
+      variable: more_cars
+      is: True
+  - "Do you own a third vehicle?": additional_cars
+    datatype: yesnoradio
+    show if:
+      variable: more_cars
+      is: True
   - "What year was this third car built?": car3_year
     maxlength: 4
+    show if:
+      variable: additional_cars
+      is: True
+  - "What is the make of this third car?": car3_make
+    maxlength: 99
+    show if:
+      variable: additional_cars
+      is: True
   - "What is the model of this third car?": car3_model
     maxlength: 99
+    show if:
+      variable: additional_cars
+      is: True
   - "What is the resale value of this third car?": car3_resale_amount
     datatype: currency
     min: 0
+    show if:
+      variable: additional_cars
+      is: True
+  - "Do you own a boat, trailer, or camper?": rec_vehicles
+    datatype: yesnoradio
+  - "What is the total resale value of your boat(s), trailer(s), and camper(s) combined?": trailer_camper_boat_resale_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: rec_vehicles
+      is: True
+  - "Do you have any other assets?": other_assets
+    datatype: yesnoradio
+  - "What is this asset?": otherasset1
+    maxlength: 99
+    show if:
+      variable: other_assets
+      is: True
+  - "How much is this asset worth?": otherasset1_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: other_assets
+      is: True
+  - "Do you have any additional assets?": additional_assets
+    datatype: yesnoradio
+    show if:
+      variable: other_assets
+      is: True
+  - "What is this asset?": otherasset2
+    maxlength: 99
+    show if:
+      variable: additional_assets
+      is: True
+  - "How much is the value of this second asset?": otherasset2_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: additional_assets
+      is: True
+  - "Do you have any other assets?": additional_other_assets
+    datatype: yesnoradio
+    show if:
+      variable: additional_assets
+      is: True
+  - "What is this asset?": otherasset3
+    maxlength: 99
+    show if:
+      variable: additional_other_assets
+      is: True
   - "How much is the value of this third asset?": otherasset3_amount
     datatype: currency
     min: 0
-  - "What is the total resale value of your boats, trailers, and campers combined?": trailer_camper_boat_resale_amount
-    datatype: currency
-    min: 0
-  - "Do you own any automobiles?": own_cars
-    datatype: yesnoradio
-  - "Do you own additional vehicles?": more_cars
-    datatype: yesnoradio
+    show if:
+      variable: additional_other_assets
+      is: True
 ---
 id: Installment Contracts and Other Debts
 question: |
   Installment Contracts and Other Debts
 subquestion: |
-  These questions are about any debts you are supposed to pay regular monthly installments on, such as for a car, television, to banks, credit card companies, or for doctor bills, hospital bills, etc.)
+  These questions are about any debts you are supposed to pay regular monthly installments on, such as for a car, television, to banks, credit card companies, or for doctor bills, hospital bills, etc.) If you are married, this includes your spouses debts too.
 fields:
   - "When did you start this first debt?": creditor1_date
     datatype: date
@@ -631,6 +799,9 @@ fields:
     datatype: date
   - "What date is your spouse going to sign this document?": spouses_signature_date
     datatype: date
+    show if: 
+      variable: is_married
+      is: True
 ---
 id: Totals
 question: |
