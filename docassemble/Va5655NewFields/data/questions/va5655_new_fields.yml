@@ -65,23 +65,25 @@ code: |
   users1_va_file_number
   if employed_two_years:
     currently_have_job
-  if users1_other_job:  
-    users1_past_kind_of_job
+    if currently_have_job == False:
+      users1_past_kind_of_job
+    if users1_other_job:  
+      users1_past_kind_of_job
   set_progress(14)
-  if is_married:
-    spouses_current_kind_of_job
-  if spouses_other_job:
-    spouses_past_kind_of_job
+  if is_married == True:
+    spouses_employed_two_years
+    if spouses_current_employed == False:
+      spouses_past_kind_of_job
+    if spouses_employed_two_years: 
+      spouses_mo_salary_amount
   if employed_two_years:
     users1_mo_salary_amount
-  if spouses_employed_two_years: 
-    spouses_mo_salary_amount
   source_of_other_income
   set_progress(35)
   rent_mortgage_amount
   mo_pay_to_debt
   bank_amount
-  creditor1_date
+  installment_payments
   is_bankruptcy
   set_progress(55)
   discharge_date
@@ -227,11 +229,14 @@ fields:
     datatype: date
   - "Are you still at this job?": users1_still_at_job
     datatype: yesnoradio
+    show if:
+      variable: currently_have_job
+      is: True
   - "When did this job end? Please use the MM-YYYY format": users1_past_end_date_mmyyyy
     datatype: text
-    show if: 
-      variable: users1_still_at_job
-      is: False
+    #show if: 
+      #variable: currently_have_job
+      #is: False
   - "What is this employer's name?": users1_past_employer_name
     maxlength: 16
   - "What is this employer's address?": users1_past_employer__address_on_one_line
@@ -290,34 +295,37 @@ question: |
 fields:
   - "What kind of work did your spouse do (or is doing) at this job?": spouses_past_kind_of_job
     maxlength: 19
-    show if: 
-      variable: is_married
-      is: True
+    #show if: 
+      #variable: is_married
+      #is: True
   - "When did your spouse start this job?": spouses__past_start_date_mmyyyy
     datatype: date
-    show if: 
-      variable: is_married
-      is: True
+    #show if: 
+      #variable: is_married
+      #is: True
   - "When did your spouse end this job?": spouses_past_end_date_mmyyyy
     datatype: date
-    show if: 
-      variable: is_married
-      is: True
+    #show if: 
+      #variable: is_married
+      #is: True
   - "What is this employer's name?": spouses__past_employer_name
     maxlength: 16
-    show if: 
-      variable: is_married
-      is: True
+    #show if: 
+      #variable: is_married
+      #is: True
   - "What is this employer's address?": spouses_past_employer__address_on_one_line
     maxlength: 99
-    show if: 
-      variable: is_married
-      is: True
+    #show if: 
+      #variable: is_married
+      #is: True
   - "Is your spouse still at this job?": spouses_still_at_job
     datatype: yesnoradio
-    show if: 
-      variable: is_married
+    show if:
+      variable: spouses_current_employed
       is: True
+    #show if: 
+      #variable: is_married
+      #is: True
 ---
 code: |
   if spouses_still_at_job:
@@ -613,152 +621,397 @@ id: Installment Contracts and Other Debts
 question: |
   Installment Contracts and Other Debts
 subquestion: |
-  These questions are about any debts you are supposed to pay regular monthly installments on, such as for a car, television, to banks, credit card companies, or for doctor bills, hospital bills, etc.) If you are married, this includes your spouses debts too.
+  These questions are about any debts you are supposed to pay regular monthly installments on, (such as for a car, television, to banks, credit card companies, or for doctor bills, etc.) If you are married, this includes your spouse's debts too.
 fields:
-  - "When did you start this first debt?": creditor1_date
-    datatype: date
-  - "What was the original amount of this first debt?": creditor1_orig_debt_amount
-    datatype: currency
-    min: 0
-  - "What is the unpaid balance on this first debt?": creditor1_unpaid_bal_amount
-    datatype: currency
-    min: 0
-  - "How much is past due on this first debt?": creditor1_past_due_amount
-    datatype: currency
-    min: 0
-  - "How much is due each month for this first debt?": creditor1_mo_due_amount
-    datatype: currency
-    min: 0
-  - "What is the creditor's address on this first debt?": creditor1__address_on_one_line
+  - "Do you have any regular monthly installment payments (such as for a car, television, credit card, or for a doctor's bill)?": installment_payments
+    datatype: yesnoradio
+  - "What is the creditor's name on your first debt (who do you pay each month)?": creditor1_name
     maxlength: 99
-  - "What was the purpose of this first debt?": creditor1_purpose
+    show if:
+      variable: installment_payments
+      is: True
+  - "What is the creditor's address on this debt?": creditor1__address_on_one_line
     maxlength: 99
-  - "When did you start this 2nd debt?": creditor2_date
+    show if:
+      variable: installment_payments
+      is: True
+  - "When did you start this debt?": creditor1_date
     datatype: date
+    show if:
+      variable: installment_payments
+      is: True
+  - "What was the purpose of this debt?": creditor1_purpose
+    maxlength: 99
+    show if:
+      variable: installment_payments
+      is: True
+  - "What was the original amount of this debt?": creditor1_orig_debt_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment_payments
+      is: True
+  - "What is the unpaid balance on this debt?": creditor1_unpaid_bal_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment_payments
+      is: True
+  - "How much is due each month for this debt?": creditor1_mo_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment_payments
+      is: True
+  - "How much is past due on this debt?": creditor1_past_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment_payments
+      is: True
+  - "Do you have another contract or monthly installment payment?": installment2_payments
+    datatype: yesnoradio
+    show if:
+      variable: installment_payments
+      is: True
+  - "What is the creditor's name on this 2nd debt (who do you pay each month)?": creditor2_name
+    maxlength: 99
+    show if:
+      variable: installment2_payments
+      is: True
   - "What is the creditor's address on this 2nd debt?": creditor2__address_on_one_line
     maxlength: 99
+    show if:
+      variable: installment2_payments
+      is: True
+  - "When did you start this 2nd debt?": creditor2_date
+    datatype: date
+    show if:
+      variable: installment2_payments
+      is: True
+  - "What was the purpose of this 2nd debt? (ex. car payment)": creditor2_purpose
+    maxlength: 99
+    show if:
+      variable: installment2_payments
+      is: True
   - "What was the original amount of this 2nd debt?": creditor2_orig_debt_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment2_payments
+      is: True
   - "What is the unpaid balance on this 2nd debt?": creditor2_unpaid_bal_amount
     datatype: currency
     min: 0
-  - "How much is past due on this 2nd debt?": creditor2_past_due_amount
-    datatype: currency
-    min: 0
+    show if:
+      variable: installment2_payments
+      is: True
   - "How much is due each month for this 2nd debt?": creditor2_mo_due_amount
     datatype: currency
     min: 0
-  - "What was the purpose of this 2nd debt?": creditor2_purpose
+    show if:
+      variable: installment2_payments
+      is: True
+  - "How much is past due on this 2nd debt?": creditor2_past_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment2_payments
+      is: True
+  - "Do you have an additional contract or monthly installment payment?": installment3_payments
+    datatype: yesnoradio
+    show if:
+      variable: installment2_payments
+      is: True
+  - "What is the creditor's name on this 3rd debt (who do you pay each month)?": creditor3_name
     maxlength: 99
-  - "When did you start this 3rd debt?": creditor3_date
-    datatype: date
+    show if:
+      variable: installment3_payments
+      is: True
   - "What is the creditor's address on this 3rd debt?": creditor3__address_on_one_line
     maxlength: 99
+    show if:
+      variable: installment3_payments
+      is: True
+  - "When did you start this 3rd debt?": creditor3_date
+    datatype: date
+    show if:
+      variable: installment3_payments
+      is: True
+  - "What was the purpose of this 3rd debt?": creditor3_purpose
+    maxlength: 99
+    show if:
+      variable: installment3_payments
+      is: True
   - "What was the original amount of this 3rd debt?": creditor3_orig_debt_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment3_payments
+      is: True
   - "What is the unpaid balance on this 3rd debt?": creditor3_unpaid_bal_amount
     datatype: currency
     min: 0
-  - "How much is past due on this 3rd debt?": creditor3_past_due_amount
-    datatype: currency
-    min: 0
+    show if:
+      variable: installment3_payments
+      is: True
   - "How much is due each month for this 3rd debt?": creditor3_mo_due_amount
     datatype: currency
     min: 0
-  - "What was the purpose of this 3rd debt?": creditor3_purpose
+    show if:
+      variable: installment3_payments
+      is: True
+  - "How much is past due on this 3rd debt?": creditor3_past_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment3_payments
+      is: True
+  - "Do you have another contract or monthly installment payment?": installment4_payments
+    datatype: yesnoradio
+    show if:
+      variable: installment3_payments
+      is: True
+  - "What is the creditor's name on this 4th debt (who do you pay each month)?": creditor4_name
     maxlength: 99
-  - "When did you start this 4th debt?": creditor4_date
-    datatype: date
+    show if:
+      variable: installment4_payments
+      is: True
   - "What is the creditor's address on this 4th debt?": creditor4__address_on_one_line
     maxlength: 99
+    show if:
+      variable: installment4_payments
+      is: True
+  - "When did you start this 4th debt?": creditor4_date
+    datatype: date
+    show if:
+      variable: installment4_payments
+      is: True
+  - "What was the purpose of this 4th debt? (ex. credit card)": creditor4_purpose
+    maxlength: 99
+    show if:
+      variable: installment4_payments
+      is: True
   - "What was the original amount of this 4th debt?": creditor4_orig_debt_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment4_payments
+      is: True
   - "What is the unpaid balance on this 4th debt?": creditor4_unpaid_bal_amount
     datatype: currency
     min: 0
-  - "How much is past due on this 4th debt?": creditor4_past_due_amount
-    datatype: currency
-    min: 0
+    show if:
+      variable: installment4_payments
+      is: True
   - "How much is due each month for this 4th debt?": creditor4_mo_due_amount
     datatype: currency
     min: 0
-  - "What was the purpose of this 4th debt?": creditor4_purpose
+    show if:
+      variable: installment4_payments
+      is: True
+  - "How much is past due on this 4th debt?": creditor4_past_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment4_payments
+      is: True
+  - "Do you have an additional contract or monthly installment payment?": installment5_payments
+    datatype: yesnoradio
+    show if:
+      variable: installment4_payments
+      is: True
+  - "What is the creditor's name on this 5th debt (who do you pay each month)?": creditor5_name
     maxlength: 99
+    show if:
+      variable: installment5_payments
+      is: True
+  - "What is the creditor's address on this 5th debt?": creditor5__address_on_one_line
+    maxlength: 99
+    show if:
+      variable: installment5_payments
+      is: True
   - "When did you start this 5th debt?": creditor5_date
     datatype: date
+    show if:
+      variable: installment5_payments
+      is: True
+  - "What was the purpose of this 5th debt?": creditor5_purpose
+    maxlength: 99
+    show if:
+      variable: installment5_payments
+      is: True
   - "What was the original amount of this 5th debt?": creditor5_orig_debt_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment5_payments
+      is: True
   - "What is the unpaid balance on this 5th debt?": creditor5_unpaid_bal_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment5_payments
+      is: True
   - "How much is due each month for this 5th debt?": creditor5_mo_due_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment5_payments
+      is: True
   - "How much is past due on this 5th debt?": creditor5_past_due_amount
     datatype: currency
     min: 0
-  - "What is the creditor's address on this 5th debt?": creditor5__address_on_one_line
+    show if:
+      variable: installment5_payments
+      is: True
+  - "Do you have another contract or monthly installment payment?": installment6_payments
+    datatype: yesnoradio
+    show if:
+      variable: installment5_payments
+      is: True
+  - "What is the creditor's name on this 6th debt (who do you pay each month)?": creditor6_name
     maxlength: 99
-  - "What was the purpose of this 5th debt?": creditor5_purpose
-    maxlength: 99
+    show if:
+      variable: installment6_payments
+      is: True
+  - "What is the creditor's address on this 6th debt?": creditor6__address_on_one_line
+    maxlength: 99 
+    show if:
+      variable: installment6_payments
+      is: True
   - "When did you start this 6th debt?": creditor6_date
     datatype: date
-  - "What is the creditor's address on this 6th debt?": creditor6__address_on_one_line
-    maxlength: 99
-  - "How much is past due on this 6th debt?": creditor6_past_due_amount
-    datatype: currency
-    min: 0
+    show if:
+      variable: installment6_payments
+      is: True
+  - "What was the purpose of this 6th debt?": creditor6_purpose
+    maxlength: 99 
+    show if:
+      variable: installment6_payments
+      is: True
   - "What was the original amount of this 6th debt?": creditor6_orig_debt_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment6_payments
+      is: True
   - "What is the unpaid balance on this 6th debt?": creditor6_unpaid_bal_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment6_payments
+      is: True
   - "How much is due each month for this 6th debt?": creditor6_mo_due_amount
     datatype: currency
     min: 0
-  - "What was the purpose of this 6th debt?": creditor6_purpose
+    show if:
+      variable: installment6_payments
+      is: True
+  - "How much is past due on this 6th debt?": creditor6_past_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment6_payments
+      is: True
+  - "Do you have another contract or monthly installment payment?": installment7_payments
+    datatype: yesnoradio
+    show if:
+      variable: installment6_payments
+      is: True
+  - "What is the creditor's name on this 7th debt (who do you pay each month)?": creditor7_name
     maxlength: 99
+    show if:
+      variable: installment7_payments
+      is: True
+  - "What is the creditor's address on this 7th debt?": creditor7__address_on_one_line
+    maxlength: 99
+    show if:
+      variable: installment7_payments
+      is: True
   - "When did you start this 7th debt?": creditor7_date
     datatype: date
+    show if:
+      variable: installment7_payments
+      is: True
+  - "What was the purpose of this 7th debt?": creditor7_purpose
+    maxlength: 99
+    show if:
+      variable: installment7_payments
+      is: True
   - "What was the original amount of this 7th debt?": creditor7_orig_debt_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment7_payments
+      is: True
   - "What is the unpaid balance on this 7th debt?": creditor7_unpaid_bal_amount
     datatype: currency
     min: 0
-  - "How much is past due on this 7th debt?": creditor7_past_due_amount
-    datatype: currency
-    min: 0
-  - "What is the creditor's address on this 7th debt?": creditor7__address_on_one_line
-    maxlength: 99
+    show if:
+      variable: installment7_payments
+      is: True
   - "How much is due each month for this 7th debt?": creditor7_mo_due_amount
     datatype: currency
     min: 0
-  - "What was the purpose of this 7th debt?": creditor7_purpose
+    show if:
+      variable: installment7_payments
+      is: True
+  - "How much is past due on this 7th debt?": creditor7_past_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment7_payments
+      is: True
+  - "Do you have another contract or monthly installment payment?": installment8_payments
+    datatype: yesnoradio
+    show if:
+      variable: installment7_payments
+      is: True
+  - "What is the creditor's name on this 8th debt (who do you pay each month)?": creditor7_name
     maxlength: 99
+    show if:
+      variable: installment8_payments
+      is: True
+  - "What is the creditor's address on this 8th debt?": creditor8__address_on_one_line
+    maxlength: 99
+    show if:
+      variable: installment8_payments
+      is: True
   - "When did you start this 8th debt?": creditor8_date
     datatype: date
+    show if:
+      variable: installment8_payments
+      is: True
+  - "What was the purpose of this 8th debt?": creditor8_purpose
+    maxlength: 99
+    show if:
+      variable: installment8_payments
+      is: True
   - "What was the original amount of this 8th debt?": creditor8_orig_debt_amount
     datatype: currency
     min: 0
+    show if:
+      variable: installment8_payments
+      is: True
   - "What is the unpaid balance on this 8th debt?": creditor8_unpaid_bal_amount
     datatype: currency
-    min: 0
-  - "How much is past due on this 8th debt?": creditor8_past_due_amount
-    datatype: currency
-    min: 0
-  - "What is the creditor's address on this 8th debt?": creditor8__address_on_one_line
-    maxlength: 99
+    min: 0 
+    show if:
+      variable: installment8_payments
+      is: True
   - "How much is due each month for this 8th debt?": creditor8_mo_due_amount
     datatype: currency
     min: 0
-  - "What was the purpose of this 8th debt?": creditor8_purpose
-    maxlength: 99
+    show if:
+      variable: installment8_payments
+      is: True
+  - "How much is past due on this 8th debt?": creditor8_past_due_amount
+    datatype: currency
+    min: 0
+    show if:
+      variable: installment8_payments
+      is: True
 ---
 id: Bankruptcy
 question: |
@@ -790,6 +1043,7 @@ subquestion: |
 fields:
   - "Additional info": additional_info
     input type: area
+    required: False
 ---
 id: Signature dates
 question: |
