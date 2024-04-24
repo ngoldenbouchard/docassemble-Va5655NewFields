@@ -75,17 +75,23 @@ code: |
       users1_mo_salary_amount
       if users1_other_job:  
         users1_past_kind_of_job
+        #users1_other_income
+    if is_married:
+        spouses_employed_two_years
+    else:
+        users1_other_income
   else:
     if is_married == True:
       spouses_employed_two_years
       if spouses_employed_two_years:
         spouses_current_employed
-        if spouses_current_employed:
-          spouses_mo_salary_amount
         if spouses_current_employed == False:
           spouses_past_kind_of_job
-        if spouses_other_job:  
-          spouses_past_kind_of_job 
+        else:
+          spouses_mo_salary_amount
+          if spouses_other_job:  
+            spouses_past_kind_of_job
+            #users1_other_income
       else: 
         users1_other_income
     else: 
