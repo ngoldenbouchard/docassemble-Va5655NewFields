@@ -2,7 +2,8 @@
 include:
   - docassemble.AssemblyLine:assembly_line.yml
   - custom_ssl_theme.yml
-  
+  - VA5655financial-calculations.yml
+---  
 features:
    navbar-brand: Stateside-Legal-logopng.png
 ---
@@ -25,10 +26,10 @@ metadata:
 code: |
   # This controls the default country and list of states in address field questions
   AL_DEFAULT_COUNTRY = "US"
----
-code: |
+#---
+#code: |
   # This controls the default state in address field questions
-  AL_DEFAULT_STATE = "ME"
+  #AL_DEFAULT_STATE = "ME"
 ---
 code: |
   github_repo_name =  'docassemble-Va5655NewFields'
@@ -61,41 +62,82 @@ code: |
   user_ask_role = "na"
   users.gather()
   set_parts(subtitle=str(users))
+  users[0].address
+  users[0].phone_number
+  users[0].birthdate
   users1_ssn
   users1_va_file_number
   if employed_two_years:
     currently_have_job
     if currently_have_job == False:
       users1_past_kind_of_job
-    if users1_other_job:  
-      users1_past_kind_of_job
+    else:
+      users1_mo_salary_amount
+      if users1_other_job:  
+        users1_past_kind_of_job
+  else:
+    if is_married == True:
+      spouses_employed_two_years
+      if spouses_employed_two_years:
+        spouses_current_employed
+        if spouses_current_employed:
+          spouses_mo_salary_amount
+        if spouses_current_employed == False:
+          spouses_past_kind_of_job
+        if spouses_other_job:  
+          spouses_past_kind_of_job 
+      else: 
+        users1_other_income
+    else: 
+      users1_other_income 
+    #if currently_have_job == False:
+      #users1_past_kind_of_job
+    #if currently_have_job == True:
+      #users1_mo_salary_amount
+    #if users1_other_job:  
+      #users1_past_kind_of_job
+  #else:
+    #users1_other_income
+  #else:
+    #users1_other_income
+  #set_progress(14)
+  #if is_married == True:
+    #spouses_employed_two_years
+   # if spouses_employed_two_years:
+      #spouses_current_employed
+      #if spouses_current_employed:
+        #spouses_mo_salary_amount
+      #if spouses_other_job:  
+        #spouses_past_kind_of_job  
+      #if spouses_current_employed == False:
+        #spouses_past_kind_of_job
+    #else: 
+      #users1_other_income  
+    #if spouses_current_employed == False:
+      #spouses_past_kind_of_job
+    #if spouses_current_employed == True:
+      #spouses_mo_salary_amount      
+  #if currently_have_job == True:
+    #users1_mo_salary_amount 
   set_progress(14)
-  if is_married == True:
-    spouses_employed_two_years
-    if spouses_current_employed == False:
-      spouses_past_kind_of_job
-    if spouses_employed_two_years: 
-      spouses_mo_salary_amount
-  if employed_two_years:
-    users1_mo_salary_amount
-  source_of_other_income
+  users1_other_income
+  if users1_other_income == False: 
+    rent_mortgage_amount
   set_progress(35)
   rent_mortgage_amount
   mo_pay_to_debt
   bank_amount
   installment_payments
   is_bankruptcy
+  if is_bankruptcy == True:
+    discharge_date
   set_progress(55)
-  discharge_date
   additional_info
   users1_signature_date
   users1_total_deduct_amount
-  users[0].address.address
   set_progress(80)
-  users[0].phone_number
-  users[0].birthdate
-  spouses.gather()
   creditors.gather()
+  va5655_new_fields_preview_question
   interview_order_va5655_new_fields = True
 ---
 ###################### Main order ######################
@@ -117,7 +159,83 @@ code: |
       },
   )
   va5655_new_fields_download
+
+  # Set defaults for all currency fields.
+  users1_mo_salary_amount = 0  
+  users1_income_tax_deduct_amount = 0
+  users1_retire_deduct_amount = 0      
+  users1_ss_deduct_amount = 0
+  users1_other_deduct_amount = 0
+  users1_net_mo_pay_amount = 0
+  users1_net_mo_income_amount = 0  
+  spouses_total_deduct_amount = 0
+  spouses_income_tax_deduct_amount = 0
+  spouses_retire_deduct_amount = 0
+  spouses_ss_deduct_amount = 0
+  spouses_other_deduct_amount = 0
+  spouses_net_mo_pay_amount = 0
+  spouses_net_mo_income_amount = 0
+  rent_mortgage_amount = 0
+  mo_food_amount = 0
+  mo_utility_amount = 0
+  other_living_amount = 0
+  mo_payments_debt_amount = 0
+  total_mo_expense_amount = 0
+  net_income_less_expense_amount = 0
+  mo_pay_to_debt = 0
+  bank_amount = 0
+  cash_amount = 0
+  car1_resale_amount = 0
+  car2_resale_amount = 0
+  car3_resale_amount = 0
+  trailer_camper_boat_resale_amount = 0
+  bond_amount = 0
+  stocks_amount = 0
+  real_estate_amount = 0
+  otherasset1_amount = 0
+  otherasset2_amount = 0
+  otherasset3_amount = 0
+  total_asset_amount = 0
+  creditor1_orig_debt_amount = 0
+  creditor2_orig_debt_amount = 0
+  creditor3_orig_debt_amount = 0
+  creditor4_orig_debt_amount = 0
+  creditor5_orig_debt_amount = 0
+  creditor6_orig_debt_amount = 0
+  creditor7_orig_debt_amount = 0
+  creditor8_orig_debt_amount = 0
+  total_orig_debt_amount = 0
+  creditor1_unpaid_bal_amount = 0
+  creditor2_unpaid_bal_amount = 0
+  creditor3_unpaid_bal_amount = 0
+  creditor4_unpaid_bal_amount = 0
+  creditor5_unpaid_bal_amount = 0
+  creditor6_unpaid_bal_amount = 0
+  creditor7_unpaid_bal_amount = 0
+  creditor8_unpaid_bal_amount = 0
+  total_unpaid_bal_amount = 0
+  creditor1_mo_due_amount = 0
+  creditor2_mo_due_amount = 0
+  creditor3_mo_due_amount = 0
+  creditor4_mo_due_amount = 0
+  creditor5_mo_due_amount = 0
+  creditor6_mo_due_amount = 0
+  creditor7_mo_due_amount = 0
+  creditor8_mo_due_amount = 0
+  total_mo_due_amount = 0
+  creditor1_past_due_amount = 0
+  creditor2_past_due_amount = 0
+  creditor3_past_due_amount = 0
+  creditor4_past_due_amount = 0
+  creditor5_past_due_amount = 0
+  creditor6_past_due_amount = 0
+  creditor7_past_due_amount = 0
+  creditor8_past_due_amount = 0
+  total_past_due_amount = 0
+  
+
 ---
+# Questions File Begin
 comment: |
   This question is used to introduce your interview. Please customize
 id: VA_Form_5655__Financial_Status_Report
@@ -155,7 +273,7 @@ subquestion: |
 ---
 id: About the Debtor
 question: |
-  About the Debtor
+  More about you
 subquestion: |
   It is assumed that the veteran is responsible for the debt. If this is not the case here, please answer these questions for the person responsible for the debt.
   
@@ -164,6 +282,10 @@ fields:
     maxlength: 11
   - "Are you married?": is_married
     datatype: yesnoradio
+  - "What is your spouse's full name?": spouses[0]
+    show if:
+      variable: is_married
+      is: True
   - "If you have Dependents, what are their ages?": dependents1_age_1
     maxlength: 24
     required: False
@@ -197,7 +319,7 @@ fields:
       variable: currently_have_job
       is: True
   - "When did you start this job?": user1_current_start_date_mmyyyy
-    datatype: date
+    datatype: text
     show if:
       variable: currently_have_job
       is: True
@@ -232,10 +354,10 @@ fields:
     show if:
       variable: currently_have_job
       is: True
-  - "When did this job end? Please use the MM-YYYY format": users1_past_end_date_mmyyyy
+  - "If you are no longer at this job, when did this job end? Please use the MM-YYYY format": users1_past_end_date_mmyyyy
     datatype: text
     #show if: 
-      #variable: currently_have_job
+      #variable: users1_still_at_job
       #is: False
   - "What is this employer's name?": users1_past_employer_name
     maxlength: 16
@@ -245,9 +367,9 @@ fields:
 code: |
   if users1_still_at_job:
     users1_past_end_date_mmyyyy = "Present Time"
-  else:
+  #else:
     # Assume users1_past_end_date_mmyyyy is already captured elsewhere if they're not currently employed there
-    pass
+    #pass
 ---
 id: Spouse s Employment within the last two 2 years
 question: |
@@ -405,7 +527,7 @@ subquestion: |
 fields:
   - "Do you (or your spouse, if applicable) have any other sources of income?": users1_other_income
     datatype: yesnoradio
-  - "What are the sources of the other income? (ex. VA benefits, Social Security, Alimony, etc.)": source_of_other_income
+  - "What are the sources of the other income? (ex. VA benefits, Social Security, Alimony, etc.) Include the sources of your spouse's other income, if applicable.": source_of_other_income
     maxlength: 99
     show if:
       variable: users1_other_income
@@ -433,7 +555,7 @@ id: Your household monthly expenses
 question: |
   Your household monthly expenses
 subquestion: |
-  These questions ask about your monthly expenses. If you are married, this includes your spouses expenses too.
+  These questions ask about your monthly expenses. If you don't have an expense that is asked about, please enter 0 (zero). If you are married, this includes your spouse's expenses too. 
 fields:
   - "What is your monthly rent or mortgage amount?": rent_mortgage_amount
     datatype: currency
@@ -471,7 +593,7 @@ id: Assets
 question: |
   Assets
 subquestion: |
-  These questions are asking about your current assets. If you don't have any money or value in the asset, just type in 0 (zero). If you are married, this includes your spouses assets too.
+  These questions are asking about your current assets. If you don't have any money or value in the asset asked, just enter 0 (zero). If you are married, this includes your spouses assets too.
 fields:
   - "How much in total do you have in all your bank accounts?": bank_amount
     datatype: currency
@@ -623,7 +745,7 @@ question: |
 subquestion: |
   These questions are about any debts you are supposed to pay regular monthly installments on, (such as for a car, television, to banks, credit card companies, or for doctor bills, etc.) If you are married, this includes your spouse's debts too.
 fields:
-  - "Do you have any regular monthly installment payments (such as for a car, television, credit card, or for a doctor's bill)?": installment_payments
+  - "Do you have any regular monthly payments (such as for a car, credit card, or medical bill)?": installment_payments
     datatype: yesnoradio
   - "What is the creditor's name on your first debt (who do you pay each month)?": creditor1_name
     maxlength: 99
@@ -1019,7 +1141,7 @@ question: |
 subquestion: |
   This question is only asking if you have filed and gone through the entire bankruptcy process, and a bankruptcy judge has approved it.
 fields:
-  - "Have you filed for bankruptcy now or in the past?": is_bankruptcy
+  - "Have you ever filed for bankruptcy?": is_bankruptcy
     datatype: yesnoradio
 ---
 id: Your bankruptcy
@@ -1056,53 +1178,58 @@ fields:
     show if: 
       variable: is_married
       is: True
----
-id: Totals
-question: |
-  Totals
-fields:
-  - "Users1 total deduct amount - FIGURE": users1_total_deduct_amount
-    datatype: currency
-    min: 0
-  - "Spouses total deduct amount - FIGURE": spouses_total_deduct_amount
-    datatype: currency
-    min: 0
-  - "Users1 net mo pay amount - FIGURE": users1_net_mo_pay_amount
-    datatype: currency
-    min: 0
-  - "Spouses net mo pay amount - FIGURE": spouses_net_mo_pay_amount
-    datatype: currency
-    min: 0
-  - "Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount": mo_payments_debt_amount
-    datatype: currency
-    min: 0
-  - "Total mo expense amount - FIGURE": total_mo_expense_amount
-    datatype: currency
-    min: 0
-  - "Users1 net mo income amount - FIGURE": users1_net_mo_income_amount
-    datatype: currency
-    min: 0
-  - "Spouses net mo income amount - FIGURE": spouses_net_mo_income_amount
-    datatype: currency
-    min: 0
-  - "Net income less expense amount - FIGURE": net_income_less_expense_amount
-    datatype: currency
-    min: 0
-  - "Total asset amount - FIGURE": total_asset_amount
-    datatype: currency
-    min: 0
-  - "Total orig debt amount - FIGURE": total_orig_debt_amount
-    datatype: currency
-    min: 0
-  - "Total unpaid bal amount - FIGURE": total_unpaid_bal_amount
-    datatype: currency
-    min: 0
-  - "Total past due amount - FIGURE": total_past_due_amount
-    datatype: currency
-    min: 0
-  - "Total mo due amount - FIGURE": total_mo_due_amount
-    datatype: currency
-    min: 0
+#---
+#Questions File End
+
+#Calculations File Begin
+#id: Totals
+#question: |
+  #Totals
+#fields:
+  #- "Users1 total deduct amount - FIGURE": users1_total_deduct_amount
+    #datatype: currency
+    #min: 0
+  #- "Spouses total deduct amount - FIGURE": spouses_total_deduct_amount
+   # datatype: currency
+   # min: 0
+  #- "Users1 net mo pay amount - FIGURE": users1_net_mo_pay_amount
+   # datatype: currency
+    #min: 0
+  #- "Spouses net mo pay amount - FIGURE": spouses_net_mo_pay_amount
+   # datatype: currency
+   # min: 0
+  #- "Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount": mo_payments_debt_amount
+   # datatype: currency
+   # min: 0
+  #- "Total mo expense amount - FIGURE": total_mo_expense_amount
+   # datatype: currency
+   # min: 0
+ # - "Users1 net mo income amount - FIGURE": users1_net_mo_income_amount
+   # datatype: currency
+   # min: 0
+ # - "Spouses net mo income amount - FIGURE": spouses_net_mo_income_amount
+   # datatype: currency
+   # min: 0
+ # - "Net income less expense amount - FIGURE": net_income_less_expense_amount
+   # datatype: currency
+   # min: 0
+ # - "Total asset amount - FIGURE": total_asset_amount
+   # datatype: currency
+   # min: 0
+ # - "Total orig debt amount - FIGURE": total_orig_debt_amount
+   # datatype: currency
+   # min: 0
+ # - "Total unpaid bal amount - FIGURE": total_unpaid_bal_amount
+   # datatype: currency
+   # min: 0
+ # - "Total past due amount - FIGURE": total_past_due_amount
+   # datatype: currency
+   # min: 0
+ # - "Total mo due amount - FIGURE": total_mo_due_amount
+   # datatype: currency
+   # min: 0
+
+#Calculations File End
 ---
 id: preview va5655_new_fields
 question: |
@@ -1121,7 +1248,7 @@ subquestion: |
 continue button field: va5655_new_fields_preview_question    
 ---
 code: |
-  signature_fields = ['users[0].signature', 'spouses[0].signature']
+  signature_fields = ['users1[0].signature', 'spouses[0].signature']
 ---
 id: va5655 new fields review screen
 event: review_va5655_new_fields
@@ -1865,7 +1992,7 @@ progress: 100
 # ALDocument objects specify the metadata for each template
 objects:
   - va5655_new_fields_Post_interview_instructions: ALDocument.using(title="Instructions", filename="va5655_new_fields_next_steps.docx", enabled=True, has_addendum=False)
-  - va5655_new_fields_attachment: ALDocument.using(title="VA Form 5655 - Financial Status Report", filename="va5655_new_fields", enabled=True, has_addendum=True, default_overflow_message=AL_DEFAULT_OVERFLOW_MESSAGE)
+  - va5655_new_fields_attachment: ALDocument.using(title="VA Form 5655 - Financial Status Report", filename="VA5655_new_fields", enabled=True, has_addendum=True, default_overflow_message=AL_DEFAULT_OVERFLOW_MESSAGE)
 ---
 # Bundles group the ALDocuments into separate downloads, such as for court and for the user
 objects:
@@ -1885,10 +2012,10 @@ attachment:
 ---
 attachment:
   name: va5655 new fields
-  filename: va5655_new_fields
+  filename: VA5655_new_fields
   variable name: va5655_new_fields_attachment[i]
   skip undefined: True
-  pdf template file: va5655_new_fields.pdf
+  pdf template file: VA5655_new_fields.pdf
   fields:
       - "users1_ssn": ${ users1_ssn }
       - "users1_va_file_number": ${ users1_va_file_number }
