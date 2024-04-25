@@ -66,65 +66,64 @@ code: |
   users[0].phone_number
   users[0].birthdate
   users1_ssn
+  set_progress(15)
   users1_va_file_number
   if employed_two_years:
+  # If User has been employed within 2 yrs
     currently_have_job
     if currently_have_job == False:
-      users1_past_kind_of_job
+    # If User isn't currently employed
+      users1_past_kind_of_job 
     else:
+    # If User is currently employed
       users1_mo_salary_amount
-      if users1_other_job:  
+      if users1_other_job:
+      # If the User has an additional job within the past 2 yrs
         users1_past_kind_of_job
-        #users1_other_income
     if is_married:
-        spouses_employed_two_years
+    # If the User is married
+      spouses_employed_two_years
+      if spouses_employed_two_years:
+      # If the Spouse has been employed in past 2 yrs
+        spouses_current_employed
+        if spouses_current_employed == False:
+        # If Spouse is not currently employed
+          spouses_past_kind_of_job
+          #users1_other_income
+        else:
+        # If Spouse is currently employed
+          spouses_mo_salary_amount
+          if spouses_other_job:
+          # If Spouse has an additional job in past 2 yrs
+            spouses_past_kind_of_job
+            #users1_other_income
     else:
-        users1_other_income
+    # If User is not married
+      users1_other_income
   else:
+  # If User has not been employed for 2 yrs and is married
     if is_married == True:
       spouses_employed_two_years
       if spouses_employed_two_years:
+      # If the Spouse has been employed in past 2 yrs
         spouses_current_employed
         if spouses_current_employed == False:
+        # If Spouse is not currently employed
           spouses_past_kind_of_job
+          #users1_other_income
         else:
+        # If Spouse is currently employed
           spouses_mo_salary_amount
-          if spouses_other_job:  
+          if spouses_other_job:
+          # If Spouse has an additional job in past 2 yrs
             spouses_past_kind_of_job
             #users1_other_income
-      else: 
+      else:
+      # If Spouse has not been employed for 2 yrs
         users1_other_income
-    else: 
+    else:
+    # if User has not been employed for 2 yrs and is not married
       users1_other_income 
-    #if currently_have_job == False:
-      #users1_past_kind_of_job
-    #if currently_have_job == True:
-      #users1_mo_salary_amount
-    #if users1_other_job:  
-      #users1_past_kind_of_job
-  #else:
-    #users1_other_income
-  #else:
-    #users1_other_income
-  #set_progress(14)
-  #if is_married == True:
-    #spouses_employed_two_years
-   # if spouses_employed_two_years:
-      #spouses_current_employed
-      #if spouses_current_employed:
-        #spouses_mo_salary_amount
-      #if spouses_other_job:  
-        #spouses_past_kind_of_job  
-      #if spouses_current_employed == False:
-        #spouses_past_kind_of_job
-    #else: 
-      #users1_other_income  
-    #if spouses_current_employed == False:
-      #spouses_past_kind_of_job
-    #if spouses_current_employed == True:
-      #spouses_mo_salary_amount      
-  #if currently_have_job == True:
-    #users1_mo_salary_amount 
   set_progress(14)
   users1_other_income
   if users1_other_income == False: 
@@ -140,10 +139,10 @@ code: |
   set_progress(55)
   additional_info
   users1_signature_date
-  users1_total_deduct_amount
+  if is_married:
+    spouses_signature_date
   set_progress(80)
   creditors.gather()
-  va5655_new_fields_preview_question
   interview_order_va5655_new_fields = True
 ---
 ###################### Main order ######################
@@ -349,7 +348,7 @@ fields:
 id: Your additional employment within the last two years
 question: |
   Your additional employment within the last two (2) years
-if: employed_two_years or users1_other_job
+#if: employed_two_years or users1_other_job
 fields:
   - "What kind of work did you do (or are doing) at this job?": users1_past_kind_of_job
     maxlength: 19
@@ -358,8 +357,11 @@ fields:
   - "Are you still at this job?": users1_still_at_job
     datatype: yesnoradio
     show if:
-      variable: currently_have_job
-      is: True
+      code: |
+        currently_have_job
+      #show if:
+      #variable: currently_have_job
+      #is: True
   - "If you are no longer at this job, when did this job end? Please use the MM-YYYY format": users1_past_end_date_mmyyyy
     datatype: text
     #show if: 
@@ -431,11 +433,16 @@ fields:
     #show if: 
       #variable: is_married
       #is: True
+  - "Is your spouse still at this job?": spouses_still_at_job
+    datatype: yesnoradio
+    show if:
+      code: |
+        spouses_current_employed
   - "When did your spouse end this job?": spouses_past_end_date_mmyyyy
     datatype: date
-    #show if: 
-      #variable: is_married
-      #is: True
+    show if: 
+      variable: spouses_still_at_job
+      is: False
   - "What is this employer's name?": spouses__past_employer_name
     maxlength: 16
     #show if: 
@@ -443,14 +450,6 @@ fields:
       #is: True
   - "What is this employer's address?": spouses_past_employer__address_on_one_line
     maxlength: 99
-    #show if: 
-      #variable: is_married
-      #is: True
-  - "Is your spouse still at this job?": spouses_still_at_job
-    datatype: yesnoradio
-    show if:
-      variable: spouses_current_employed
-      is: True
     #show if: 
       #variable: is_married
       #is: True
@@ -1181,9 +1180,9 @@ fields:
     datatype: date
   - "What date is your spouse going to sign this document?": spouses_signature_date
     datatype: date
-    show if: 
-      variable: is_married
-      is: True
+    #show if: 
+      #variable: is_married
+      #is: True
 #---
 #Questions File End
 
@@ -1998,7 +1997,7 @@ progress: 100
 # ALDocument objects specify the metadata for each template
 objects:
   - va5655_new_fields_Post_interview_instructions: ALDocument.using(title="Instructions", filename="va5655_new_fields_next_steps.docx", enabled=True, has_addendum=False)
-  - va5655_new_fields_attachment: ALDocument.using(title="VA Form 5655 - Financial Status Report", filename="VA5655_new_fields", enabled=True, has_addendum=True, default_overflow_message=AL_DEFAULT_OVERFLOW_MESSAGE)
+  - va5655_new_fields_attachment: ALDocument.using(title="VA Form 5655 - Financial Status Report", filename="va5655_new_fields", enabled=True, has_addendum=True, default_overflow_message=AL_DEFAULT_OVERFLOW_MESSAGE)
 ---
 # Bundles group the ALDocuments into separate downloads, such as for court and for the user
 objects:
@@ -2018,10 +2017,10 @@ attachment:
 ---
 attachment:
   name: va5655 new fields
-  filename: VA5655_new_fields
+  filename: va5655_new_fields
   variable name: va5655_new_fields_attachment[i]
   skip undefined: True
-  pdf template file: VA5655_new_fields.pdf
+  pdf template file: va5655_new_fields.pdf
   fields:
       - "users1_ssn": ${ users1_ssn }
       - "users1_va_file_number": ${ users1_va_file_number }
