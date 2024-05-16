@@ -22,6 +22,7 @@ metadata:
   typical_role: "na"
   al_weaver_version: "1.10.2"
   generated_on: "2024-03-26"
+
 ---
 code: |
   # This controls the default country and list of states in address field questions
@@ -62,7 +63,7 @@ code: |
   user_ask_role = "na"
   users.gather()
   set_parts(subtitle=str(users))
-  users[0].address
+  users[0].address.on_one_line()
   users[0].phone_number
   users[0].birthdate
   users1_ssn
@@ -117,14 +118,13 @@ code: |
           if spouses_other_job:
           # If Spouse has an additional job in past 2 yrs
             spouses_past_kind_of_job
-            #users1_other_income
       else:
       # If Spouse has not been employed for 2 yrs
         users1_other_income
     else:
     # if User has not been employed for 2 yrs and is not married
       users1_other_income 
-  set_progress(14)
+  set_progress(25)
   users1_other_income
   if users1_other_income == False: 
     rent_mortgage_amount
@@ -138,12 +138,79 @@ code: |
     discharge_date
   set_progress(55)
   additional_info
-  users1_signature_date
-  if is_married:
-    spouses_signature_date
+  #signature_date
+  #if is_married:
+    #spouses_signature_date
   set_progress(80)
-  creditors.gather()
+  #creditors.gather()
+  #total_mo_due_amount
+  do_default
   interview_order_va5655_new_fields = True
+---
+code: |
+  users1_mo_salary_amount 
+  users1_income_tax_deduct_amount
+  users1_retire_deduct_amount      
+  users1_ss_deduct_amount
+  users1_other_deduct_amount
+  users1_other_income_amount
+  spouses_mo_salary_amount
+  spouses_income_tax_deduct_amount
+  spouses_retire_deduct_amount
+  spouses_ss_deduct_amount
+  spouses_other_deduct_amount
+  spouses_other_income_amount
+  rent_mortgage_amount
+  mo_food_amount
+  mo_utility_amount
+  other_living_amount
+  mo_pay_to_debt
+  bank_amount
+  cash_amount
+  car1_resale_amount
+  car2_resale_amount
+  car3_resale_amount
+  trailer_camper_boat_resale_amount
+  bond_amount
+  stocks_amount
+  real_estate_amount
+  otherasset1_amount
+  otherasset2_amount
+  otherasset3_amount
+  creditor1_orig_debt_amount
+  creditor2_orig_debt_amount
+  creditor3_orig_debt_amount
+  creditor4_orig_debt_amount
+  creditor5_orig_debt_amount
+  creditor6_orig_debt_amount
+  creditor7_orig_debt_amount
+  creditor8_orig_debt_amount
+  creditor1_unpaid_bal_amount
+  creditor2_unpaid_bal_amount
+  creditor3_unpaid_bal_amount
+  creditor4_unpaid_bal_amount
+  creditor5_unpaid_bal_amount
+  creditor6_unpaid_bal_amount
+  creditor7_unpaid_bal_amount
+  creditor8_unpaid_bal_amount
+  creditor1_mo_due_amount
+  creditor2_mo_due_amount
+  creditor3_mo_due_amount
+  creditor4_mo_due_amount
+  creditor5_mo_due_amount
+  creditor6_mo_due_amount
+  creditor7_mo_due_amount
+  creditor8_mo_due_amount
+  creditor1_past_due_amount
+  creditor2_past_due_amount
+  creditor3_past_due_amount
+  creditor4_past_due_amount
+  creditor5_past_due_amount
+  creditor6_past_due_amount
+  creditor7_past_due_amount
+  creditor8_past_due_amount
+  do_default = True
+  
 ---
 ###################### Main order ######################
 comment: |
@@ -154,7 +221,7 @@ code: |
   al_intro_screen
   va5655_new_fields_intro
   interview_order_va5655_new_fields
-  signature_date
+  #signature_date
   # Store anonymous data for analytics / statistics
   store_variables_snapshot(
       persistent=True,
@@ -163,81 +230,10 @@ code: |
           "reached_interview_end": True,
       },
   )
+  #al_form_requires_digital_signature = False
+  #basic_questions_signature_flow
   va5655_new_fields_download
 
-  # Set defaults for all currency fields.
-  users1_mo_salary_amount = 0  
-  users1_income_tax_deduct_amount = 0
-  users1_retire_deduct_amount = 0      
-  users1_ss_deduct_amount = 0
-  users1_other_deduct_amount = 0
-  users1_net_mo_pay_amount = 0
-  users1_net_mo_income_amount = 0  
-  spouses_total_deduct_amount = 0
-  spouses_income_tax_deduct_amount = 0
-  spouses_retire_deduct_amount = 0
-  spouses_ss_deduct_amount = 0
-  spouses_other_deduct_amount = 0
-  spouses_net_mo_pay_amount = 0
-  spouses_net_mo_income_amount = 0
-  rent_mortgage_amount = 0
-  mo_food_amount = 0
-  mo_utility_amount = 0
-  other_living_amount = 0
-  mo_payments_debt_amount = 0
-  total_mo_expense_amount = 0
-  net_income_less_expense_amount = 0
-  mo_pay_to_debt = 0
-  bank_amount = 0
-  cash_amount = 0
-  car1_resale_amount = 0
-  car2_resale_amount = 0
-  car3_resale_amount = 0
-  trailer_camper_boat_resale_amount = 0
-  bond_amount = 0
-  stocks_amount = 0
-  real_estate_amount = 0
-  otherasset1_amount = 0
-  otherasset2_amount = 0
-  otherasset3_amount = 0
-  total_asset_amount = 0
-  creditor1_orig_debt_amount = 0
-  creditor2_orig_debt_amount = 0
-  creditor3_orig_debt_amount = 0
-  creditor4_orig_debt_amount = 0
-  creditor5_orig_debt_amount = 0
-  creditor6_orig_debt_amount = 0
-  creditor7_orig_debt_amount = 0
-  creditor8_orig_debt_amount = 0
-  total_orig_debt_amount = 0
-  creditor1_unpaid_bal_amount = 0
-  creditor2_unpaid_bal_amount = 0
-  creditor3_unpaid_bal_amount = 0
-  creditor4_unpaid_bal_amount = 0
-  creditor5_unpaid_bal_amount = 0
-  creditor6_unpaid_bal_amount = 0
-  creditor7_unpaid_bal_amount = 0
-  creditor8_unpaid_bal_amount = 0
-  total_unpaid_bal_amount = 0
-  creditor1_mo_due_amount = 0
-  creditor2_mo_due_amount = 0
-  creditor3_mo_due_amount = 0
-  creditor4_mo_due_amount = 0
-  creditor5_mo_due_amount = 0
-  creditor6_mo_due_amount = 0
-  creditor7_mo_due_amount = 0
-  creditor8_mo_due_amount = 0
-  total_mo_due_amount = 0
-  creditor1_past_due_amount = 0
-  creditor2_past_due_amount = 0
-  creditor3_past_due_amount = 0
-  creditor4_past_due_amount = 0
-  creditor5_past_due_amount = 0
-  creditor6_past_due_amount = 0
-  creditor7_past_due_amount = 0
-  creditor8_past_due_amount = 0
-  total_past_due_amount = 0
-  
 
 ---
 # Questions File Begin
@@ -275,6 +271,18 @@ subquestion: |
   
   Most people take about **60 minutes** to finish this interview.
 
+---
+id: your contact information
+question: |
+  What is your phone number?
+subquestion: |
+  Include the best phone number to reach you.
+
+  ${ collapse_template(why_contact_info_needed_template) }
+fields:  
+  - Phone number: users[0].phone_number
+    required: False
+  
 ---
 id: About the Debtor
 question: |
@@ -324,12 +332,12 @@ fields:
       variable: currently_have_job
       is: True
   - "When did you start this job?": user1_current_start_date_mmyyyy
-    datatype: text
+    datatype: date
     show if:
       variable: currently_have_job
       is: True
   - "Who is your employer for this job?": users1_current_employer1_name
-    maxlength: 16
+    maxlength: 99
     show if:
       variable: currently_have_job
       is: True
@@ -352,21 +360,18 @@ question: |
 fields:
   - "What kind of work did you do (or are doing) at this job?": users1_past_kind_of_job
     maxlength: 19
-  - "When did you start this job?": users1_past_start_date_mmyyyy
-    datatype: date
+  - "When did you start this job? Please use MM/YYYY format.": users1_past_start_date_mmyyyy
+    maxlength: 7
   - "Are you still at this job?": users1_still_at_job
     datatype: yesnoradio
     show if:
       code: |
         currently_have_job
-      #show if:
-      #variable: currently_have_job
-      #is: True
-  - "If you are no longer at this job, when did this job end? Please use the MM-YYYY format": users1_past_end_date_mmyyyy
-    datatype: text
-    #show if: 
-      #variable: users1_still_at_job
-      #is: False
+  - "If you are no longer at this job, when did this job end? Please use the MM/YYYY format.": users1_past_end_date_mmyyyy
+    datatype: date
+    show if:
+      variable: users1_still_at_job
+      is: False
   - "What is this employer's name?": users1_past_employer_name
     maxlength: 16
   - "What is this employer's address?": users1_past_employer__address_on_one_line
@@ -375,9 +380,9 @@ fields:
 code: |
   if users1_still_at_job:
     users1_past_end_date_mmyyyy = "Present Time"
-  #else:
+  else:
     # Assume users1_past_end_date_mmyyyy is already captured elsewhere if they're not currently employed there
-    #pass
+    pass
 ---
 id: Spouse s Employment within the last two 2 years
 question: |
@@ -397,7 +402,7 @@ fields:
     show if:
       variable: spouses_current_employed
       is: True
-  - "When did your spouse start this job?": spouses__current_start_date_mmyyyy
+  - "When did your spouse start this job? Please use MM/YYYY format.": spouses__current_start_date_mmyyyy
     datatype: date
     show if:
       variable: spouses_current_employed
@@ -424,15 +429,9 @@ question: |
   Spouse's other employment within the last two (2) years.
 fields:
   - "What kind of work did your spouse do (or is doing) at this job?": spouses_past_kind_of_job
-    maxlength: 19
-    #show if: 
-      #variable: is_married
-      #is: True
-  - "When did your spouse start this job?": spouses__past_start_date_mmyyyy
-    datatype: date
-    #show if: 
-      #variable: is_married
-      #is: True
+    maxlength: 99
+  - "When did your spouse start this job? Please use MM/YYYY format.": spouses__past_start_date_mmyyyy
+    maxlength: 7
   - "Is your spouse still at this job?": spouses_still_at_job
     datatype: yesnoradio
     show if:
@@ -445,18 +444,13 @@ fields:
       is: False
   - "What is this employer's name?": spouses__past_employer_name
     maxlength: 16
-    #show if: 
-      #variable: is_married
-      #is: True
   - "What is this employer's address?": spouses_past_employer__address_on_one_line
     maxlength: 99
-    #show if: 
-      #variable: is_married
-      #is: True
+
 ---
 code: |
   if spouses_still_at_job:
-    spouses_past_end_date_mmyyyy = "Present Time"
+    spouses_past_end_date_mmyyyy == "Present Time"
   else:
     # Assume users1_past_end_date_mmyyyy is already captured elsewhere if they're not currently employed there
     pass
@@ -469,7 +463,7 @@ subquestion: |
   
   If you collect VA benefits, Social Security, or other means of income outside of employment, we'll ask about that later.
 fields:
-  - "What is your gross monthly salary amount?": users1_mo_salary_amount
+  - "What is your *current* gross monthly salary from the job you just described?": users1_mo_salary_amount
     datatype: currency
     min: 0
   - "How much is taken out of your monthly salary for taxes? This includes federal, state, and local taxes.": users1_income_tax_deduct_amount
@@ -482,7 +476,7 @@ fields:
     datatype: currency
     min: 0
   - "Do you have any other deductions being taken out of your monthly salary?": users1_more_deductions
-    datatype: yesnoradio
+    datatype: yesnoradio      
   - "What other deductions do your and/or your spouse have taken out of your monthly salary?": other_deduction_type
     maxlength: 99
     show if:
@@ -494,7 +488,9 @@ fields:
     show if:
       variable: users1_more_deductions
       is: True
- 
+  #- "Have you been employed in another job within the last two years?": users1_other_job
+    #datatype: yesnoradio
+    
 ---
 id: Your Spouses Income and Payroll Deductions
 question: |
@@ -502,7 +498,7 @@ question: |
 subquestion: |
   These questions focus on your spouse's monthly income and payroll deductions from employment only. If they collect VA benefits, Social Security, or income from other sources, we'll ask about that later.
 fields:
-  - "What is your spouse's gross monthly salary amount?": spouses_mo_salary_amount
+  - "What is your spouse's *current* gross monthly salary from the job you just described?": spouses_mo_salary_amount
     datatype: currency
     min: 0
   - "How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.": spouses_income_tax_deduct_amount
@@ -516,13 +512,18 @@ fields:
     min: 0
   - "Does your spouse have any other deductions coming out of their monthly salary?": spouses_more_deductions
     datatype: yesnoradio
+  - "What other deductions does your spouse have taken out of their monthly salary? Leave your type(s) of other deduction(s) if you entered any.": other_deduction_type
+    maxlength: 99
+    show if:
+      variable: spouses_more_deductions
+      is: True
   - "How much is taken out of your spouse's monthly salary for their other deductions?": spouses_other_deduct_amount
     datatype: currency
     min: 0
     show if: 
       variable: spouses_more_deductions
       is: True
- 
+    
 ---
 id: Other sources of income
 question: |
@@ -751,7 +752,7 @@ subquestion: |
   These questions are about any debts you are supposed to pay regular monthly installments on, (such as for a car, television, to banks, credit card companies, or for doctor bills, etc.) If you are married, this includes your spouse's debts too.
 fields:
   - "Do you have any regular monthly payments (such as for a car, credit card, or medical bill)?": installment_payments
-    datatype: yesnoradio
+    datatype: yesnoradio    
   - "What is the creditor's name on your first debt (who do you pay each month)?": creditor1_name
     maxlength: 99
     show if:
@@ -761,7 +762,7 @@ fields:
     maxlength: 99
     show if:
       variable: installment_payments
-      is: True
+      is: True 
   - "When did you start this debt?": creditor1_date
     datatype: date
     show if:
@@ -1176,65 +1177,10 @@ id: Signature dates
 question: |
   Signature dates
 fields:
-  - "What date are you going to sign this document?": users1_signature_date
+  - "What date are you going to sign this document?": signature_date
     datatype: date
   - "What date is your spouse going to sign this document?": spouses_signature_date
     datatype: date
-    #show if: 
-      #variable: is_married
-      #is: True
-#---
-#Questions File End
-
-#Calculations File Begin
-#id: Totals
-#question: |
-  #Totals
-#fields:
-  #- "Users1 total deduct amount - FIGURE": users1_total_deduct_amount
-    #datatype: currency
-    #min: 0
-  #- "Spouses total deduct amount - FIGURE": spouses_total_deduct_amount
-   # datatype: currency
-   # min: 0
-  #- "Users1 net mo pay amount - FIGURE": users1_net_mo_pay_amount
-   # datatype: currency
-    #min: 0
-  #- "Spouses net mo pay amount - FIGURE": spouses_net_mo_pay_amount
-   # datatype: currency
-   # min: 0
-  #- "Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount": mo_payments_debt_amount
-   # datatype: currency
-   # min: 0
-  #- "Total mo expense amount - FIGURE": total_mo_expense_amount
-   # datatype: currency
-   # min: 0
- # - "Users1 net mo income amount - FIGURE": users1_net_mo_income_amount
-   # datatype: currency
-   # min: 0
- # - "Spouses net mo income amount - FIGURE": spouses_net_mo_income_amount
-   # datatype: currency
-   # min: 0
- # - "Net income less expense amount - FIGURE": net_income_less_expense_amount
-   # datatype: currency
-   # min: 0
- # - "Total asset amount - FIGURE": total_asset_amount
-   # datatype: currency
-   # min: 0
- # - "Total orig debt amount - FIGURE": total_orig_debt_amount
-   # datatype: currency
-   # min: 0
- # - "Total unpaid bal amount - FIGURE": total_unpaid_bal_amount
-   # datatype: currency
-   # min: 0
- # - "Total past due amount - FIGURE": total_past_due_amount
-   # datatype: currency
-   # min: 0
- # - "Total mo due amount - FIGURE": total_mo_due_amount
-   # datatype: currency
-   # min: 0
-
-#Calculations File End
 ---
 id: preview va5655_new_fields
 question: |
@@ -1253,7 +1199,11 @@ subquestion: |
 continue button field: va5655_new_fields_preview_question    
 ---
 code: |
-  signature_fields = ['users1[0].signature', 'spouses[0].signature']
+  if is_married:
+    signature_fields = ['users[0].signature', 'spouses[0].signature']
+  else:
+    signature_fields = ['users[0].signature']
+
 ---
 id: va5655 new fields review screen
 event: review_va5655_new_fields
@@ -1423,21 +1373,21 @@ review:
       **How much is taken out of your spouse's monthly salary for their other deductions?**:
       ${ currency(spouses_other_deduct_amount) }
   - Edit: users1_total_deduct_amount
-    button: |
-      **Users1 total deduct amount - FIGURE**:
-      ${ currency(users1_total_deduct_amount) }
+    #button: |
+      #**Users1 total deduct amount - FIGURE**:
+      #${ currency(users1_total_deduct_amount) }
   - Edit: spouses_total_deduct_amount
-    button: |
-      **Spouses total deduct amount - FIGURE**:
-      ${ currency(spouses_total_deduct_amount) }
+    #button: |
+      #**Spouses total deduct amount - FIGURE**:
+      #${ currency(spouses_total_deduct_amount) }
   - Edit: users1_net_mo_pay_amount
-    button: |
-      **Users1 net mo pay amount - FIGURE**:
-      ${ currency(users1_net_mo_pay_amount) }
+    #button: |
+      #**Users1 net mo pay amount - FIGURE**:
+      #${ currency(users1_net_mo_pay_amount) }
   - Edit: spouses_net_mo_pay_amount
-    button: |
-      **Spouses net mo pay amount - FIGURE**:
-      ${ currency(spouses_net_mo_pay_amount) }
+    #button: |
+      #**Spouses net mo pay amount - FIGURE**:
+      #${ currency(spouses_net_mo_pay_amount) }
   - Edit: other_living
     button: |
       **What are your other household living expenses?**:
@@ -1463,21 +1413,21 @@ review:
       **Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount**:
       ${ currency(mo_payments_debt_amount) }
   - Edit: total_mo_expense_amount
-    button: |
-      **Total mo expense amount - FIGURE**:
-      ${ currency(total_mo_expense_amount) }
+    #button: |
+      #**Total mo expense amount - FIGURE**:
+      #${ currency(total_mo_expense_amount) }
   - Edit: users1_net_mo_income_amount
-    button: |
-      **Users1 net mo income amount - FIGURE**:
-      ${ currency(users1_net_mo_income_amount) }
+    #button: |
+      #**Users1 net mo income amount - FIGURE**:
+      #${ currency(users1_net_mo_income_amount) }
   - Edit: spouses_net_mo_income_amount
-    button: |
-      **Spouses net mo income amount - FIGURE**:
-      ${ currency(spouses_net_mo_income_amount) }
+    #button: |
+      #**Spouses net mo income amount - FIGURE**:
+      #${ currency(spouses_net_mo_income_amount) }
   - Edit: net_income_less_expense_amount
-    button: |
-      **Net income less expense amount - FIGURE**:
-      ${ currency(net_income_less_expense_amount) }
+    #button: |
+      #**Net income less expense amount - FIGURE**:
+      #${ currency(net_income_less_expense_amount) }
   - Edit: mo_pay_to_debt
     button: |
       **How much can you pay monthly towards your VA debt? (this can be $0.00)**:
@@ -1567,9 +1517,9 @@ review:
       **What is the total resale value of your boats, trailers, and campers combined?**:
       ${ currency(trailer_camper_boat_resale_amount) }
   - Edit: total_asset_amount
-    button: |
-      **Total asset amount - FIGURE**:
-      ${ currency(total_asset_amount) }
+    #button: |
+      #**Total asset amount - FIGURE**:
+      #${ currency(total_asset_amount) }
   - Edit: creditor1_date
     button: |
       **When did you start this first debt?**:
@@ -1802,21 +1752,21 @@ review:
       **What was the purpose of this 8th debt?**:
       ${ creditor8_purpose }
   - Edit: total_orig_debt_amount
-    button: |
-      **Total orig debt amount - FIGURE**:
-      ${ currency(total_orig_debt_amount) }
+    #button: |
+      #**Total orig debt amount - FIGURE**:
+      #${ currency(total_orig_debt_amount) }
   - Edit: total_unpaid_bal_amount
-    button: |
-      **Total unpaid bal amount - FIGURE**:
-      ${ currency(total_unpaid_bal_amount) }
+    #button: |
+      #**Total unpaid bal amount - FIGURE**:
+      #${ currency(total_unpaid_bal_amount) }
   - Edit: total_past_due_amount
-    button: |
-      **Total past due amount - FIGURE**:
-      ${ currency(total_past_due_amount) }
+    #button: |
+      #**Total past due amount - FIGURE**:
+      #${ currency(total_past_due_amount) }
   - Edit: total_mo_due_amount
-    button: |
-      **Total mo due amount - FIGURE**:
-      ${ currency(total_mo_due_amount) }
+    #button: |
+      #**Total mo due amount - FIGURE**:
+      #${ currency(total_mo_due_amount) }
   - Edit: is_bankruptcy
     button: |
       **Have you filed for bankruptcy now or in the past?**:
@@ -1837,10 +1787,10 @@ review:
     button: |
       **Additional info**:
       > ${ single_paragraph(additional_info) }
-  - Edit: users1_signature_date
+  - Edit: signature_date
     button: |
       **What date are you going to sign this document?**:
-      ${ users1_signature_date }
+      ${ signature_date }
   - Edit: spouses_signature_date
     button: |
       **What date is your spouse going to sign this document?**:
@@ -2014,6 +1964,212 @@ attachment:
   variable name: va5655_new_fields_Post_interview_instructions[i]
   skip undefined: True
   tagged pdf: True
+#---
+# main order
+#mandatory: True
+#code: |
+  #do_chair
+  #download_screen
+#---
+# interview order
+#code: |
+  #foobar_page
+  #do_defaults
+  #do_chair = True
+#---
+#code: |
+  #bar
+  #frog
+  #jumbo
+  #do_defaults = "w/e"
+#---
+#code: |
+  #frog = 0
+---
+#DEFAULT CODES BEGIN
+code: |
+  users1_mo_salary_amount = 0
+---
+code: |
+  users1_income_tax_deduct_amount = 0
+---
+code: |
+  users1_retire_deduct_amount = 0
+---
+code: |
+  users1_ss_deduct_amount = 0
+---
+code: |
+  users1_other_deduct_amount = 0
+---
+code: |
+  users1_other_income_amount = 0
+---
+code: |
+  spouses_mo_salary_amount = 0
+---
+code: |
+  spouses_income_tax_deduct_amount = 0
+---
+code: |
+  spouses_other_income_amount = 0
+---
+code: |
+  spouses_retire_deduct_amount = 0
+---
+code: |
+  spouses_ss_deduct_amount = 0
+---
+code: |
+  spouses_other_deduct_amount = 0
+---
+code: |
+  rent_mortgage_amount = 0
+---
+code: |
+  mo_food_amount = 0
+---
+code: |
+  mo_utility_amount = 0
+---
+code: |
+  other_living_amount = 0
+---
+code: |  
+  mo_pay_to_debt = 0
+---
+code: |
+  bank_amount = 0
+---
+code: |
+  cash_amount = 0
+---
+code: |
+  car1_resale_amount = 0
+---
+code: |
+  car2_resale_amount = 0
+---
+code: |  
+  car3_resale_amount = 0
+---
+code: |  
+  trailer_camper_boat_resale_amount = 0
+---
+code: |  
+  bond_amount = 0
+---
+code: |  
+  stocks_amount = 0
+---
+code: |  
+  real_estate_amount = 0
+---
+code: |  
+  otherasset1_amount = 0
+---
+code: |  
+  otherasset2_amount = 0
+---
+code: |  
+  otherasset3_amount = 0
+---
+code: |  
+  creditor1_orig_debt_amount = 0
+---
+code: |  
+  creditor2_orig_debt_amount = 0
+---
+code: |
+  creditor3_orig_debt_amount = 0
+---
+code: |
+  creditor4_orig_debt_amount = 0
+---
+code: |
+  creditor5_orig_debt_amount = 0
+---
+code: |
+  creditor6_orig_debt_amount = 0
+---
+code: |  
+  creditor7_orig_debt_amount = 0
+---
+code: |  
+  creditor8_orig_debt_amount = 0
+---
+code: |  
+  creditor1_unpaid_bal_amount = 0
+---
+code: |  
+  creditor2_unpaid_bal_amount = 0
+---
+code: |  
+  creditor3_unpaid_bal_amount = 0
+---
+code: | 
+  creditor4_unpaid_bal_amount = 0
+---
+code: |
+  creditor5_unpaid_bal_amount = 0
+---
+code: |
+  creditor6_unpaid_bal_amount = 0
+---
+code: |
+  creditor7_unpaid_bal_amount = 0
+---
+code: |
+  creditor8_unpaid_bal_amount = 0
+---
+code: |
+  creditor1_mo_due_amount = 0
+---
+code: |
+  creditor2_mo_due_amount = 0
+---
+code: |
+  creditor3_mo_due_amount = 0
+---
+code: |
+  creditor4_mo_due_amount = 0
+---
+code: |
+  creditor5_mo_due_amount = 0
+---
+code: |
+  creditor6_mo_due_amount = 0
+---
+code: |
+  creditor7_mo_due_amount = 0
+---
+code: |
+  creditor8_mo_due_amount = 0
+---
+code: |
+  creditor1_past_due_amount = 0
+---
+code: |
+  creditor2_past_due_amount = 0
+---
+code: |
+  creditor3_past_due_amount = 0
+---
+code: |
+  creditor4_past_due_amount = 0
+---
+code: |
+  creditor5_past_due_amount = 0
+---
+code: |
+  creditor6_past_due_amount = 0
+---
+code: |
+  creditor7_past_due_amount = 0
+---
+code: |
+  creditor8_past_due_amount = 0   
+
 ---
 attachment:
   name: va5655 new fields
@@ -2023,7 +2179,9 @@ attachment:
   pdf template file: va5655_new_fields.pdf
   fields:
       - "users1_ssn": ${ users1_ssn }
+      #- "users1_ssn": ${ 2 + foo }
       - "users1_va_file_number": ${ users1_va_file_number }
+      #- "users1_va_file_number": ${ sum([1, bar]) }
       - "users1_reason_filing": ${ users1_reason_filing }
       - "users1_name_full": ${ users[0] }
       - "users1_address_on_one_line": ${ users[0].address.on_one_line() }
@@ -2034,21 +2192,21 @@ attachment:
       - "spouses_name_full": ${ spouses[0] }
       - "dependents1_age_1": ${ dependents1_age_1 }
       - "users1_current_kind_of_job__1": ${ users1_current_kind_of_job }
-      - "user1_current_start_date_mmyyyy__1": ${ user1_current_start_date_mmyyyy.format() }
+      - "user1_current_start_date_mmyyyy__1": ${ user1_current_start_date_mmyyyy.format('MM/dd/yyyy') }
       - "users1_current_employer1_name__1": ${ users1_current_employer1_name }
       - "users1_current_employer__address_on_one_line__1": ${ users1_current_employer__address_on_one_line }
       - "users1_past_kind_of_job__1": ${ users1_past_kind_of_job }
-      - "users1_past_start_date_mmyyyy__1": ${ users1_past_start_date_mmyyyy.format() }
-      - "users1_past_end_date_mmyyyy__1": ${ users1_past_end_date_mmyyyy.format() }
+      - "users1_past_start_date_mmyyyy__1": ${ users1_past_start_date_mmyyyy.format('MM/yyyy') }
+      - "users1_past_end_date_mmyyyy__1": ${ users1_past_end_date_mmyyyy.format('MM/yyyy') }
       - "users1_past_employer_name__1": ${ users1_past_employer_name }
       - "users1_past_employer__address_on_one_line__1": ${ users1_past_employer__address_on_one_line }
       - "spouses_current_kind_of_job__1": ${ spouses_current_kind_of_job }
-      - "spouses__current_start_date_mmyyyy__1": ${ spouses__current_start_date_mmyyyy.format() }
+      - "spouses__current_start_date_mmyyyy__1": ${ spouses__current_start_date_mmyyyy.format('MM/dd/yyyy') }
       - "spouses_current_employer1_name__1": ${ spouses_current_employer1_name }
       - "spouses__current_employer__address_on_one_line__1": ${ spouses__current_employer__address_on_one_line }
       - "spouses_past_kind_of_job__1": ${ spouses_past_kind_of_job }
-      - "spouses__past_start_date_mmyyyy__1": ${ spouses__past_start_date_mmyyyy.format() }
-      - "spouses_past_end_date_mmyyyy__1": ${ spouses_past_end_date_mmyyyy.format() }
+      - "spouses__past_start_date_mmyyyy__1": ${ spouses__past_start_date_mmyyyy.format('MM/yyyy') }
+      - "spouses_past_end_date_mmyyyy__1": ${ spouses_past_end_date_mmyyyy.format('MM/yyyy') }
       - "spouses__past_employer_name__1": ${ spouses__past_employer_name }
       - "spouses_past_employer__address_on_one_line__1": ${ spouses_past_employer__address_on_one_line }
       - "spouses_mo_salary_amount": ${ currency(spouses_mo_salary_amount) }
@@ -2065,20 +2223,20 @@ attachment:
       - "other_deduction_type": ${ other_deduction_type }
       - "users1_other_deduct_amount": ${ currency(users1_other_deduct_amount) }
       - "spouses_other_deduct_amount": ${ currency(spouses_other_deduct_amount) }
-      - "users1_total_deduct_amount": ${ currency(users1_total_deduct_amount) }
-      - "spouses_total_deduct_amount": ${ currency(spouses_total_deduct_amount) }
-      - "users1_net_mo_pay_amount": ${ currency(users1_net_mo_pay_amount) }
-      - "spouses_net_mo_pay_amount": ${ currency(spouses_net_mo_pay_amount) }
+      - "users1_total_deduct_amount": ${ currency(users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount) }
+      - "spouses_total_deduct_amount": ${ currency(spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount) }
+      - "users1_net_mo_pay_amount": ${ currency(users1_mo_salary_amount - (users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount)) }
+      - "spouses_net_mo_pay_amount": ${ currency(spouses_mo_salary_amount - (spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount)) }
       - "other_living": ${ va5655_new_fields_attachment.safe_value("other_living") }
       - "other_living_amount": ${ currency(other_living_amount) }
       - "source_of_other_income": ${ source_of_other_income }
       - "users1_other_income_amount": ${ currency(users1_other_income_amount) }
       - "spouses_other_income_amount": ${ currency(spouses_other_income_amount) }
-      - "mo_payments_debt_amount": ${ currency(mo_payments_debt_amount) }
-      - "total_mo_expense_amount": ${ currency(total_mo_expense_amount) }
-      - "users1_net_mo_income_amount": ${ currency(users1_net_mo_income_amount) }
-      - "spouses_net_mo_income_amount": ${ currency(spouses_net_mo_income_amount) }
-      - "net_income_less_expense_amount": ${ currency(net_income_less_expense_amount) }
+      - "mo_payments_debt_amount": ${ currency(creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount) }
+      - "total_mo_expense_amount": ${ currency(rent_mortgage_amount + mo_food_amount + mo_utility_amount + other_living_amount + creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount) }
+      - "users1_net_mo_income_amount": ${ currency(users1_mo_salary_amount - (users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount) + users1_other_income_amount) }
+      - "spouses_net_mo_income_amount": ${ currency(spouses_mo_salary_amount - (spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount) + spouses_other_income_amount) }
+      - "net_income_less_expense_amount": ${ currency(users1_mo_salary_amount - (users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount) + users1_other_income_amount + spouses_mo_salary_amount - (spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount) + spouses_other_income_amount - (rent_mortgage_amount + mo_food_amount + mo_utility_amount + other_living_amount + creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount)) }
       - "mo_pay_to_debt": ${ currency(mo_pay_to_debt) }
       - "bank_amount": ${ currency(bank_amount) }
       - "bond_amount": ${ currency(bond_amount) }
@@ -2089,39 +2247,39 @@ attachment:
       - "car1_year": ${ car1_year }
       - "car1_model": ${ car1_model }
       - "car1_resale_amount": ${ currency(car1_resale_amount) }
-      - "otherasset1_amount": ${ currency(otherasset1_amount) }
+      - "otherasset1": ${ otherasset1 }
       - "otherasset1_amount": ${ currency(otherasset1_amount) }
       - "car2_make": ${ car2_make }
       - "car2_year": ${ car2_year }
       - "car2_model": ${ car2_model }
       - "car2_resale_amount": ${ currency(car2_resale_amount) }
-      - "otherasset2_amount": ${ currency(otherasset2_amount) }
+      - "otherasset2": ${ otherasset2 }
       - "otherasset2_amount": ${ currency(otherasset2_amount) }
       - "car3_make": ${ car3_make }
       - "car3_year": ${ car3_year }
       - "car3_model": ${ car3_model }
       - "car3_resale_amount": ${ currency(car3_resale_amount) }
-      - "otherasset3_amount": ${ currency(otherasset3_amount) }
+      - "otherasset3": ${ otherasset3 }
       - "otherasset3_amount": ${ currency(otherasset3_amount) }
       - "trailer_camper_boat_resale_amount": ${ currency(trailer_camper_boat_resale_amount) }
-      - "total_asset_amount": ${ currency(total_asset_amount) }
-      - "creditor1_date": ${ creditor1_date.format() }
+      - "total_asset_amount": ${ currency(bank_amount + cash_amount + car1_resale_amount + car2_resale_amount + car3_resale_amount + trailer_camper_boat_resale_amount + bond_amount + stocks_amount + real_estate_amount + otherasset1_amount + otherasset2_amount + otherasset3_amount) }
+      - "creditor1_date": ${ creditor1_date.format('MM/dd/yyyy') }
       - "creditor1_orig_debt_amount": ${ currency(creditor1_orig_debt_amount) }
       - "creditor1_unpaid_bal_amount": ${ currency(creditor1_unpaid_bal_amount) }
       - "creditor1_past_due_amount": ${ currency(creditor1_past_due_amount) }
       - "creditor1_mo_due_amount": ${ currency(creditor1_mo_due_amount) }
       - "creditor1__address_on_one_line": ${ creditor1__address_on_one_line }
-      - "creditor1_name": ${ creditors[0] }
+      - "creditor1_name": ${ creditor1_name }
       - "creditor1_purpose": ${ creditor1_purpose }
-      - "creditor2_date": ${ creditor2_date.format() }
+      - "creditor2_date": ${ creditor2_date.format('MM/dd/yyyy') }
       - "creditor2__address_on_one_line": ${ creditor2__address_on_one_line }
-      - "creditor2_name": ${ creditors[1] }
+      - "creditor2_name": ${ creditor2_name }
       - "creditor2_orig_debt_amount": ${ currency(creditor2_orig_debt_amount) }
       - "creditor2_unpaid_bal_amount": ${ currency(creditor2_unpaid_bal_amount) }
       - "creditor2_past_due_amount": ${ currency(creditor2_past_due_amount) }
       - "creditor2_mo_due_amount": ${ currency(creditor2_mo_due_amount) }
       - "creditor2_purpose": ${ creditor2_purpose }
-      - "creditor3_date": ${ creditor3_date.format() }
+      - "creditor3_date": ${ creditor3_date.format('MM/dd/yyyy') }
       - "creditor3__address_on_one_line": ${ creditor3__address_on_one_line }
       - "creditor3_name": ${ creditors[2] }
       - "creditor3_orig_debt_amount": ${ currency(creditor3_orig_debt_amount) }
@@ -2129,7 +2287,7 @@ attachment:
       - "creditor3_past_due_amount": ${ currency(creditor3_past_due_amount) }
       - "creditor3_mo_due_amount": ${ currency(creditor3_mo_due_amount) }
       - "creditor3_purpose": ${ creditor3_purpose }
-      - "creditor4_date": ${ creditor4_date.format() }
+      - "creditor4_date": ${ creditor4_date.format('MM/dd/yyyy') }
       - "creditor4__address_on_one_line": ${ creditor4__address_on_one_line }
       - "creditor4_name": ${ creditors[3] }
       - "creditor4_orig_debt_amount": ${ currency(creditor4_orig_debt_amount) }
@@ -2137,7 +2295,7 @@ attachment:
       - "creditor4_past_due_amount": ${ currency(creditor4_past_due_amount) }
       - "creditor4_mo_due_amount": ${ currency(creditor4_mo_due_amount) }
       - "creditor4_purpose": ${ creditor4_purpose }
-      - "creditor5_date": ${ creditor5_date.format() }
+      - "creditor5_date": ${ creditor5_date.format('MM/dd/yyyy') }
       - "creditor5_orig_debt_amount": ${ currency(creditor5_orig_debt_amount) }
       - "creditor5_unpaid_bal_amount": ${ currency(creditor5_unpaid_bal_amount) }
       - "creditor5_mo_due_amount": ${ currency(creditor5_mo_due_amount) }
@@ -2145,7 +2303,7 @@ attachment:
       - "creditor5__address_on_one_line": ${ creditor5__address_on_one_line }
       - "creditor5_name": ${ creditors[4] }
       - "creditor5_purpose": ${ creditor5_purpose }
-      - "creditor6_date": ${ creditor6_date.format() }
+      - "creditor6_date": ${ creditor6_date.format('MM/dd/yyyy') }
       - "creditor6__address_on_one_line": ${ creditor6__address_on_one_line }
       - "creditor6_name": ${ creditors[5] }
       - "creditor6_past_due_amount": ${ currency(creditor6_past_due_amount) }
@@ -2153,7 +2311,7 @@ attachment:
       - "creditor6_unpaid_bal_amount": ${ currency(creditor6_unpaid_bal_amount) }
       - "creditor6_mo_due_amount": ${ currency(creditor6_mo_due_amount) }
       - "creditor6_purpose": ${ creditor6_purpose }
-      - "creditor7_date": ${ creditor7_date.format() }
+      - "creditor7_date": ${ creditor7_date.format('MM/dd/yyyy') }
       - "creditor7_orig_debt_amount": ${ currency(creditor7_orig_debt_amount) }
       - "creditor7_unpaid_bal_amount": ${ currency(creditor7_unpaid_bal_amount) }
       - "creditor7_past_due_amount": ${ currency(creditor7_past_due_amount) }
@@ -2161,7 +2319,7 @@ attachment:
       - "creditor7_name": ${ creditors[6] }
       - "creditor7_mo_due_amount": ${ currency(creditor7_mo_due_amount) }
       - "creditor7_purpose": ${ creditor7_purpose }
-      - "creditor8_date": ${ creditor8_date.format() }
+      - "creditor8_date": ${ creditor8_date.format('MM/dd/yyyy') }
       - "creditor8_name": ${ creditors[7] }
       - "creditor8_orig_debt_amount": ${ currency(creditor8_orig_debt_amount) }
       - "creditor8_unpaid_bal_amount": ${ currency(creditor8_unpaid_bal_amount) }
@@ -2169,10 +2327,10 @@ attachment:
       - "creditor8__address_on_one_line": ${ creditor8__address_on_one_line }
       - "creditor8_mo_due_amount": ${ currency(creditor8_mo_due_amount) }
       - "creditor8_purpose": ${ creditor8_purpose }
-      - "total_orig_debt_amount": ${ currency(total_orig_debt_amount) }
-      - "total_unpaid_bal_amount": ${ currency(total_unpaid_bal_amount) }
-      - "total_past_due_amount": ${ currency(total_past_due_amount) }
-      - "total_mo_due_amount": ${ currency(total_mo_due_amount) }
+      - "total_orig_debt_amount": ${ currency(creditor1_orig_debt_amount + creditor2_orig_debt_amount + creditor3_orig_debt_amount + creditor4_orig_debt_amount + creditor5_orig_debt_amount + creditor6_orig_debt_amount + creditor7_orig_debt_amount + creditor8_orig_debt_amount) }
+      - "total_unpaid_bal_amount": ${ currency(creditor1_unpaid_bal_amount + creditor2_unpaid_bal_amount + creditor3_unpaid_bal_amount + creditor4_unpaid_bal_amount + creditor5_unpaid_bal_amount + creditor6_unpaid_bal_amount + creditor7_unpaid_bal_amount + creditor8_unpaid_bal_amount) }
+      - "total_past_due_amount": ${ currency(creditor1_past_due_amount + creditor2_past_due_amount + creditor3_past_due_amount + creditor4_past_due_amount + creditor5_past_due_amount + creditor6_past_due_amount + creditor7_past_due_amount + creditor8_past_due_amount) }
+      - "total_mo_due_amount": ${ currency(creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount) }
       - "is_bankruptcy_yes": ${ is_bankruptcy }
       - "is_bankruptcy_no": ${ not is_bankruptcy }
       - "discharge_date": ${ discharge_date.format() }
@@ -2181,8 +2339,8 @@ attachment:
       - "additional_info": ${ va5655_new_fields_attachment.safe_value("additional_info") }
       - "users1_signature": ${ users[0].signature }
       - "spouses_signature": ${ spouses[0].signature }
-      - "users1_signature_date": ${ users1_signature_date.format() }
-      - "spouses_signature_date": ${ spouses_signature_date.format() }
+      - "signature_date": ${ today() }
+      - "spouses_signature_date": ${ today() }
 ---
 code: |
   va5655_new_fields_attachment.overflow_fields["other_living"].overflow_trigger = 189
@@ -2190,6 +2348,4 @@ code: |
   va5655_new_fields_attachment.overflow_fields["additional_info"].overflow_trigger = 364
   va5655_new_fields_attachment.overflow_fields["additional_info"].label = "Additional info"
   va5655_new_fields_attachment.overflow_fields.gathered = True
-
-
 
