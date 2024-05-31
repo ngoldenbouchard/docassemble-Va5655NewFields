@@ -51,6 +51,7 @@ objects:
 ---
 sections:
   - review_va5655_new_fields: Review your answers
+
 ---
 #################### Interview order #####################
 comment: |
@@ -144,72 +145,259 @@ code: |
   set_progress(80)
   #creditors.gather()
   #total_mo_due_amount
-  do_default
+  #do_default
   interview_order_va5655_new_fields = True
 ---
 code: |
-  users1_mo_salary_amount 
-  users1_income_tax_deduct_amount
-  users1_retire_deduct_amount      
-  users1_ss_deduct_amount
-  users1_other_deduct_amount
-  users1_other_income_amount
-  spouses_mo_salary_amount
-  spouses_income_tax_deduct_amount
-  spouses_retire_deduct_amount
-  spouses_ss_deduct_amount
-  spouses_other_deduct_amount
-  spouses_other_income_amount
-  rent_mortgage_amount
-  mo_food_amount
-  mo_utility_amount
-  other_living_amount
-  mo_pay_to_debt
-  bank_amount
-  cash_amount
-  car1_resale_amount
-  car2_resale_amount
-  car3_resale_amount
-  trailer_camper_boat_resale_amount
-  bond_amount
-  stocks_amount
-  real_estate_amount
-  otherasset1_amount
-  otherasset2_amount
-  otherasset3_amount
-  creditor1_orig_debt_amount
-  creditor2_orig_debt_amount
-  creditor3_orig_debt_amount
-  creditor4_orig_debt_amount
-  creditor5_orig_debt_amount
-  creditor6_orig_debt_amount
-  creditor7_orig_debt_amount
-  creditor8_orig_debt_amount
-  creditor1_unpaid_bal_amount
-  creditor2_unpaid_bal_amount
-  creditor3_unpaid_bal_amount
-  creditor4_unpaid_bal_amount
-  creditor5_unpaid_bal_amount
-  creditor6_unpaid_bal_amount
-  creditor7_unpaid_bal_amount
-  creditor8_unpaid_bal_amount
-  creditor1_mo_due_amount
-  creditor2_mo_due_amount
-  creditor3_mo_due_amount
-  creditor4_mo_due_amount
-  creditor5_mo_due_amount
-  creditor6_mo_due_amount
-  creditor7_mo_due_amount
-  creditor8_mo_due_amount
-  creditor1_past_due_amount
-  creditor2_past_due_amount
-  creditor3_past_due_amount
-  creditor4_past_due_amount
-  creditor5_past_due_amount
-  creditor6_past_due_amount
-  creditor7_past_due_amount
-  creditor8_past_due_amount
-  do_default = True
+  #users1_mo_salary_amount 
+  #users1_income_tax_deduct_amount
+  #users1_retire_deduct_amount      
+  #users1_ss_deduct_amount
+  #users1_other_deduct_amount
+  #users1_other_income_amount
+  #spouses_mo_salary_amount
+  #spouses_income_tax_deduct_amount
+  #spouses_retire_deduct_amount
+  #spouses_ss_deduct_amount
+  #spouses_other_deduct_amount
+  #spouses_other_income_amount
+  #rent_mortgage_amount
+  #mo_food_amount
+  #mo_utility_amount
+  #other_living_amount
+  #mo_pay_to_debt
+  #bank_amount
+  #cash_amount
+  #car1_resale_amount
+  #car2_resale_amount
+  #car3_resale_amount
+  #trailer_camper_boat_resale_amount
+  #bond_amount
+  #stocks_amount
+  #real_estate_amount
+  #otherasset1_amount
+  #otherasset2_amount
+  #otherasset3_amount
+  #creditor1_orig_debt_amount
+  #creditor2_orig_debt_amount
+  #creditor3_orig_debt_amount
+  #creditor4_orig_debt_amount
+  #creditor5_orig_debt_amount
+  #creditor6_orig_debt_amount
+  #creditor7_orig_debt_amount
+  #creditor8_orig_debt_amount
+  #creditor1_unpaid_bal_amount
+  #creditor2_unpaid_bal_amount
+  #creditor3_unpaid_bal_amount
+  #creditor4_unpaid_bal_amount
+  #creditor5_unpaid_bal_amount
+  #creditor6_unpaid_bal_amount
+  #creditor7_unpaid_bal_amount
+  #creditor8_unpaid_bal_amount
+  #creditor1_mo_due_amount
+  #creditor2_mo_due_amount
+  #creditor3_mo_due_amount
+  #creditor4_mo_due_amount
+  #creditor5_mo_due_amount
+  #creditor6_mo_due_amount
+  #creditor7_mo_due_amount
+  #creditor8_mo_due_amount
+  #creditor1_past_due_amount
+  #creditor2_past_due_amount
+  #creditor3_past_due_amount
+  #creditor4_past_due_amount
+  #creditor5_past_due_amount
+  #creditor6_past_due_amount
+  #creditor7_past_due_amount
+  #creditor8_past_due_amount
+  #do_default = True
+
+---
+#DEFAULT CODES BEGIN
+code: |
+  users1_mo_salary_amount = 0
+---
+code: |
+  users1_income_tax_deduct_amount = 0
+---
+code: |
+  users1_retire_deduct_amount = 0
+---
+code: |
+  users1_ss_deduct_amount = 0
+---
+code: |
+  users1_other_deduct_amount = 0
+---
+code: |
+  users1_other_income_amount = 0
+---
+code: |
+  spouses_mo_salary_amount = 0
+---
+code: |
+  spouses_income_tax_deduct_amount = 0
+---
+code: |
+  spouses_other_income_amount = 0
+---
+code: |
+  spouses_retire_deduct_amount = 0
+---
+code: |
+  spouses_ss_deduct_amount = 0
+---
+code: |
+  spouses_other_deduct_amount = 0
+---
+code: |
+  rent_mortgage_amount = 0
+---
+code: |
+  mo_food_amount = 0
+---
+code: |
+  mo_utility_amount = 0
+---
+code: |
+  other_living_amount = 0
+---
+code: |  
+  mo_pay_to_debt = 0
+---
+code: |
+  bank_amount = 0
+---
+code: |
+  cash_amount = 0
+---
+code: |
+  car1_resale_amount = 0
+---
+code: |
+  car2_resale_amount = 0
+---
+code: |  
+  car3_resale_amount = 0
+---
+code: |  
+  trailer_camper_boat_resale_amount = 0
+---
+code: |  
+  bond_amount = 0
+---
+code: |  
+  stocks_amount = 0
+---
+code: |  
+  real_estate_amount = 0
+---
+code: |  
+  otherasset1_amount = 0
+---
+code: |  
+  otherasset2_amount = 0
+---
+code: |  
+  otherasset3_amount = 0
+---
+code: |  
+  creditor1_orig_debt_amount = 0
+---
+code: |  
+  creditor2_orig_debt_amount = 0
+---
+code: |
+  creditor3_orig_debt_amount = 0
+---
+code: |
+  creditor4_orig_debt_amount = 0
+---
+code: |
+  creditor5_orig_debt_amount = 0
+---
+code: |
+  creditor6_orig_debt_amount = 0
+---
+code: |  
+  creditor7_orig_debt_amount = 0
+---
+code: |  
+  creditor8_orig_debt_amount = 0
+---
+code: |  
+  creditor1_unpaid_bal_amount = 0
+---
+code: |  
+  creditor2_unpaid_bal_amount = 0
+---
+code: |  
+  creditor3_unpaid_bal_amount = 0
+---
+code: | 
+  creditor4_unpaid_bal_amount = 0
+---
+code: |
+  creditor5_unpaid_bal_amount = 0
+---
+code: |
+  creditor6_unpaid_bal_amount = 0
+---
+code: |
+  creditor7_unpaid_bal_amount = 0
+---
+code: |
+  creditor8_unpaid_bal_amount = 0
+---
+code: |
+  creditor1_mo_due_amount = 0
+---
+code: |
+  creditor2_mo_due_amount = 0
+---
+code: |
+  creditor3_mo_due_amount = 0
+---
+code: |
+  creditor4_mo_due_amount = 0
+---
+code: |
+  creditor5_mo_due_amount = 0
+---
+code: |
+  creditor6_mo_due_amount = 0
+---
+code: |
+  creditor7_mo_due_amount = 0
+---
+code: |
+  creditor8_mo_due_amount = 0
+---
+code: |
+  creditor1_past_due_amount = 0
+---
+code: |
+  creditor2_past_due_amount = 0
+---
+code: |
+  creditor3_past_due_amount = 0
+---
+code: |
+  creditor4_past_due_amount = 0
+---
+code: |
+  creditor5_past_due_amount = 0
+---
+code: |
+  creditor6_past_due_amount = 0
+---
+code: |
+  creditor7_past_due_amount = 0
+---
+code: |
+  creditor8_past_due_amount = 0
+
+
   
 ---
 ###################### Main order ######################
@@ -218,6 +406,7 @@ comment: |
   Delete mandatory: True to include in another interview
 mandatory: True
 code: |
+  this_or_0
   al_intro_screen
   va5655_new_fields_intro
   interview_order_va5655_new_fields
@@ -749,7 +938,7 @@ id: Installment Contracts and Other Debts
 question: |
   Installment Contracts and Other Debts
 subquestion: |
-  These questions are about any debts you are supposed to pay regular monthly installments on, (such as for a car, television, to banks, credit card companies, or for doctor bills, etc.) If you are married, this includes your spouse's debts too.
+  These questions are about any debts you are supposed to pay regular monthly installments on, (such as for a car, television, mortgage, to banks, credit card companies, or for doctor bills, etc.) If you are married, this includes your spouse's debts too.
 fields:
   - "Do you have any regular monthly payments (such as for a car, credit card, or medical bill)?": installment_payments
     datatype: yesnoradio    
@@ -1096,7 +1285,7 @@ fields:
     show if:
       variable: installment7_payments
       is: True
-  - "What is the creditor's name on this 8th debt (who do you pay each month)?": creditor7_name
+  - "What is the creditor's name on this 8th debt (who do you pay each month)?": creditor8_name
     maxlength: 99
     show if:
       variable: installment8_payments
@@ -1204,12 +1393,15 @@ code: |
   else:
     signature_fields = ['users[0].signature']
 
+
 ---
 id: va5655 new fields review screen
 event: review_va5655_new_fields
 question: |
   Review your answers
 review:
+
+# Review General Info
   - Edit: users1_ssn
     button: |
       **What is your Social Security Number?**:
@@ -1244,6 +1436,16 @@ review:
     button: |
       **If you have Dependents, what are their ages?**:
       ${ dependents1_age_1 }
+
+# Review User Employment Info  
+  - Edit: employed_two_years
+    button: |
+      **Have you been employed within the last two years?**:
+      ${ employed_two_years }
+  - Edit: currently_have_job
+    button: |
+      **Are you currently employed?**:
+      ${ currently_have_job }
   - Edit: users1_current_kind_of_job
     button: |
       **What kind of job do you currently do? (ex. Postal Worker, CEO, Mechanic, Security, etc.)**:
@@ -1260,6 +1462,10 @@ review:
     button: |
       **What is your employer's address?**:
       ${ users1_current_employer__address_on_one_line }
+  - Edit: users1_other_job
+    button: |
+      **Have you been employed in another job within the last two years?**:
+      ${ users1_other_job }  
   - Edit: users1_past_kind_of_job
     button: |
       **What kind of work did you do (or are doing) at this job?**:
@@ -1268,6 +1474,10 @@ review:
     button: |
       **When do you start this job?**:
       ${ users1_past_start_date_mmyyyy }
+  - Edit: users1_still_at_job
+    button: |
+      **Are you still at this job?**:
+      ${ users1_still_at_job }
   - Edit: users1_past_end_date_mmyyyy
     button: |
       **When did this job end?**:
@@ -1280,6 +1490,40 @@ review:
     button: |
       **What is this employer's address?**:
       ${ users1_past_employer__address_on_one_line }
+
+
+# Review User's Current Salary
+  - Edit: users1_mo_salary_amount
+    button: |
+      **What is your gross monthly salary amount?**:
+      ${ currency(users1_mo_salary_amount) }
+  - Edit: users1_income_tax_deduct_amount
+    button: |
+      **How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.**:
+      ${ currency(users1_income_tax_deduct_amount) }
+  - Edit: users1_retire_deduct_amount
+    button: |
+      **How much is taken out of your monthly salary for retirement?**:
+      ${ currency(users1_retire_deduct_amount) }
+  - Edit: users1_ss_deduct_amount
+    button: |
+      **How much is taken out of your monthly salary for social security?**:
+      ${ currency(users1_ss_deduct_amount) }
+  - Edit: users1_more_deductions
+    button: |
+      **Do you have any other deductions being taken out of your monthly salary?**:
+      ${ users1_more_deductions }
+
+
+# Review Spouses Employment
+  - Edit: spouses_employed_two_years
+    button: |
+      **Has your spouse been employed within the last two years?**:
+      ${ spouses_employed_two_years }
+  - Edit: spouses_current_employed
+    button: |
+      **Is your spouse currently employed?**:
+      ${ spouses_current_employed }  
   - Edit: spouses_current_kind_of_job
     button: |
       **What kind of job does your spouse do now? (ex. Postal Worker, CEO, Mechanic, Security, etc.)**:
@@ -1296,6 +1540,18 @@ review:
     button: |
       **What is your spouse's current employer's address?**:
       ${ spouses__current_employer__address_on_one_line }
+  - Edit: spouses_other_job
+    button: |
+      **Has your spouse been employed in any other job over the last two years?**:
+      ${ spouses_other_job }
+  - Edit: spouses__past_employer_name
+    button: |
+      **What is this employer's name?**:
+      ${ spouses__past_employer_name }
+  - Edit: spouses_past_employer__address_on_one_line
+    button: |
+      **What is this employer's address?**:
+      ${ spouses_past_employer__address_on_one_line }  
   - Edit: spouses_past_kind_of_job
     button: |
       **What kind of work did your spouse do (or is doing) at this job?**:
@@ -1304,98 +1560,39 @@ review:
     button: |
       **When did your spouse start this job?**:
       ${ spouses__past_start_date_mmyyyy }
+  - Edit: spouses_still_at_job
+    button: |
+      **Is your spouse still at this job?**:
+      ${ spouses_still_at_job }
   - Edit: spouses_past_end_date_mmyyyy
     button: |
       **When did your spouse end this job?**:
       ${ spouses_past_end_date_mmyyyy }
-  - Edit: spouses__past_employer_name
-    button: |
-      **What is this employer's name?**:
-      ${ spouses__past_employer_name }
-  - Edit: spouses_past_employer__address_on_one_line
-    button: |
-      **What is this employer's address?**:
-      ${ spouses_past_employer__address_on_one_line }
+
+
+# Review Spouse's Current Salary
   - Edit: spouses_mo_salary_amount
     button: |
       **What is your spouse's gross monthly salary amount?**:
       ${ currency(spouses_mo_salary_amount) }
-  - Edit: users1_mo_salary_amount
-    button: |
-      **What is your gross monthly salary amount?**:
-      ${ currency(users1_mo_salary_amount) }
-  - Edit: rent_mortgage_amount
-    button: |
-      **What is your monthly rent or mortgage amount?**:
-      ${ currency(rent_mortgage_amount) }
-  - Edit: mo_food_amount
-    button: |
-      **How much is spent for food in a month?**:
-      ${ currency(mo_food_amount) }
   - Edit: spouses_income_tax_deduct_amount
     button: |
       **How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.**:
       ${ currency(spouses_income_tax_deduct_amount) }
-  - Edit: mo_utility_amount
-    button: |
-      **How much are your household utilities a month?**:
-      ${ currency(mo_utility_amount) }
-  - Edit: users1_income_tax_deduct_amount
-    button: |
-      **How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.**:
-      ${ currency(users1_income_tax_deduct_amount) }
-  - Edit: users1_retire_deduct_amount
-    button: |
-      **How much is taken out of your monthly salary for retirement?**:
-      ${ currency(users1_retire_deduct_amount) }
   - Edit: spouses_retire_deduct_amount
     button: |
       **How much is taken out of your spouse's monthly salary for retirement?**:
       ${ currency(spouses_retire_deduct_amount) }
-  - Edit: users1_ss_deduct_amount
-    button: |
-      **How much is taken out of your monthly salary for social security?**:
-      ${ currency(users1_ss_deduct_amount) }
   - Edit: spouses_ss_deduct_amount
     button: |
       **How much is taken out of your spouse's monthly salary for social security?**:
       ${ currency(spouses_ss_deduct_amount) }
-  - Edit: other_deduction_type
+  - Edit: spouses_more_deductions
     button: |
-      **What other deductions do your and/or your spouse have taken out of your monthly salary?**:
-      ${ other_deduction_type }
-  - Edit: users1_other_deduct_amount
-    button: |
-      **How much is taken out of your monthly salary for your other deductions?**:
-      ${ currency(users1_other_deduct_amount) }
-  - Edit: spouses_other_deduct_amount
-    button: |
-      **How much is taken out of your spouse's monthly salary for their other deductions?**:
-      ${ currency(spouses_other_deduct_amount) }
-  - Edit: users1_total_deduct_amount
-    #button: |
-      #**Users1 total deduct amount - FIGURE**:
-      #${ currency(users1_total_deduct_amount) }
-  - Edit: spouses_total_deduct_amount
-    #button: |
-      #**Spouses total deduct amount - FIGURE**:
-      #${ currency(spouses_total_deduct_amount) }
-  - Edit: users1_net_mo_pay_amount
-    #button: |
-      #**Users1 net mo pay amount - FIGURE**:
-      #${ currency(users1_net_mo_pay_amount) }
-  - Edit: spouses_net_mo_pay_amount
-    #button: |
-      #**Spouses net mo pay amount - FIGURE**:
-      #${ currency(spouses_net_mo_pay_amount) }
-  - Edit: other_living
-    button: |
-      **What are your other household living expenses?**:
-      > ${ single_paragraph(other_living) }
-  - Edit: other_living_amount
-    button: |
-      **How much are your other living expenses a month?**:
-      ${ currency(other_living_amount) }
+      **Does your spouse have any other deductions coming out of their monthly salary?**:
+      ${ spouses_more_deductions }
+
+# Review User and Spouse's Other Income
   - Edit: source_of_other_income
     button: |
       **What is the sources of your other income? (ex. VA benefits**:
@@ -1408,30 +1605,50 @@ review:
     button: |
       **How much is your spouse getting a month from this other income?**:
       ${ currency(spouses_other_income_amount) }
-  - Edit: mo_payments_debt_amount
+
+# Review User and Spouse's Other Deductions
+  - Edit: other_deduction_type
     button: |
-      **Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount**:
-      ${ currency(mo_payments_debt_amount) }
-  - Edit: total_mo_expense_amount
-    #button: |
-      #**Total mo expense amount - FIGURE**:
-      #${ currency(total_mo_expense_amount) }
-  - Edit: users1_net_mo_income_amount
-    #button: |
-      #**Users1 net mo income amount - FIGURE**:
-      #${ currency(users1_net_mo_income_amount) }
-  - Edit: spouses_net_mo_income_amount
-    #button: |
-      #**Spouses net mo income amount - FIGURE**:
-      #${ currency(spouses_net_mo_income_amount) }
-  - Edit: net_income_less_expense_amount
-    #button: |
-      #**Net income less expense amount - FIGURE**:
-      #${ currency(net_income_less_expense_amount) }
+      **What other deductions do your and/or your spouse have taken out of your monthly salary?**:
+      ${ other_deduction_type }
+  - Edit: users1_other_deduct_amount
+    button: |
+      **How much is taken out of your monthly salary for your other deductions?**:
+      ${ currency(users1_other_deduct_amount) }
+  - Edit: spouses_other_deduct_amount
+    button: |
+      **How much is taken out of your spouse's monthly salary for their other deductions?**:
+      ${ currency(spouses_other_deduct_amount) }
+
+# Review Normal Expenses
+  - Edit: rent_mortgage_amount
+    button: |
+      **What is your monthly rent or mortgage amount?**:
+      ${ currency(rent_mortgage_amount) }
+  - Edit: mo_food_amount
+    button: |
+      **How much is spent for food in a month?**:
+      ${ currency(mo_food_amount) }
+  - Edit: mo_utility_amount
+    button: |
+      **How much are your household utilities a month?**:
+      ${ currency(mo_utility_amount) }
+  - Edit: other_living
+    button: |
+      **What are your other household living expenses?**:
+      > ${ single_paragraph(other_living) }
+  - Edit: other_living_amount
+    button: |
+      **How much are your other living expenses a month?**:
+      ${ currency(other_living_amount) }
+
+# Review How much can user afford to pay VA
   - Edit: mo_pay_to_debt
     button: |
       **How much can you pay monthly towards your VA debt? (this can be $0.00)**:
       ${ currency(mo_pay_to_debt) }
+
+# Review Assets
   - Edit: bank_amount
     button: |
       **How much do you have in all your bank accounts?**:
@@ -1468,10 +1685,6 @@ review:
     button: |
       **What is the resale value of this first car?**:
       ${ currency(car1_resale_amount) }
-  - Edit: otherasset1_amount
-    button: |
-      **How much is this first asset?**:
-      ${ currency(otherasset1_amount) }
   - Edit: car2_make
     button: |
       **What is the make of this second car?**:
@@ -1488,10 +1701,6 @@ review:
     button: |
       **What is the resale value of this second car?**:
       ${ currency(car2_resale_amount) }
-  - Edit: otherasset2_amount
-    button: |
-      **How much is the value of this second asset?**:
-      ${ currency(otherasset2_amount) }
   - Edit: car3_make
     button: |
       **What is the make of this third car?**:
@@ -1508,18 +1717,24 @@ review:
     button: |
       **What is the resale value of this third car?**:
       ${ currency(car3_resale_amount) }
-  - Edit: otherasset3_amount
-    button: |
-      **How much is the value of this third asset?**:
-      ${ currency(otherasset3_amount) }
   - Edit: trailer_camper_boat_resale_amount
     button: |
       **What is the total resale value of your boats, trailers, and campers combined?**:
       ${ currency(trailer_camper_boat_resale_amount) }
-  - Edit: total_asset_amount
-    #button: |
-      #**Total asset amount - FIGURE**:
-      #${ currency(total_asset_amount) }
+  - Edit: otherasset1_amount
+    button: |
+      **How much is this first asset?**:
+      ${ currency(otherasset1_amount) }
+  - Edit: otherasset2_amount
+    button: |
+      **How much is the value of this second asset?**:
+      ${ currency(otherasset2_amount) }
+  - Edit: otherasset3_amount
+    button: |
+      **How much is the value of this third asset?**:
+      ${ currency(otherasset3_amount) }
+
+# Review Creditor Info
   - Edit: creditor1_date
     button: |
       **When did you start this first debt?**:
@@ -1751,22 +1966,8 @@ review:
     button: |
       **What was the purpose of this 8th debt?**:
       ${ creditor8_purpose }
-  - Edit: total_orig_debt_amount
-    #button: |
-      #**Total orig debt amount - FIGURE**:
-      #${ currency(total_orig_debt_amount) }
-  - Edit: total_unpaid_bal_amount
-    #button: |
-      #**Total unpaid bal amount - FIGURE**:
-      #${ currency(total_unpaid_bal_amount) }
-  - Edit: total_past_due_amount
-    #button: |
-      #**Total past due amount - FIGURE**:
-      #${ currency(total_past_due_amount) }
-  - Edit: total_mo_due_amount
-    #button: |
-      #**Total mo due amount - FIGURE**:
-      #${ currency(total_mo_due_amount) }
+
+# Review Bankruptcy
   - Edit: is_bankruptcy
     button: |
       **Have you filed for bankruptcy now or in the past?**:
@@ -1783,10 +1984,14 @@ review:
     button: |
       **Bankruptcy docket number**:
       ${ bankruptcy_docket_number }
+  
+# Review Additional Info  
   - Edit: additional_info
     button: |
       **Additional info**:
       > ${ single_paragraph(additional_info) }
+  
+# Review Signuature Dates 
   - Edit: signature_date
     button: |
       **What date are you going to sign this document?**:
@@ -1795,38 +2000,11 @@ review:
     button: |
       **What date is your spouse going to sign this document?**:
       ${ spouses_signature_date }
-  - Edit: currently_have_job
-    button: |
-      **Are you currently employed?**:
-      ${ currently_have_job }
-  - Edit: spouses_current_employed
-    button: |
-      **Is your spouse currently employed?**:
-      ${ spouses_current_employed }
-  - Edit: users1_other_job
-    button: |
-      **Have you been employed in another job within the last two years?**:
-      ${ users1_other_job }
-  - Edit: spouses_other_job
-    button: |
-      **Has your spouse been employed in any other job over the last two years?**:
-      ${ spouses_other_job }
-  - Edit: users1_still_at_job
-    button: |
-      **Are you still at this job?**:
-      ${ users1_still_at_job }
-  - Edit: spouses_still_at_job
-    button: |
-      **Is your spouse still at this job?**:
-      ${ spouses_still_at_job }
-  - Edit: users1_more_deductions
-    button: |
-      **Do you have any other deductions being taken out of your monthly salary?**:
-      ${ users1_more_deductions }
-  - Edit: spouses_more_deductions
-    button: |
-      **Does your spouse have any other deductions coming out of their monthly salary?**:
-      ${ spouses_more_deductions }
+
+
+
+
+
   - Edit: living_expenses
     button: |
       **Do you have any other living expenses to include?**:
@@ -1847,14 +2025,67 @@ review:
     button: |
       **Do you own additional vehicles?**:
       ${ more_cars }
-  - Edit: employed_two_years
-    button: |
-      **Have you been employed within the last two years?**:
-      ${ employed_two_years }
-  - Edit: spouses_employed_two_years
-    button: |
-      **Has your spouse been employed within the last two years?**:
-      ${ spouses_employed_two_years }
+
+
+#- Edit: users1_total_deduct_amount
+#  #button: |
+#    #**Users1 total deduct amount - FIGURE**:
+#    #${ currency(users1_total_deduct_amount) }
+#- Edit: spouses_total_deduct_amount
+#  #button: |
+#    #**Spouses total deduct amount - FIGURE**:
+#    #${ currency(spouses_total_deduct_amount) }
+#- Edit: users1_net_mo_pay_amount
+#  #button: |
+#    #**Users1 net mo pay amount - FIGURE**:
+#    #${ currency(users1_net_mo_pay_amount) }
+#- Edit: spouses_net_mo_pay_amount
+#  #button: |
+#    #**Spouses net mo pay amount - FIGURE**:
+#    #${ currency(spouses_net_mo_pay_amount) }
+# - Edit: mo_payments_debt_amount
+#   button: |
+#     **Mo payments debt amount - FIGURE PULLED FROM TOTAL_Mo_Due_Amount**:
+#     ${ currency(mo_payments_debt_amount) }
+# - Edit: total_mo_expense_amount
+#   #button: |
+#     #**Total mo expense amount - FIGURE**:
+#     #${ currency(total_mo_expense_amount) }
+# - Edit: users1_net_mo_income_amount
+#   #button: |
+#     #**Users1 net mo income amount - FIGURE**:
+#     #${ currency(users1_net_mo_income_amount) }
+# - Edit: spouses_net_mo_income_amount
+#    #button: |
+#      #**Spouses net mo income amount - FIGURE**:
+#      #${ currency(spouses_net_mo_income_amount) }
+#  - Edit: net_income_less_expense_amount
+#    #button: |
+#      #**Net income less expense amount - FIGURE**:
+#      #${ currency(net_income_less_expense_amount) }
+#  - Edit: total_asset_amount
+#    #button: |
+#    #**Total asset amount - FIGURE**:
+#    #${ currency(total_asset_amount) }
+# - Edit: total_orig_debt_amount
+#   #button: |
+#     #**Total orig debt amount - FIGURE**:
+#     #${ currency(total_orig_debt_amount) }
+# - Edit: total_unpaid_bal_amount
+#   #button: |
+#     #**Total unpaid bal amount - FIGURE**:
+#     #${ currency(total_unpaid_bal_amount) }
+# - Edit: total_past_due_amount
+#   #button: |
+#     #**Total past due amount - FIGURE**:
+#     #${ currency(total_past_due_amount) }
+# - Edit: total_mo_due_amount
+#   #button: |
+#     #**Total mo due amount - FIGURE**:
+#     #${ currency(total_mo_due_amount) }
+
+
+
 ---
 continue button field: users.revisit
 question: |
@@ -1964,6 +2195,7 @@ attachment:
   variable name: va5655_new_fields_Post_interview_instructions[i]
   skip undefined: True
   tagged pdf: True
+
 #---
 # main order
 #mandatory: True
@@ -1985,191 +2217,7 @@ attachment:
 #---
 #code: |
   #frog = 0
----
-#DEFAULT CODES BEGIN
-code: |
-  users1_mo_salary_amount = 0
----
-code: |
-  users1_income_tax_deduct_amount = 0
----
-code: |
-  users1_retire_deduct_amount = 0
----
-code: |
-  users1_ss_deduct_amount = 0
----
-code: |
-  users1_other_deduct_amount = 0
----
-code: |
-  users1_other_income_amount = 0
----
-code: |
-  spouses_mo_salary_amount = 0
----
-code: |
-  spouses_income_tax_deduct_amount = 0
----
-code: |
-  spouses_other_income_amount = 0
----
-code: |
-  spouses_retire_deduct_amount = 0
----
-code: |
-  spouses_ss_deduct_amount = 0
----
-code: |
-  spouses_other_deduct_amount = 0
----
-code: |
-  rent_mortgage_amount = 0
----
-code: |
-  mo_food_amount = 0
----
-code: |
-  mo_utility_amount = 0
----
-code: |
-  other_living_amount = 0
----
-code: |  
-  mo_pay_to_debt = 0
----
-code: |
-  bank_amount = 0
----
-code: |
-  cash_amount = 0
----
-code: |
-  car1_resale_amount = 0
----
-code: |
-  car2_resale_amount = 0
----
-code: |  
-  car3_resale_amount = 0
----
-code: |  
-  trailer_camper_boat_resale_amount = 0
----
-code: |  
-  bond_amount = 0
----
-code: |  
-  stocks_amount = 0
----
-code: |  
-  real_estate_amount = 0
----
-code: |  
-  otherasset1_amount = 0
----
-code: |  
-  otherasset2_amount = 0
----
-code: |  
-  otherasset3_amount = 0
----
-code: |  
-  creditor1_orig_debt_amount = 0
----
-code: |  
-  creditor2_orig_debt_amount = 0
----
-code: |
-  creditor3_orig_debt_amount = 0
----
-code: |
-  creditor4_orig_debt_amount = 0
----
-code: |
-  creditor5_orig_debt_amount = 0
----
-code: |
-  creditor6_orig_debt_amount = 0
----
-code: |  
-  creditor7_orig_debt_amount = 0
----
-code: |  
-  creditor8_orig_debt_amount = 0
----
-code: |  
-  creditor1_unpaid_bal_amount = 0
----
-code: |  
-  creditor2_unpaid_bal_amount = 0
----
-code: |  
-  creditor3_unpaid_bal_amount = 0
----
-code: | 
-  creditor4_unpaid_bal_amount = 0
----
-code: |
-  creditor5_unpaid_bal_amount = 0
----
-code: |
-  creditor6_unpaid_bal_amount = 0
----
-code: |
-  creditor7_unpaid_bal_amount = 0
----
-code: |
-  creditor8_unpaid_bal_amount = 0
----
-code: |
-  creditor1_mo_due_amount = 0
----
-code: |
-  creditor2_mo_due_amount = 0
----
-code: |
-  creditor3_mo_due_amount = 0
----
-code: |
-  creditor4_mo_due_amount = 0
----
-code: |
-  creditor5_mo_due_amount = 0
----
-code: |
-  creditor6_mo_due_amount = 0
----
-code: |
-  creditor7_mo_due_amount = 0
----
-code: |
-  creditor8_mo_due_amount = 0
----
-code: |
-  creditor1_past_due_amount = 0
----
-code: |
-  creditor2_past_due_amount = 0
----
-code: |
-  creditor3_past_due_amount = 0
----
-code: |
-  creditor4_past_due_amount = 0
----
-code: |
-  creditor5_past_due_amount = 0
----
-code: |
-  creditor6_past_due_amount = 0
----
-code: |
-  creditor7_past_due_amount = 0
----
-code: |
-  creditor8_past_due_amount = 0   
-
+ 
 ---
 attachment:
   name: va5655 new fields
@@ -2187,12 +2235,12 @@ attachment:
       - "users1_address_on_one_line": ${ users[0].address.on_one_line() }
       - "is_married_yes": ${ is_married }
       - "is_married_no": ${ not is_married }
-      - "users1_phone_number": ${ users[0].phone_number }
+      - "users1_phone_number": ${ users[0].phone_number.format('US') }
       - "users1_birthdate": ${ users[0].birthdate.format() }
       - "spouses_name_full": ${ spouses[0] }
       - "dependents1_age_1": ${ dependents1_age_1 }
       - "users1_current_kind_of_job__1": ${ users1_current_kind_of_job }
-      - "user1_current_start_date_mmyyyy__1": ${ user1_current_start_date_mmyyyy.format('MM/dd/yyyy') }
+      - "user1_current_start_date_mmyyyy__1": ${ user1_current_start_date_mmyyyy.format('MM/yyyy') }
       - "users1_current_employer1_name__1": ${ users1_current_employer1_name }
       - "users1_current_employer__address_on_one_line__1": ${ users1_current_employer__address_on_one_line }
       - "users1_past_kind_of_job__1": ${ users1_past_kind_of_job }
@@ -2201,7 +2249,7 @@ attachment:
       - "users1_past_employer_name__1": ${ users1_past_employer_name }
       - "users1_past_employer__address_on_one_line__1": ${ users1_past_employer__address_on_one_line }
       - "spouses_current_kind_of_job__1": ${ spouses_current_kind_of_job }
-      - "spouses__current_start_date_mmyyyy__1": ${ spouses__current_start_date_mmyyyy.format('MM/dd/yyyy') }
+      - "spouses__current_start_date_mmyyyy__1": ${ spouses__current_start_date_mmyyyy.format('MM/yyyy') }
       - "spouses_current_employer1_name__1": ${ spouses_current_employer1_name }
       - "spouses__current_employer__address_on_one_line__1": ${ spouses__current_employer__address_on_one_line }
       - "spouses_past_kind_of_job__1": ${ spouses_past_kind_of_job }
@@ -2209,128 +2257,128 @@ attachment:
       - "spouses_past_end_date_mmyyyy__1": ${ spouses_past_end_date_mmyyyy.format('MM/yyyy') }
       - "spouses__past_employer_name__1": ${ spouses__past_employer_name }
       - "spouses_past_employer__address_on_one_line__1": ${ spouses_past_employer__address_on_one_line }
-      - "spouses_mo_salary_amount": ${ currency(spouses_mo_salary_amount) }
-      - "users1_mo_salary_amount": ${ currency(users1_mo_salary_amount) }
-      - "rent_mortgage_amount": ${ currency(rent_mortgage_amount) }
-      - "mo_food_amount": ${ currency(mo_food_amount) }
-      - "spouses_income_tax_deduct_amount": ${ currency(spouses_income_tax_deduct_amount) }
-      - "mo_utility_amount": ${ currency(mo_utility_amount) }
-      - "users1_income_tax_deduct_amount": ${ currency(users1_income_tax_deduct_amount) }
-      - "users1_retire_deduct_amount": ${ currency(users1_retire_deduct_amount) }
-      - "spouses_retire_deduct_amount": ${ currency(spouses_retire_deduct_amount) }
-      - "users1_ss_deduct_amount": ${ currency(users1_ss_deduct_amount) }
-      - "spouses_ss_deduct_amount": ${ currency(spouses_ss_deduct_amount) }
+      - "spouses_mo_salary_amount": ${ currency(this_or_0('spouses_mo_salary_amount')) }
+      - "users1_mo_salary_amount": ${ currency(this_or_0('users1_mo_salary_amount')) }
+      - "rent_mortgage_amount": ${ currency(this_or_0('rent_mortgage_amount')) }
+      - "mo_food_amount": ${ currency(this_or_0('mo_food_amount')) }
+      - "spouses_income_tax_deduct_amount": ${ currency(this_or_0('spouses_income_tax_deduct_amount')) }
+      - "mo_utility_amount": ${ currency(this_or_0('mo_utility_amount')) }
+      - "users1_income_tax_deduct_amount": ${ currency(this_or_0('users1_income_tax_deduct_amount')) }
+      - "users1_retire_deduct_amount": ${ currency(this_or_0('users1_retire_deduct_amount')) }
+      - "spouses_retire_deduct_amount": ${ currency(this_or_0('spouses_retire_deduct_amount')) }
+      - "users1_ss_deduct_amount": ${ currency(this_or_0('users1_ss_deduct_amount')) }
+      - "spouses_ss_deduct_amount": ${ currency(this_or_0('spouses_ss_deduct_amount')) }
       - "other_deduction_type": ${ other_deduction_type }
-      - "users1_other_deduct_amount": ${ currency(users1_other_deduct_amount) }
-      - "spouses_other_deduct_amount": ${ currency(spouses_other_deduct_amount) }
-      - "users1_total_deduct_amount": ${ currency(users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount) }
-      - "spouses_total_deduct_amount": ${ currency(spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount) }
-      - "users1_net_mo_pay_amount": ${ currency(users1_mo_salary_amount - (users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount)) }
-      - "spouses_net_mo_pay_amount": ${ currency(spouses_mo_salary_amount - (spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount)) }
+      - "users1_other_deduct_amount": ${ currency(this_or_0('users1_other_deduct_amount')) }
+      - "spouses_other_deduct_amount": ${ currency(this_or_0('spouses_other_deduct_amount')) }
+      - "users1_total_deduct_amount": ${ currency(this_or_0('users1_income_tax_deduct_amount') + (this_or_0('users1_retire_deduct_amount') + this_or_0('users1_ss_deduct_amount') + this_or_0('users1_other_deduct_amount') )) }
+      - "spouses_total_deduct_amount": ${ currency(this_or_0('spouses_income_tax_deduct_amount') + (this_or_0('spouses_retire_deduct_amount') + this_or_0('spouses_ss_deduct_amount') + this_or_0('spouses_other_deduct_amount') )) }
+      - "users1_net_mo_pay_amount": ${ currency(this_or_0('users1_mo_salary_amount') - (this_or_0('users1_income_tax_deduct_amount') + this_or_0('users1_retire_deduct_amount') + this_or_0('users1_ss_deduct_amount') + this_or_0('users1_other_deduct_amount') )) }
+      - "spouses_net_mo_pay_amount": ${ currency(this_or_0('spouses_mo_salary_amount') - (this_or_0('spouses_income_tax_deduct_amount') + this_or_0('spouses_retire_deduct_amount') + this_or_0('spouses_ss_deduct_amount') + this_or_0('spouses_other_deduct_amount') )) }
       - "other_living": ${ va5655_new_fields_attachment.safe_value("other_living") }
-      - "other_living_amount": ${ currency(other_living_amount) }
+      - "other_living_amount": ${ currency(this_or_0('other_living_amount')) }
       - "source_of_other_income": ${ source_of_other_income }
-      - "users1_other_income_amount": ${ currency(users1_other_income_amount) }
-      - "spouses_other_income_amount": ${ currency(spouses_other_income_amount) }
-      - "mo_payments_debt_amount": ${ currency(creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount) }
-      - "total_mo_expense_amount": ${ currency(rent_mortgage_amount + mo_food_amount + mo_utility_amount + other_living_amount + creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount) }
-      - "users1_net_mo_income_amount": ${ currency(users1_mo_salary_amount - (users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount) + users1_other_income_amount) }
-      - "spouses_net_mo_income_amount": ${ currency(spouses_mo_salary_amount - (spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount) + spouses_other_income_amount) }
-      - "net_income_less_expense_amount": ${ currency(users1_mo_salary_amount - (users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount) + users1_other_income_amount + spouses_mo_salary_amount - (spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount) + spouses_other_income_amount - (rent_mortgage_amount + mo_food_amount + mo_utility_amount + other_living_amount + creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount)) }
-      - "mo_pay_to_debt": ${ currency(mo_pay_to_debt) }
-      - "bank_amount": ${ currency(bank_amount) }
-      - "bond_amount": ${ currency(bond_amount) }
-      - "cash_amount": ${ currency(cash_amount) }
-      - "stocks_amount": ${ currency(stocks_amount) }
-      - "real_estate_amount": ${ currency(real_estate_amount) }
+      - "users1_other_income_amount": ${ currency(this_or_0('users1_other_income_amount')) }
+      - "spouses_other_income_amount": ${ currency(this_or_0('spouses_other_income_amount')) }
+      - "mo_payments_debt_amount": ${ currency(this_or_0('creditor1_mo_due_amount') + (this_or_0('creditor2_mo_due_amount') + this_or_0('creditor3_mo_due_amount') + this_or_0('creditor4_mo_due_amount') + this_or_0('creditor5_mo_due_amount') + this_or_0('creditor6_mo_due_amount') + this_or_0('creditor7_mo_due_amount') + this_or_0('creditor8_mo_due_amount') )) }
+      - "total_mo_expense_amount": ${ currency(this_or_0('rent_mortgage_amount') + (this_or_0('mo_food_amount') + this_or_0('mo_utility_amount') + this_or_0('other_living_amount') + this_or_0('creditor1_mo_due_amount') + this_or_0('creditor2_mo_due_amount') + this_or_0('creditor3_mo_due_amount') + this_or_0('creditor4_mo_due_amount') + this_or_0('creditor5_mo_due_amount') + this_or_0('creditor6_mo_due_amount') + this_or_0('creditor7_mo_due_amount') + this_or_0('creditor8_mo_due_amount') )) }
+      - "users1_net_mo_income_amount": ${ currency(this_or_0('users1_mo_salary_amount') - (this_or_0('users1_income_tax_deduct_amount') + this_or_0('users1_retire_deduct_amount') + this_or_0('users1_ss_deduct_amount') + this_or_0('users1_other_deduct_amount')) + (this_or_0('users1_other_income_amount') )) }
+      - "spouses_net_mo_income_amount": ${ currency(this_or_0('spouses_mo_salary_amount') - (this_or_0('spouses_income_tax_deduct_amount') + this_or_0('spouses_retire_deduct_amount') + this_or_0('spouses_ss_deduct_amount') + this_or_0('spouses_other_deduct_amount')) + (this_or_0('spouses_other_income_amount') )) }
+      - "net_income_less_expense_amount": ${ currency(this_or_0('users1_mo_salary_amount') - (this_or_0('users1_income_tax_deduct_amount') + this_or_0('users1_retire_deduct_amount') + this_or_0('users1_ss_deduct_amount') + this_or_0('users1_other_deduct_amount')) + (this_or_0('users1_other_income_amount')) + (this_or_0('spouses_mo_salary_amount') - (this_or_0('spouses_income_tax_deduct_amount') + this_or_0('spouses_retire_deduct_amount') + this_or_0('spouses_ss_deduct_amount') + this_or_0('spouses_other_deduct_amount')) + (this_or_0('spouses_other_income_amount'))) - (this_or_0('rent_mortgage_amount') + this_or_0('mo_food_amount') + this_or_0('mo_utility_amount') + this_or_0('other_living_amount') + this_or_0('creditor1_mo_due_amount') + this_or_0('creditor2_mo_due_amount') + this_or_0('creditor3_mo_due_amount') + this_or_0('creditor4_mo_due_amount') + this_or_0('creditor5_mo_due_amount') + this_or_0('creditor6_mo_due_amount') + this_or_0('creditor7_mo_due_amount') + this_or_0('creditor8_mo_due_amount')) ) }
+      - "mo_pay_to_debt": ${ currency(this_or_0('mo_pay_to_debt')) }
+      - "bank_amount": ${ currency(this_or_0('bank_amount')) }
+      - "bond_amount": ${ currency(this_or_0('bond_amount')) }
+      - "cash_amount": ${ currency(this_or_0('cash_amount')) }
+      - "stocks_amount": ${ currency(this_or_0('stocks_amount')) }
+      - "real_estate_amount": ${ currency(this_or_0('real_estate_amount')) }
       - "car1_make": ${ car1_make }
       - "car1_year": ${ car1_year }
       - "car1_model": ${ car1_model }
-      - "car1_resale_amount": ${ currency(car1_resale_amount) }
+      - "car1_resale_amount": ${ currency(this_or_0('car1_resale_amount')) }
       - "otherasset1": ${ otherasset1 }
-      - "otherasset1_amount": ${ currency(otherasset1_amount) }
-      - "car2_make": ${ car2_make }
+      - "otherasset1_amount": ${ currency(this_or_0('otherasset1_amount')) }
+      - "car2_make": ${ (this_or_na('car2_make')) }
       - "car2_year": ${ car2_year }
       - "car2_model": ${ car2_model }
-      - "car2_resale_amount": ${ currency(car2_resale_amount) }
+      - "car2_resale_amount": ${ currency(this_or_0('car2_resale_amount')) }
       - "otherasset2": ${ otherasset2 }
-      - "otherasset2_amount": ${ currency(otherasset2_amount) }
+      - "otherasset2_amount": ${ currency(this_or_0('otherasset2_amount')) }
       - "car3_make": ${ car3_make }
       - "car3_year": ${ car3_year }
       - "car3_model": ${ car3_model }
-      - "car3_resale_amount": ${ currency(car3_resale_amount) }
+      - "car3_resale_amount": ${ currency(this_or_0('car3_resale_amount')) }
       - "otherasset3": ${ otherasset3 }
-      - "otherasset3_amount": ${ currency(otherasset3_amount) }
-      - "trailer_camper_boat_resale_amount": ${ currency(trailer_camper_boat_resale_amount) }
-      - "total_asset_amount": ${ currency(bank_amount + cash_amount + car1_resale_amount + car2_resale_amount + car3_resale_amount + trailer_camper_boat_resale_amount + bond_amount + stocks_amount + real_estate_amount + otherasset1_amount + otherasset2_amount + otherasset3_amount) }
+      - "otherasset3_amount": ${ currency(this_or_0('otherasset3_amount')) }
+      - "trailer_camper_boat_resale_amount": ${ currency(this_or_0('trailer_camper_boat_resale_amount')) }
+      - "total_asset_amount": ${ currency(this_or_0('bank_amount') + (this_or_0('cash_amount') + this_or_0('car1_resale_amount') + this_or_0('car2_resale_amount') + this_or_0('car3_resale_amount') + this_or_0('trailer_camper_boat_resale_amount') + this_or_0('bond_amount') + this_or_0('stocks_amount') + this_or_0('real_estate_amount') + this_or_0('otherasset1_amount') + this_or_0('otherasset2_amount') + this_or_0('otherasset3_amount') )) }
       - "creditor1_date": ${ creditor1_date.format('MM/dd/yyyy') }
-      - "creditor1_orig_debt_amount": ${ currency(creditor1_orig_debt_amount) }
-      - "creditor1_unpaid_bal_amount": ${ currency(creditor1_unpaid_bal_amount) }
-      - "creditor1_past_due_amount": ${ currency(creditor1_past_due_amount) }
-      - "creditor1_mo_due_amount": ${ currency(creditor1_mo_due_amount) }
+      - "creditor1_orig_debt_amount": ${ currency(this_or_0('creditor1_orig_debt_amount')) }
+      - "creditor1_unpaid_bal_amount": ${ currency(this_or_0('creditor1_unpaid_bal_amount')) }
+      - "creditor1_past_due_amount": ${ currency(this_or_0('creditor1_past_due_amount')) }
+      - "creditor1_mo_due_amount": ${ currency(this_or_0('creditor1_mo_due_amount')) }
       - "creditor1__address_on_one_line": ${ creditor1__address_on_one_line }
       - "creditor1_name": ${ creditor1_name }
       - "creditor1_purpose": ${ creditor1_purpose }
       - "creditor2_date": ${ creditor2_date.format('MM/dd/yyyy') }
       - "creditor2__address_on_one_line": ${ creditor2__address_on_one_line }
       - "creditor2_name": ${ creditor2_name }
-      - "creditor2_orig_debt_amount": ${ currency(creditor2_orig_debt_amount) }
-      - "creditor2_unpaid_bal_amount": ${ currency(creditor2_unpaid_bal_amount) }
-      - "creditor2_past_due_amount": ${ currency(creditor2_past_due_amount) }
-      - "creditor2_mo_due_amount": ${ currency(creditor2_mo_due_amount) }
+      - "creditor2_orig_debt_amount": ${ currency(this_or_0('creditor2_orig_debt_amount')) }
+      - "creditor2_unpaid_bal_amount": ${ currency(this_or_0('creditor2_unpaid_bal_amount')) }
+      - "creditor2_past_due_amount": ${ currency(this_or_0('creditor2_past_due_amount')) }
+      - "creditor2_mo_due_amount": ${ currency(this_or_0('creditor2_mo_due_amount')) }
       - "creditor2_purpose": ${ creditor2_purpose }
       - "creditor3_date": ${ creditor3_date.format('MM/dd/yyyy') }
       - "creditor3__address_on_one_line": ${ creditor3__address_on_one_line }
-      - "creditor3_name": ${ creditors[2] }
-      - "creditor3_orig_debt_amount": ${ currency(creditor3_orig_debt_amount) }
-      - "creditor3_unpaid_bal_amount": ${ currency(creditor3_unpaid_bal_amount) }
-      - "creditor3_past_due_amount": ${ currency(creditor3_past_due_amount) }
-      - "creditor3_mo_due_amount": ${ currency(creditor3_mo_due_amount) }
+      - "creditor3_name": ${ creditor3_name }
+      - "creditor3_orig_debt_amount": ${ currency(this_or_0('creditor3_orig_debt_amount')) }
+      - "creditor3_unpaid_bal_amount": ${ currency(this_or_0('creditor3_unpaid_bal_amount')) }
+      - "creditor3_past_due_amount": ${ currency(this_or_0('creditor3_past_due_amount')) }
+      - "creditor3_mo_due_amount": ${ currency(this_or_0('creditor3_mo_due_amount')) }
       - "creditor3_purpose": ${ creditor3_purpose }
       - "creditor4_date": ${ creditor4_date.format('MM/dd/yyyy') }
       - "creditor4__address_on_one_line": ${ creditor4__address_on_one_line }
-      - "creditor4_name": ${ creditors[3] }
-      - "creditor4_orig_debt_amount": ${ currency(creditor4_orig_debt_amount) }
-      - "creditor4_unpaid_bal_amount": ${ currency(creditor4_unpaid_bal_amount) }
-      - "creditor4_past_due_amount": ${ currency(creditor4_past_due_amount) }
-      - "creditor4_mo_due_amount": ${ currency(creditor4_mo_due_amount) }
+      - "creditor4_name": ${ creditor4_name }
+      - "creditor4_orig_debt_amount": ${ currency(this_or_0('creditor4_orig_debt_amount')) }
+      - "creditor4_unpaid_bal_amount": ${ currency(this_or_0('creditor4_unpaid_bal_amount')) }
+      - "creditor4_past_due_amount": ${ currency(this_or_0('creditor4_past_due_amount')) }
+      - "creditor4_mo_due_amount": ${ currency(this_or_0('creditor4_mo_due_amount')) }
       - "creditor4_purpose": ${ creditor4_purpose }
       - "creditor5_date": ${ creditor5_date.format('MM/dd/yyyy') }
-      - "creditor5_orig_debt_amount": ${ currency(creditor5_orig_debt_amount) }
-      - "creditor5_unpaid_bal_amount": ${ currency(creditor5_unpaid_bal_amount) }
-      - "creditor5_mo_due_amount": ${ currency(creditor5_mo_due_amount) }
-      - "creditor5_past_due_amount": ${ currency(creditor5_past_due_amount) }
+      - "creditor5_orig_debt_amount": ${ currency(this_or_0('creditor5_orig_debt_amount')) }
+      - "creditor5_unpaid_bal_amount": ${ currency(this_or_0('creditor5_unpaid_bal_amount')) }
+      - "creditor5_mo_due_amount": ${ currency(this_or_0('creditor5_mo_due_amount')) }
+      - "creditor5_past_due_amount": ${ currency(this_or_0('creditor5_past_due_amount')) }
       - "creditor5__address_on_one_line": ${ creditor5__address_on_one_line }
-      - "creditor5_name": ${ creditors[4] }
+      - "creditor5_name": ${ creditor5_name }
       - "creditor5_purpose": ${ creditor5_purpose }
       - "creditor6_date": ${ creditor6_date.format('MM/dd/yyyy') }
       - "creditor6__address_on_one_line": ${ creditor6__address_on_one_line }
-      - "creditor6_name": ${ creditors[5] }
-      - "creditor6_past_due_amount": ${ currency(creditor6_past_due_amount) }
-      - "creditor6_orig_debt_amount": ${ currency(creditor6_orig_debt_amount) }
-      - "creditor6_unpaid_bal_amount": ${ currency(creditor6_unpaid_bal_amount) }
-      - "creditor6_mo_due_amount": ${ currency(creditor6_mo_due_amount) }
+      - "creditor6_name": ${ creditor6_name }
+      - "creditor6_past_due_amount": ${ currency(this_or_0('creditor6_past_due_amount')) }
+      - "creditor6_orig_debt_amount": ${ currency(this_or_0('creditor6_orig_debt_amount')) }
+      - "creditor6_unpaid_bal_amount": ${ currency(this_or_0('creditor6_unpaid_bal_amount')) }
+      - "creditor6_mo_due_amount": ${ currency(this_or_0('creditor6_mo_due_amount')) }
       - "creditor6_purpose": ${ creditor6_purpose }
       - "creditor7_date": ${ creditor7_date.format('MM/dd/yyyy') }
-      - "creditor7_orig_debt_amount": ${ currency(creditor7_orig_debt_amount) }
-      - "creditor7_unpaid_bal_amount": ${ currency(creditor7_unpaid_bal_amount) }
-      - "creditor7_past_due_amount": ${ currency(creditor7_past_due_amount) }
+      - "creditor7_orig_debt_amount": ${ currency(this_or_0('creditor7_orig_debt_amount')) }
+      - "creditor7_unpaid_bal_amount": ${ currency(this_or_0('creditor7_unpaid_bal_amount')) }
+      - "creditor7_past_due_amount": ${ currency(this_or_0('creditor7_past_due_amount')) }
       - "creditor7__address_on_one_line": ${ creditor7__address_on_one_line }
-      - "creditor7_name": ${ creditors[6] }
-      - "creditor7_mo_due_amount": ${ currency(creditor7_mo_due_amount) }
+      - "creditor7_name": ${ creditor7_name }
+      - "creditor7_mo_due_amount": ${ currency(this_or_0('creditor7_mo_due_amount')) }
       - "creditor7_purpose": ${ creditor7_purpose }
       - "creditor8_date": ${ creditor8_date.format('MM/dd/yyyy') }
-      - "creditor8_name": ${ creditors[7] }
-      - "creditor8_orig_debt_amount": ${ currency(creditor8_orig_debt_amount) }
-      - "creditor8_unpaid_bal_amount": ${ currency(creditor8_unpaid_bal_amount) }
-      - "creditor8_past_due_amount": ${ currency(creditor8_past_due_amount) }
+      - "creditor8_name": ${ creditor8_name }
+      - "creditor8_orig_debt_amount": ${ currency(this_or_0('creditor8_orig_debt_amount')) }
+      - "creditor8_unpaid_bal_amount": ${ currency(this_or_0('creditor8_unpaid_bal_amount')) }
+      - "creditor8_past_due_amount": ${ currency(this_or_0('creditor8_past_due_amount')) }
       - "creditor8__address_on_one_line": ${ creditor8__address_on_one_line }
-      - "creditor8_mo_due_amount": ${ currency(creditor8_mo_due_amount) }
+      - "creditor8_mo_due_amount": ${ currency(this_or_0('creditor8_mo_due_amount')) }
       - "creditor8_purpose": ${ creditor8_purpose }
-      - "total_orig_debt_amount": ${ currency(creditor1_orig_debt_amount + creditor2_orig_debt_amount + creditor3_orig_debt_amount + creditor4_orig_debt_amount + creditor5_orig_debt_amount + creditor6_orig_debt_amount + creditor7_orig_debt_amount + creditor8_orig_debt_amount) }
-      - "total_unpaid_bal_amount": ${ currency(creditor1_unpaid_bal_amount + creditor2_unpaid_bal_amount + creditor3_unpaid_bal_amount + creditor4_unpaid_bal_amount + creditor5_unpaid_bal_amount + creditor6_unpaid_bal_amount + creditor7_unpaid_bal_amount + creditor8_unpaid_bal_amount) }
-      - "total_past_due_amount": ${ currency(creditor1_past_due_amount + creditor2_past_due_amount + creditor3_past_due_amount + creditor4_past_due_amount + creditor5_past_due_amount + creditor6_past_due_amount + creditor7_past_due_amount + creditor8_past_due_amount) }
-      - "total_mo_due_amount": ${ currency(creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount) }
+      - "total_orig_debt_amount": ${ currency(this_or_0('creditor1_orig_debt_amount') + (this_or_0('creditor2_orig_debt_amount') + this_or_0('creditor3_orig_debt_amount') + this_or_0('creditor4_orig_debt_amount') + this_or_0('creditor5_orig_debt_amount') + this_or_0('creditor6_orig_debt_amount') + this_or_0('creditor7_orig_debt_amount') + this_or_0('creditor8_orig_debt_amount') )) }
+      - "total_unpaid_bal_amount": ${ currency(this_or_0('creditor1_unpaid_bal_amount') + (this_or_0('creditor2_unpaid_bal_amount') + this_or_0('creditor3_unpaid_bal_amount') + this_or_0('creditor4_unpaid_bal_amount') + this_or_0('creditor5_unpaid_bal_amount') + this_or_0('creditor6_unpaid_bal_amount') + this_or_0('creditor7_unpaid_bal_amount') + this_or_0('creditor8_unpaid_bal_amount') ))}
+      - "total_past_due_amount": ${ currency(this_or_0('creditor1_past_due_amount') + (this_or_0('creditor2_past_due_amount') + this_or_0('creditor3_past_due_amount') + this_or_0('creditor4_past_due_amount') + this_or_0('creditor5_past_due_amount') + this_or_0('creditor6_past_due_amount') + this_or_0('creditor7_past_due_amount') + this_or_0('creditor8_past_due_amount') )) }
+      - "total_mo_due_amount": ${ currency(this_or_0('creditor1_mo_due_amount') + (this_or_0('creditor2_mo_due_amount') + this_or_0('creditor3_mo_due_amount') + this_or_0('creditor4_mo_due_amount') + this_or_0('creditor5_mo_due_amount') + this_or_0('creditor6_mo_due_amount') + this_or_0('creditor7_mo_due_amount') + this_or_0('creditor8_mo_due_amount') ))}
       - "is_bankruptcy_yes": ${ is_bankruptcy }
       - "is_bankruptcy_no": ${ not is_bankruptcy }
       - "discharge_date": ${ discharge_date.format() }
@@ -2341,6 +2389,22 @@ attachment:
       - "spouses_signature": ${ spouses[0].signature }
       - "signature_date": ${ today() }
       - "spouses_signature_date": ${ today() }
+---
+# Default currency Function
+code: |
+  def this_or_0( var_name ):
+    if defined(var_name):
+      return value(var_name)
+    else:
+      return 0
+
+---
+code: |
+  def this_or_na( var_name ):
+    if defined(var_name):
+      return (var_name)
+    else:
+      return N/A
 ---
 code: |
   va5655_new_fields_attachment.overflow_fields["other_living"].overflow_trigger = 189
