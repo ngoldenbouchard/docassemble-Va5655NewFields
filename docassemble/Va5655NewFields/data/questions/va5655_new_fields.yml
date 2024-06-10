@@ -407,6 +407,7 @@ comment: |
 mandatory: True
 code: |
   this_or_0
+  this_or_na
   al_intro_screen
   va5655_new_fields_intro
   interview_order_va5655_new_fields
@@ -419,8 +420,10 @@ code: |
           "reached_interview_end": True,
       },
   )
+  va5655_new_fields_preview_question
   #al_form_requires_digital_signature = False
   #basic_questions_signature_flow
+  #users[0].signature
   va5655_new_fields_download
 
 
@@ -2239,20 +2242,20 @@ attachment:
       - "users1_birthdate": ${ users[0].birthdate.format() }
       - "spouses_name_full": ${ spouses[0] }
       - "dependents1_age_1": ${ dependents1_age_1 }
-      - "users1_current_kind_of_job__1": ${ users1_current_kind_of_job }
+      - "users1_current_kind_of_job__1": ${ this_or_na('users1_current_kind_of_job') }
       - "user1_current_start_date_mmyyyy__1": ${ user1_current_start_date_mmyyyy.format('MM/yyyy') }
       - "users1_current_employer1_name__1": ${ users1_current_employer1_name }
       - "users1_current_employer__address_on_one_line__1": ${ users1_current_employer__address_on_one_line }
-      - "users1_past_kind_of_job__1": ${ users1_past_kind_of_job }
+      - "users1_past_kind_of_job__1": ${ this_or_na('users1_past_kind_of_job') }
       - "users1_past_start_date_mmyyyy__1": ${ users1_past_start_date_mmyyyy.format('MM/yyyy') }
       - "users1_past_end_date_mmyyyy__1": ${ users1_past_end_date_mmyyyy.format('MM/yyyy') }
       - "users1_past_employer_name__1": ${ users1_past_employer_name }
       - "users1_past_employer__address_on_one_line__1": ${ users1_past_employer__address_on_one_line }
-      - "spouses_current_kind_of_job__1": ${ spouses_current_kind_of_job }
+      - "spouses_current_kind_of_job__1": ${ this_or_na('spouses_current_kind_of_job') }
       - "spouses__current_start_date_mmyyyy__1": ${ spouses__current_start_date_mmyyyy.format('MM/yyyy') }
       - "spouses_current_employer1_name__1": ${ spouses_current_employer1_name }
       - "spouses__current_employer__address_on_one_line__1": ${ spouses__current_employer__address_on_one_line }
-      - "spouses_past_kind_of_job__1": ${ spouses_past_kind_of_job }
+      - "spouses_past_kind_of_job__1": ${ this_or_na('spouses_past_kind_of_job') }
       - "spouses__past_start_date_mmyyyy__1": ${ spouses__past_start_date_mmyyyy.format('MM/yyyy') }
       - "spouses_past_end_date_mmyyyy__1": ${ spouses_past_end_date_mmyyyy.format('MM/yyyy') }
       - "spouses__past_employer_name__1": ${ spouses__past_employer_name }
@@ -2291,23 +2294,23 @@ attachment:
       - "cash_amount": ${ currency(this_or_0('cash_amount')) }
       - "stocks_amount": ${ currency(this_or_0('stocks_amount')) }
       - "real_estate_amount": ${ currency(this_or_0('real_estate_amount')) }
-      - "car1_make": ${ car1_make }
+      - "car1_make": ${ this_or_na('car1_make') }
       - "car1_year": ${ car1_year }
       - "car1_model": ${ car1_model }
       - "car1_resale_amount": ${ currency(this_or_0('car1_resale_amount')) }
-      - "otherasset1": ${ otherasset1 }
+      - "otherasset1": ${ this_or_na('otherasset1') }
       - "otherasset1_amount": ${ currency(this_or_0('otherasset1_amount')) }
-      - "car2_make": ${ (this_or_na('car2_make')) }
+      - "car2_make": ${ this_or_na('car2_make') }
       - "car2_year": ${ car2_year }
       - "car2_model": ${ car2_model }
       - "car2_resale_amount": ${ currency(this_or_0('car2_resale_amount')) }
-      - "otherasset2": ${ otherasset2 }
+      - "otherasset2": ${ this_or_na('otherasset2') }
       - "otherasset2_amount": ${ currency(this_or_0('otherasset2_amount')) }
-      - "car3_make": ${ car3_make }
+      - "car3_make": ${ this_or_na('car3_make') }
       - "car3_year": ${ car3_year }
       - "car3_model": ${ car3_model }
       - "car3_resale_amount": ${ currency(this_or_0('car3_resale_amount')) }
-      - "otherasset3": ${ otherasset3 }
+      - "otherasset3": ${ this_or_na('otherasset3') }
       - "otherasset3_amount": ${ currency(this_or_0('otherasset3_amount')) }
       - "trailer_camper_boat_resale_amount": ${ currency(this_or_0('trailer_camper_boat_resale_amount')) }
       - "total_asset_amount": ${ currency(this_or_0('bank_amount') + (this_or_0('cash_amount') + this_or_0('car1_resale_amount') + this_or_0('car2_resale_amount') + this_or_0('car3_resale_amount') + this_or_0('trailer_camper_boat_resale_amount') + this_or_0('bond_amount') + this_or_0('stocks_amount') + this_or_0('real_estate_amount') + this_or_0('otherasset1_amount') + this_or_0('otherasset2_amount') + this_or_0('otherasset3_amount') )) }
@@ -2317,11 +2320,11 @@ attachment:
       - "creditor1_past_due_amount": ${ currency(this_or_0('creditor1_past_due_amount')) }
       - "creditor1_mo_due_amount": ${ currency(this_or_0('creditor1_mo_due_amount')) }
       - "creditor1__address_on_one_line": ${ creditor1__address_on_one_line }
-      - "creditor1_name": ${ creditor1_name }
+      - "creditor1_name": ${ this_or_na('creditor1_name') }
       - "creditor1_purpose": ${ creditor1_purpose }
       - "creditor2_date": ${ creditor2_date.format('MM/dd/yyyy') }
       - "creditor2__address_on_one_line": ${ creditor2__address_on_one_line }
-      - "creditor2_name": ${ creditor2_name }
+      - "creditor2_name": ${ this_or_na('creditor2_name') }
       - "creditor2_orig_debt_amount": ${ currency(this_or_0('creditor2_orig_debt_amount')) }
       - "creditor2_unpaid_bal_amount": ${ currency(this_or_0('creditor2_unpaid_bal_amount')) }
       - "creditor2_past_due_amount": ${ currency(this_or_0('creditor2_past_due_amount')) }
@@ -2329,7 +2332,7 @@ attachment:
       - "creditor2_purpose": ${ creditor2_purpose }
       - "creditor3_date": ${ creditor3_date.format('MM/dd/yyyy') }
       - "creditor3__address_on_one_line": ${ creditor3__address_on_one_line }
-      - "creditor3_name": ${ creditor3_name }
+      - "creditor3_name": ${ this_or_na('creditor3_name') }
       - "creditor3_orig_debt_amount": ${ currency(this_or_0('creditor3_orig_debt_amount')) }
       - "creditor3_unpaid_bal_amount": ${ currency(this_or_0('creditor3_unpaid_bal_amount')) }
       - "creditor3_past_due_amount": ${ currency(this_or_0('creditor3_past_due_amount')) }
@@ -2337,7 +2340,7 @@ attachment:
       - "creditor3_purpose": ${ creditor3_purpose }
       - "creditor4_date": ${ creditor4_date.format('MM/dd/yyyy') }
       - "creditor4__address_on_one_line": ${ creditor4__address_on_one_line }
-      - "creditor4_name": ${ creditor4_name }
+      - "creditor4_name": ${ this_or_na('creditor4_name') }
       - "creditor4_orig_debt_amount": ${ currency(this_or_0('creditor4_orig_debt_amount')) }
       - "creditor4_unpaid_bal_amount": ${ currency(this_or_0('creditor4_unpaid_bal_amount')) }
       - "creditor4_past_due_amount": ${ currency(this_or_0('creditor4_past_due_amount')) }
@@ -2349,11 +2352,11 @@ attachment:
       - "creditor5_mo_due_amount": ${ currency(this_or_0('creditor5_mo_due_amount')) }
       - "creditor5_past_due_amount": ${ currency(this_or_0('creditor5_past_due_amount')) }
       - "creditor5__address_on_one_line": ${ creditor5__address_on_one_line }
-      - "creditor5_name": ${ creditor5_name }
+      - "creditor5_name": ${ this_or_na('creditor5_name') }
       - "creditor5_purpose": ${ creditor5_purpose }
       - "creditor6_date": ${ creditor6_date.format('MM/dd/yyyy') }
       - "creditor6__address_on_one_line": ${ creditor6__address_on_one_line }
-      - "creditor6_name": ${ creditor6_name }
+      - "creditor6_name": ${ this_or_na('creditor6_name') }
       - "creditor6_past_due_amount": ${ currency(this_or_0('creditor6_past_due_amount')) }
       - "creditor6_orig_debt_amount": ${ currency(this_or_0('creditor6_orig_debt_amount')) }
       - "creditor6_unpaid_bal_amount": ${ currency(this_or_0('creditor6_unpaid_bal_amount')) }
@@ -2364,11 +2367,11 @@ attachment:
       - "creditor7_unpaid_bal_amount": ${ currency(this_or_0('creditor7_unpaid_bal_amount')) }
       - "creditor7_past_due_amount": ${ currency(this_or_0('creditor7_past_due_amount')) }
       - "creditor7__address_on_one_line": ${ creditor7__address_on_one_line }
-      - "creditor7_name": ${ creditor7_name }
+      - "creditor7_name": ${ this_or_na('creditor7_name') }
       - "creditor7_mo_due_amount": ${ currency(this_or_0('creditor7_mo_due_amount')) }
       - "creditor7_purpose": ${ creditor7_purpose }
       - "creditor8_date": ${ creditor8_date.format('MM/dd/yyyy') }
-      - "creditor8_name": ${ creditor8_name }
+      - "creditor8_name": ${ this_or_na('creditor8_name') }
       - "creditor8_orig_debt_amount": ${ currency(this_or_0('creditor8_orig_debt_amount')) }
       - "creditor8_unpaid_bal_amount": ${ currency(this_or_0('creditor8_unpaid_bal_amount')) }
       - "creditor8_past_due_amount": ${ currency(this_or_0('creditor8_past_due_amount')) }
@@ -2381,7 +2384,7 @@ attachment:
       - "total_mo_due_amount": ${ currency(this_or_0('creditor1_mo_due_amount') + (this_or_0('creditor2_mo_due_amount') + this_or_0('creditor3_mo_due_amount') + this_or_0('creditor4_mo_due_amount') + this_or_0('creditor5_mo_due_amount') + this_or_0('creditor6_mo_due_amount') + this_or_0('creditor7_mo_due_amount') + this_or_0('creditor8_mo_due_amount') ))}
       - "is_bankruptcy_yes": ${ is_bankruptcy }
       - "is_bankruptcy_no": ${ not is_bankruptcy }
-      - "discharge_date": ${ discharge_date.format() }
+      - "discharge_date": ${ this_or_na('discharge_date.format()') }
       - "court_location": ${ court_location }
       - "bankruptcy_docket_number": ${ bankruptcy_docket_number }
       - "additional_info": ${ va5655_new_fields_attachment.safe_value("additional_info") }
@@ -2402,9 +2405,9 @@ code: |
 code: |
   def this_or_na( var_name ):
     if defined(var_name):
-      return (var_name)
+      return value(var_name)
     else:
-      return N/A
+      return "N/A"
 ---
 code: |
   va5655_new_fields_attachment.overflow_fields["other_living"].overflow_trigger = 189
