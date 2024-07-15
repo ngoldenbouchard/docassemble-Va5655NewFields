@@ -421,11 +421,13 @@ code: |
       },
   )
   va5655_new_fields_preview_question
-  #al_form_requires_digital_signature = False
-  #basic_questions_signature_flow
+  al_form_requires_digital_signature = False
+  basic_questions_signature_flow
   #users[0].signature
   va5655_new_fields_download
-
+#--- Terms of use scroll text box text
+#"template: PTLA_terms_of_use
+#"content: |
 
 ---
 # Questions File Begin
@@ -651,11 +653,11 @@ id: Your Income
 question: |
   Your Income
 subquestion: |
-  These questions are only about your monthly income and payroll deductions from employment. We will get to other people's income and deductions later if that applies to you. 
+  These questions are only about your current monthly income and deductions from employment. We will get to other people's income and deductions later if that applies to your situation. 
   
-  If you collect VA benefits, Social Security, or other means of income outside of employment, we'll ask about that later.
+  If you collect VA benefits, Social Security, or other means of income outside of employment, please do not include it. We'll ask about that later.
 fields:
-  - "What is your *current* gross monthly salary from the job you just described?": users1_mo_salary_amount
+  - "What is your *current* gross monthly salary (your salary before anything is taken out for taxes, retirement, etc.) for the job you have now?": users1_mo_salary_amount
     datatype: currency
     min: 0
   - "How much is taken out of your monthly salary for taxes? This includes federal, state, and local taxes.": users1_income_tax_deduct_amount
@@ -688,9 +690,9 @@ id: Your Spouses Income and Payroll Deductions
 question: |
   Your Spouses Income and Payroll Deductions
 subquestion: |
-  These questions focus on your spouse's monthly income and payroll deductions from employment only. If they collect VA benefits, Social Security, or income from other sources, we'll ask about that later.
+  These questions focus on your spouse's monthly income and payroll deductions from employment only. If they collect VA benefits, Social Security, or income from other sources, we'll ask about that later. 
 fields:
-  - "What is your spouse's *current* gross monthly salary from the job you just described?": spouses_mo_salary_amount
+  - "What is your spouse's *current* gross monthly salary (their salary before anything is taken out for taxes, retirement, etc.) for the job they have now?": spouses_mo_salary_amount
     datatype: currency
     min: 0
   - "How much is taken out of your spouse's monthly salary for taxes? This includes federal, state, and local taxes.": spouses_income_tax_deduct_amount
