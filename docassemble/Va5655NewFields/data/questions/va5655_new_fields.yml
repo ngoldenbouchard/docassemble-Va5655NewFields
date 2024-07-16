@@ -45,6 +45,7 @@ objects:
   - users: ALPeopleList.using(ask_number=True,target_number=1)
   - users1_past_employer: ALPeopleList
   - users1_current_employer: ALPeopleList
+  - spouses: ALPeopleList.using(ask_number=True,target_number=1)
   - spouses_current_employer: ALPeopleList
   - spouses__past_employer: ALPeopleList
   
@@ -423,7 +424,8 @@ code: |
   va5655_new_fields_preview_question
   al_form_requires_digital_signature = False
   basic_questions_signature_flow
-  #users[0].signature
+  users[0].signature
+  spouses[0].signature
   va5655_new_fields_download
 #--- Terms of use scroll text box text
 #"template: PTLA_terms_of_use
@@ -489,7 +491,7 @@ fields:
     maxlength: 11
   - "Are you married?": is_married
     datatype: yesnoradio
-  - "What is your spouse's full name?": spouses[0]
+  - "What is your spouse's full name?": spouses[0].name.first
     show if:
       variable: is_married
       is: True
@@ -2168,7 +2170,7 @@ question: |
 subquestion: |
   Thank you ${users}. Your form is ready to download and deliver.
   
-  View, download and send your form below. Click the "Edit answers" button to fix any mistakes.
+  View, download, print and send your form below. Click the "Edit answers" button to fix any mistakes.
 
   ${ action_button_html(url_action('review_va5655_new_fields'), label='Edit answers', color='info') }
   
@@ -2242,8 +2244,8 @@ attachment:
       - "is_married_no": ${ not is_married }
       - "users1_phone_number": ${ users[0].phone_number.format('US') }
       - "users1_birthdate": ${ users[0].birthdate.format() }
-      - "spouses_name_full": ${ spouses[0] }
-      - "dependents1_age_1": ${ dependents1_age_1 }
+      - "spouses_name_full": ${ this_or_na('spouses[0]') }
+      - "dependents1_age_1": ${ this_or_na('dependents1_age_1') }
       - "users1_current_kind_of_job__1": ${ this_or_na('users1_current_kind_of_job') }
       - "user1_current_start_date_mmyyyy__1": ${ user1_current_start_date_mmyyyy.format('MM/yyyy') }
       - "users1_current_employer1_name__1": ${ users1_current_employer1_name }
