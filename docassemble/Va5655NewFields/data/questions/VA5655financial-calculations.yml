@@ -1,0 +1,125 @@
+---
+code: |
+
+  
+  # Set defaults for all currency fields.
+  users1_mo_salary_amount = 0
+  users1_income_tax_deduct_amount = 0
+  users1_retire_deduct_amount = 0      
+  users1_ss_deduct_amount = 0
+  users1_other_deduct_amount = 0
+  users1_net_mo_pay_amount = 0
+  users1_net_mo_income_amount = 0  
+  spouses_mo_salary_amount = 0
+  spouses_total_deduct_amount = 0
+  spouses_income_tax_deduct_amount = 0
+  spouses_retire_deduct_amount = 0
+  spouses_ss_deduct_amount = 0
+  spouses_other_deduct_amount = 0
+  spouses_net_mo_pay_amount = 0
+  spouses_net_mo_income_amount = 0
+  rent_mortgage_amount = 0
+  mo_food_amount = 0
+  mo_utility_amount = 0
+  other_living_amount = 0
+  mo_payments_debt_amount = 0
+  total_mo_expense_amount = 0
+  net_income_less_expense_amount = 0
+  mo_pay_to_debt = 0
+  bank_amount = 0
+  cash_amount = 0
+  car1_resale_amount = 0
+  car2_resale_amount = 0
+  car3_resale_amount = 0
+  trailer_camper_boat_resale_amount = 0
+  bond_amount = 0
+  stocks_amount = 0
+  real_estate_amount = 0
+  otherasset1_amount = 0
+  otherasset2_amount = 0
+  otherasset3_amount = 0
+  total_asset_amount = 0
+  creditor1_orig_debt_amount = 0
+  creditor2_orig_debt_amount = 0
+  creditor3_orig_debt_amount = 0
+  creditor4_orig_debt_amount = 0
+  creditor5_orig_debt_amount = 0
+  creditor6_orig_debt_amount = 0
+  creditor7_orig_debt_amount = 0
+  creditor8_orig_debt_amount = 0
+  total_orig_debt_amount = 0
+  creditor1_unpaid_bal_amount = 0
+  creditor2_unpaid_bal_amount = 0
+  creditor3_unpaid_bal_amount = 0
+  creditor4_unpaid_bal_amount = 0
+  creditor5_unpaid_bal_amount = 0
+  creditor6_unpaid_bal_amount = 0
+  creditor7_unpaid_bal_amount = 0
+  creditor8_unpaid_bal_amount = 0
+  total_unpaid_bal_amount = 0
+  creditor1_mo_due_amount = 0
+  creditor2_mo_due_amount = 0
+  creditor3_mo_due_amount = 0
+  creditor4_mo_due_amount = 0
+  creditor5_mo_due_amount = 0
+  creditor6_mo_due_amount = 0
+  creditor7_mo_due_amount = 0
+  creditor8_mo_due_amount = 0
+  total_mo_due_amount = 0
+  creditor1_past_due_amount = 0
+  creditor2_past_due_amount = 0
+  creditor3_past_due_amount = 0
+  creditor4_past_due_amount = 0
+  creditor5_past_due_amount = 0
+  creditor6_past_due_amount = 0
+  creditor7_past_due_amount = 0
+  creditor8_past_due_amount = 0
+  total_past_due_amount = 0
+---
+#Math for VAFinancialStatusReport!
+
+code: |
+  
+  # Step 1 Figuring User's Total Monthly Net Income
+  # Step 1.1 Figuring User's Total Income Deductions (box 14E).
+  users1_total_deduct_amount = round(users1_income_tax_deduct_amount + users1_retire_deduct_amount + users1_ss_deduct_amount + users1_other_deduct_amount, 0)
+  # Step 1.2 Figuring User's Net Take Home Pay (box 15).
+  users1_net_mo_pay_amount = round(users1_mo_salary_amount - users1_total_deduct_amount, 0)
+  # Step 1.3 Totaling User's Total Monthly Net Income (box 17 Self Column).
+  users1_net_mo_income_amount = round(users1_net_mo_pay_amount + users1_other_income_amount, 0)
+ 
+  # Step 2 Figuring Spouse's Total Monthly Net Income
+  # Step 2.1 Spouse's Total Income Deductions (box 13).
+  spouses_total_deduct_amount: (spouses_income_tax_deduct_amount + spouses_retire_deduct_amount + spouses_ss_deduct_amount + spouses_other_deduct_amount, 0)
+  # Step 2.2 Figuring Spouse's Net Take Home Pay (box 15).
+  spouses_net_mo_pay_amount = round(spouses_mo_salary_amount - users1_total_deduct_amount, 0)
+  # Step 2.3 Totaling Spouse's Total Monthly Net Income (box 17 Spouse Column).
+  spouses_net_mo_income_amount = round(spouses_net_mo_pay_amount + spouses_other_income_amount, 0)   
+  
+  # Step 3. Figuring Total Monthly Payments on Installment Contracts and Other Debts 
+  # Step 3.1 Figuring Monthly Installment Payments (box 34I Column E)
+  total_mo_due_amount = round(creditor1_mo_due_amount + creditor2_mo_due_amount + creditor3_mo_due_amount + creditor4_mo_due_amount + creditor5_mo_due_amount + creditor6_mo_due_amount + creditor7_mo_due_amount + creditor8_mo_due_amount, 0)
+  # Step 3.2 Putting Monthly Installment Payments Total in box 22
+  mo_payments_debt_amount = total_mo_due_amount
+  # Step 3.3 Totaling Monthly Expenses (box 23)
+  total_mo_expense_amount = round(rent_mortgage_amount + mo_food_amount + mo_utility_amount + other_living_amount + total_mo_due_amount, 0)
+  
+  # Step 4. Figuring Net Monthly Income Less Expenses  
+  # Step 4.1 Totaling Net Monthly Income Less Expenses (box 24A)
+  net_income_less_expense_amount = round(users1_net_mo_income_amount + spouses_net_mo_income_amount - total_mo_expense_amount, 0) 
+  
+  # Step 5. Total Assets  
+  # Step 5.1 Totaling All Assets (box 31)
+  total_asset_amount = round(bank_amount + cash_amount + car1_resale_amount + car2_resale_amount + car3_resale_amount + trailer_camper_boat_resale_amount + bond_amount + stocks_amount + real_estate_amount + otherasset1_amount + otherasset2_amount + otherasset3_amount, 0)
+  
+  # Step 6. Total Orginal Debt Amount  
+  # Step 6.1 Totaling Orginal Debt Amount (box 34I, Column C)
+  total_orig_debt_amount = round(creditor1_orig_debt_amount + creditor2_orig_debt_amount + creditor3_orig_debt_amount + creditor4_orig_debt_amount + creditor5_orig_debt_amount + creditor6_orig_debt_amount + creditor7_orig_debt_amount + creditor8_orig_debt_amount, 0)
+  
+  # Step 7. Total Unpaid Balance Amount  
+  # Step 7.1 Totaling Unpaid Balance Amount (box 34I, Column D)
+  total_unpaid_bal_amount = round(creditor1_unpaid_bal_amount + creditor2_unpaid_bal_amount + creditor3_unpaid_bal_amount + creditor4_unpaid_bal_amount + creditor5_unpaid_bal_amount + creditor6_unpaid_bal_amount + creditor7_unpaid_bal_amount + creditor8_unpaid_bal_amount, 0)
+  
+  # Step 8. Total Past Due Amount  
+  # Step 8.1 Totaling Past Due Amount (box 34I, Column F)
+  total_past_due_amount = round(creditor1_past_due_amount + creditor2_past_due_amount + creditor3_past_due_amount + creditor4_past_due_amount + creditor5_past_due_amount + creditor6_past_due_amount + creditor7_past_due_amount + creditor8_past_due_amount, 0)
