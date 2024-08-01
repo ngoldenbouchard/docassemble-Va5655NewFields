@@ -3,6 +3,12 @@ include:
   - docassemble.AssemblyLine:assembly_line.yml
   - custom_ssl_theme.yml
   - VA5655financial-calculations.yml
+---
+default screen parts:
+  footer: |
+    [:share-alt-square: Share](${ url_ask([{'undefine': ['al_sharing_type','al_how_share_link']}, 'al_share_form_screen', {'recompute': ['al_did_share_form']}, 'al_share_results']) })
+    [:info-circle: About](${ url_action('about_this_interview') })
+    [:comment-dots: Feedback](https://forms.office.com/Pages/ResponsePage.aspx?id=gOsuS1HkzESOjJ_IxTUKuD8iguCNz0RHpK3V26oh9QpUQkJPTTc3UTBZU0cxVEpOQlMzSlc1R1gzQy4u){:target="_blank"}
 ---  
 features:
    navbar-brand: Stateside-Legal-logopng.png
@@ -148,6 +154,10 @@ code: |
   #total_mo_due_amount
   #do_default
   interview_order_va5655_new_fields = True
+#users[0].signature
+#if is_married:
+#  spouses[0].signature
+  
 ---
 code: |
   #users1_mo_salary_amount 
@@ -425,7 +435,10 @@ code: |
   al_form_requires_digital_signature = False
   basic_questions_signature_flow
   users[0].signature
-  spouses[0].signature
+  if is_married:
+    spouses[0].signature
+  #users[0].signature
+  #spouses[0].signature
   va5655_new_fields_download
 #--- Terms of use scroll text box text
 #"template: PTLA_terms_of_use
