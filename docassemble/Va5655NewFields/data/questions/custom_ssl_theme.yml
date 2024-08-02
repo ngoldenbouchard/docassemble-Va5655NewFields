@@ -112,12 +112,17 @@ subquestion: |
   Live help is currently available in this interview. Click the speech bubble
   (:comment-alt:) in the navigation bar to connect to a live advocate for help.
   % endif
+  
+  ${ display_template(PTLA_terms_of_use, scrollable=True, collapse=False) }
+  
 fields:
   # This points to a terms of use in this package which you can edit.
   # If you prefer, you can link to a static website by deleting everything
   # in the ${ } tags and replacing with a static website, like 
   # https://example.com/tos
-  - To continue, you must accept our [terms of use](${interview_url(i=f"{ user_info().current_package }:terms_of_use.yml") }){:target="_blank"}: acknowledged_information_use
+  #[terms of use](${interview_url(i=f"{ user_info().current_package }:terms_of_use.yml") }){:target="_blank"}
+  
+  - To continue, you must accept our terms of use: acknowledged_information_use
     datatype: checkboxes
     none of the above: False    
     minlength: 1

@@ -59,7 +59,6 @@ objects:
 sections:
   - review_va5655_new_fields: Review your answers
 
----
 #################### Interview order #####################
 comment: |
   Controls order and branching logic for questions specific to this form
@@ -440,9 +439,92 @@ code: |
   #users[0].signature
   #spouses[0].signature
   va5655_new_fields_download
-#--- Terms of use scroll text box text
-#"template: PTLA_terms_of_use
-#"content: |
+---
+template: PTLA_terms_of_use
+content: |
+  ## StatesideLegal's Terms of Use and Privacy Policy
+
+  This website is free to use.
+  StatesideLegal hosts this site.
+
+  ### You need to know
+
+  * This website does not provide legal advice. If you need legal advice, contact a lawyer.
+
+  * The information and documents on this website have no warranty. We provide the information “as-is.” By using the site, you agree not to hold StatesideLegal, Pine Tree Legal Assistance, and/or the information providers on this site liable.
+
+  * We work hard to keep the information on the site up to date. Lawyers drafted and reviewed the documents this site uses. But laws and rules change over time. These changes can make a document unenforceable when you use it.
+
+  * We do our best to keep the site working! To do that, we allow you to submit feedback so we can track problems on the site. But we cannot provide individual technical support. 
+
+  ### To use this site
+
+  * You need to be over 13 to use this site. 
+
+  * This site is for anyone 13 and over. For example: you can be the person who needs the help, a lawyer, or a social worker.
+
+  * You may not sell the information or the contents of this site. But you can charge for your own time. 
+
+  * Please keep your use fair. Do not use this site in a way that is illegal or that makes it harder for other people to use.
+
+  ### Information we and others collect
+
+  * We collect the information that you type to help you complete your forms. We delete all information 180 days after you last update it. You can also delete information immediately.
+
+  * We log information including IP addresses and web browsers from all visitors. We use this information to keep our site secure. We keep logs for up to 180 days.
+
+  * We use Google Analytics to learn how people use our website. This helps us understand which pages are hardest to use. Google may use this information to show you better advertisements.
+
+  * We use email and text message delivery services that may keep their own records of any messages you send. If you choose to log in with your phone number, this may include a record of the times you log in to the site.
+
+  ### We keep your information safe
+
+  * We use the same technology that banks and online stores use to keep your information safe.
+  
+  * We use:
+    * 256 bit encryption
+    
+    * Continual monitoring
+    
+    * Limited access controls
+    
+    * Regular security updates
+    
+    * Software firewalls
+
+  ### Sharing your information
+
+  * We never sell your information.
+
+  * We share anonymous information with a small number of nonprofits and researchers. We use the information to improve our site and to improve free legal help for veterans.
+
+  * When you visit some pages of the site, the site may ask if you want to apply to get a free lawyer from legal aid. You get to decide if you want to share your personal information.
+
+  * You may choose to email completed forms or share a link to your in-progress work at any time to any person.
+
+  ### These terms of use can change
+
+  * We may change these Terms of Use at any time with no notice. Please review the terms on a regular basis to see any changes.
+
+  * If you use the site after we make changes, you accept our changed Terms of Use.
+
+  The laws of Maine apply to these Terms of Use.
+
+  If a judge decides that one of the terms in this Terms of Use is unenforceable, it will not change the terms that remain.
+
+  ### If you still have questions
+
+  If you would like to access, correct, amend, or delete any personal information we have about you or have any other questions, contact us via our [email form](https://statesidelegal.org/contact) or at: 
+
+  StatesideLegal
+  
+  c/o Pine Tree Legal Assistance, Inc.
+  
+  88 Federal Street
+  
+  Portland, ME 04101
+
+
 
 ---
 # Questions File Begin
@@ -480,6 +562,7 @@ subquestion: |
   
   Most people take about **60 minutes** to finish this interview.
 
+  ${ display_template(PTLA_terms_of_use, scrollable=True, collapse=False) }
 ---
 id: your contact information
 question: |
