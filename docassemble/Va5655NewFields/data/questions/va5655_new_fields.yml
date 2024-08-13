@@ -562,7 +562,6 @@ subquestion: |
   
   Most people take about **60 minutes** to finish this interview.
 
-  ${ display_template(PTLA_terms_of_use, scrollable=True, collapse=False) }
 ---
 id: your contact information
 question: |

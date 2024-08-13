@@ -4,6 +4,7 @@
 } */
 
 
+
 /* .bg-dark is the color used for the navbar. Replace with your theme color. */
 .bg-dark {
     background-color: #fff !important;    
@@ -57,7 +58,7 @@ body {
  
 }
 
-/*Dark Mode visuals*/
+/*-----DARK MODE VISUALS------*/
 function myFunction() {
   var element = document.body;
   element.classList.toggle("dark-mode");
@@ -73,6 +74,45 @@ body {
   color: #fff;
 }
 
+.form-control {
+  color: #000;
+  background-color: #eeeeee
+}
+
+.row {
+.form-control:focus {
+  color: #000;
+  }
+}
+/*.input {
+  color: #000
+}*/
+
+.form-select {
+  color: #000;
+  background-color: #fff
+}
+
+[data-bs-theme=dark] .al_collapse_template .bg-light, [data-bs-theme=dark] .al_display_template .bg-light, [data-bs-theme=dark] .al_display_template.bg-light {
+    --bs-bg-opacity: 1;
+    background-color: #f8f9fa !important;
+    border-color: #d3d4d5 !important;
+}
+
+.text-start.btn.btn-light.dalabelauty {
+      --bs-btn-color: #000;
+      --bs-btn-bg: #f8f9fa;
+      --bs-btn-border-color: #f8f9fa;
+      --bs-btn-hover-color: #000;    
+      --bs-btn-hover-bg: #eeeeee;
+      --bs-btn-hover-border-color: #eeeeee;
+}
+
+[data-bs-theme=dark] #dasigcanvas {
+    background-color: #eeee;
+}
+
+/* -------END OF DARK MODE------*/
 
 /* This is for the color of nav the buttons and primary buttons - Stripped from inspect */
 .nav-pills {
@@ -205,6 +245,7 @@ body {
   color: #000;
   border:2px solid;
   position: relative;
+  --bs-progress-bg: #eeeeee
 }
 .progress-6::before {
   content:"";
@@ -232,7 +273,7 @@ body {
   
 /*box shadow around text boxes*/
 .form-control:focus {
-    color: var(--bs-body-color);
+    color: #000;
     background-color: var(--bs-form-control-bg);
     border-color: #002968;
     outline: 0;
