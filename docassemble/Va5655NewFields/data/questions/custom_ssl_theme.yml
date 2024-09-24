@@ -32,7 +32,7 @@ code: |
   AL_ORGANIZATION_TITLE = "Veterans Forms Project"
 ---  
 code: |
-  AL_ORGANIZATION_HOMEPAGE = "https://apps.ptla.org"
+  AL_ORGANIZATION_HOMEPAGE = "https://apps.statesidelegal.org"
 ---
 code: |
   AL_DEFAULT_COUNTRY = "US"
