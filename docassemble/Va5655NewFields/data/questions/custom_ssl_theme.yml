@@ -29,7 +29,7 @@ metadata:
     https://www.statesidelegal.org
 ---
 code: |
-  AL_ORGANIZATION_TITLE = "Veterans Forms Project"
+  AL_ORGANIZATION_TITLE = "Forms Project"
 ---  
 code: |
   AL_ORGANIZATION_HOMEPAGE = "https://apps.statesidelegal.org"
@@ -84,29 +84,30 @@ code: |
 id: basic questions intro screen
 #decoration: form-lineal
 question: |
-  ${interview_short_title}: StatesideLegal Forms Online
+  ${interview_short_title}: How it Works
 subquestion: |
   % if form_approved_for_email_filing:
    <br /> This website can help you complete and file court forms in 3 steps:
   % else:
-  This website can help you complete and download forms in 3 steps:
+  This project can help you complete and download forms in 3 steps:
   % endif
   
-  Step 1. Answer questions that will fill in your form for you.   
-  Step 2. Preview the completed form.   
+  1.  Answer questions that will fill in your form for you.
+  
+  2.  Preview the completed form.
+  
   % if form_approved_for_email_filing:  
-  Step 3. Email the form to the court using this secure website and save copies for yourself for later reference.   
+  3.  Email the form to the court using this secure website and save copies for yourself for later reference.   
   % elif al_form_type in ['starts_case','existing_case','appeal']:
-  Step 3. Download and print the final form. You will need to deliver it
-  to the court on your own. 
+  3.  Download, print, and email the final form. You will need to deliver it on your own. 
   % else:
-  Step 3. Download and print the final form. You will need to deliver it 
+  3.  Download, print, and email the final form. You will need to deliver it on your own. 
   on your own. 
   % endif
   
-  This site is not a lawyer. If you need a lawyer to represent you, you can [find legal help near you](https://statesidelegal.org//stateside-map) on StatesideLegal.
+  This project does not provide legal advice. If you need a lawyer to represent you, you can [find legal help near you](https://statesidelegal.org//stateside-map) on StatesideLegal's Find Legal Help map.
   
-  Tap the {green words} on any screen for a definition or more information.
+  Tap the {green words} on any screen for definitions or more information.
   
   % if chat_partners_available().help:
   Live help is currently available in this interview. Click the speech bubble

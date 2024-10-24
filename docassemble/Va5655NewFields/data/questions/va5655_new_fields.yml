@@ -42,7 +42,7 @@ code: |
   github_repo_name =  'docassemble-Va5655NewFields'
 ---
 code: |
-  interview_short_title = "Include this form when requesting a Waiver or Disputing a VA overpayment"
+  interview_short_title = "StatesideLegal's Forms Project"
 ---
 code: |
   al_form_type = "other_form" 
@@ -557,10 +557,6 @@ subquestion: |
         - Bankruptcy information. 
  
   When you are finished, you will need to <b>Download</b> and <b>Print</b> your completed form.
-    
-  <strong><u>Your Information and Answers</strong></u>
-  
-  Your information and answers will NOT be stored longer than 14 days. If you leave the session without completing and downloading your forms, your information and answers will be lost and you will have to start over. 
     
   <strong><u>Interview Timing</strong></u>
   
@@ -2229,8 +2225,8 @@ columns:
       row_item.name.full() if defined("row_item.name.first") else ""
   - Address: |
       row_item.address.block() if defined("row_item.address.address") else ""
-  #- Phone number: |
-  #    row_item.phone_number if defined("row_item.phone_number") else ""
+  - Phone number: |
+      row_item.phone_number if defined("row_item.phone_number") else ""
   - Birthdate: |
       row_item.birthdate if defined("row_item.birthdate") else ""
   - Signature: |
