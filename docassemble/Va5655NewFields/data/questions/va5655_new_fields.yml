@@ -42,7 +42,7 @@ code: |
   github_repo_name =  'docassemble-Va5655NewFields'
 ---
 code: |
-  interview_short_title = "Include this form to Request a waiver or Dispute a VA overpayment"
+  interview_short_title = "Include this form when requesting a Waiver or Disputing a VA overpayment"
 ---
 code: |
   al_form_type = "other_form" 
@@ -479,18 +479,17 @@ content: |
 
   ### We keep your information safe
 
-  * We use the same technology that banks and online stores use to keep your information safe.
+  We use the same technology that banks and online stores use to keep your information safe. This includes
   
-  * We use:
-    * 256 bit encryption
+  * 256 bit encryption
     
-    * Continual monitoring
+  * Continual monitoring
     
-    * Limited access controls
+  * Limited access controls
     
-    * Regular security updates
+  * Regular security updates
     
-    * Software firewalls
+  * Software firewalls
 
   ### Sharing your information
 
@@ -535,51 +534,77 @@ continue button field: va5655_new_fields_intro
 question: |
   VA Form 5655 - Financial Status Report
 subquestion: |
-  This interview will help you complete VA form 5655 - Financial Status Report. This form must be submitted to the VA when asking for a VA overpayment waiver.
+  This interview will help you complete VA form 5655 - Financial Status Report. This form must be submitted to the VA when requesting a waiver or disputing a VA overpayment.
+   
+  <strong><u>This Form Requires Sensitive Personal Information.</strong></u>
   
-  <b> Please note that this form requires sensitive personal information. </b> To protect your privacy, StatesideLegal.org will not retain your information on our servers for longer than 14 days. We do not share your info with third parties. Please be sure to complete this interview in one visit or your work will be lost and you will have to start over.
+  To protect your privacy, StatesideLegal.org will not retain your information on our servers for longer than 14 days. We do not share your info with third parties. Please be sure to complete this interview in one visit or your work will be lost and you will have to start over.
+    
+  <strong><u>Gather Information Before Starting</strong></u>  
   
-  Before you get started, please gather:
+  You’ll need to gather some information before you start. Click the links for specific examples of the information the VA needs. 
   
   1. Your social security number
-  2.  Your VA file number
-  3.  You and your spouse's (if applicable):
-        - Work history for the past 2 years. You'll need the employer name, start and end dates, and monthly income for each job.
-         - Income. This includes money you earn from a job, VA or Social Security benefits, or other sources. You’ll find the details you’ll need on a recent paycheck.
-         - Assets. These include your cash, bank accounts, stocks and bonds, real estate, cars, jewelry, and other items of value.
-         - Expenses and Debts. These include:
-           - Monthly living expenses. These include housing, food, and utilities (like gas, electricity, and water).
-           - Other living expenses. These include expenses like clothing, transportation, child care, or health care.
-           - Installment contracts or other debts. These include car loans, student loans, credit card debt, and other debts or purchase payment plans.
-         - Bankruptcy information. If you've ever declared bankruptcy, you'll need the date discharged, court location, and docket number.
+  2. Your VA file number
+  3. You and your spouse's (if applicable):
+        - Work history for the past 2 years.  
+        - Monthly Income. 
+        - All Assets. 
+        - Expenses and Debts. These include:
+           - Monthly living expenses. 
+           - Other living expenses.
+           - Installment contracts or other debts. 
+        - Bankruptcy information. 
+ 
+  When you are finished, you will need to <b>Download</b> and <b>Print</b> your completed form.
+    
+  <strong><u>Your Information and Answers</strong></u>
   
-  When you are finished, you will need to:
-  
-  1. Download and print your completed form
-  
-  ** Remember, your information and answers will NOT be stored longer than 14 days. If you leave the session without completing and downloading the interview, your information and answers will be lost and you will have to start over.** 
-  
+  Your information and answers will NOT be stored longer than 14 days. If you leave the session without completing and downloading your forms, your information and answers will be lost and you will have to start over. 
+    
+  <strong><u>Interview Timing</strong></u>
   
   Most people take about **60 minutes** to finish this interview.
+  <p>  </p>
 
+auto terms:
+  Work history for the past 2 years: |
+    You'll need the employer's name, start and end dates, and monthly income for each job.
+  Monthly Income: |
+    Monthly income includes money you earn from a job, VA or Social Security benefits, or other sources. You’ll find the details you need on a recent paycheck or benefits letter.
+  All Assets: |
+    Assets include your cash, bank accounts, stocks and bonds, real estate, cars, jewelry, and other items of value.
+  Monthly living expenses: |
+    Monthly living expenses include housing, food, and utilities (like gas, electricity, and water).
+  Other living expenses: |
+    Other living expenses include things like buying clothing and paying for transportation, child care, or health care.
+  Installment contracts or other debts: |
+    Installment contracts and debts include car loans, student loans, credit card debt, and other debts or payment plans.
+  Bankruptcy information: |
+    If you have gone through bankruptcy, the VA wants the date discharged, court location, and docket number.
 ---
 id: your contact information
 question: |
-  What is your phone number?
+  What is your phone number? 
 subquestion: |
-  Include the best phone number to reach you.
+  Include the best phone number to reach you. If in the U.S., your phone number should be in the (123) 456-7899 format. If you have an extension, be sure to include too.
 
-  ${ collapse_template(why_contact_info_needed_template) }
+  ${ collapse_template(contact_info_needed_template) }
 fields:  
   - Phone number: users[0].phone_number
     required: False
-  
+---
+template: contact_info_needed_template
+subject: |
+  Why does the VA need my phone number?
+content: |
+  The VA asks for your phone number so they can contact you quickly with any questions or concerns regarding your waiver request or dispute. If you still don't want to provide this information, just click the 'Next" button to continue.
 ---
 id: About the Debtor
 question: |
   More about you
 subquestion: |
-  It is assumed that the veteran is responsible for the debt. If this is not the case here, please answer these questions for the person responsible for the debt.
+  These questions ask for more information about the person responsible for the VA overpayment debt. The VA assumes that the veteran is responsible for the debt. If the veteran is not responsible in this case, please answer these questions using the information for the person who is responsible.
   
 fields:
   - "What is your Social Security Number?": users1_ssn
@@ -590,7 +615,7 @@ fields:
     show if:
       variable: is_married
       is: True
-  - "If you have Dependents, what are their ages?": dependents1_age_1
+  - "If you have Dependents, what are their ages? If you have more than 1 dependent, just seperate their ages with a comma.": dependents1_age_1
     maxlength: 24
     required: False
 ---
@@ -752,9 +777,9 @@ question: |
 subquestion: |
   These questions are only about your current monthly income and deductions from employment. We will get to other people's income and deductions later if that applies to your situation. 
   
-  If you collect VA benefits, Social Security, or other means of income outside of employment, please do not include it. We'll ask about that later.
+  If you get VA benefits, Social Security, or other kinds of income other than from employment, please do not include it. We'll ask about that later.
 fields:
-  - "What is your *current* gross monthly salary (your salary before anything is taken out for taxes, retirement, etc.) for the job you have now?": users1_mo_salary_amount
+  - "What is your *current* gross monthly pay (your pay before anything is taken out for taxes, retirement, etc.) for the job you have now?": users1_mo_salary_amount
     datatype: currency
     min: 0
   - "How much is taken out of your monthly salary for taxes? This includes federal, state, and local taxes.": users1_income_tax_deduct_amount
@@ -857,7 +882,7 @@ fields:
   - "What is your monthly rent or mortgage amount?": rent_mortgage_amount
     datatype: currency
     min: 0
-  - "How much is spent for food in a month?": mo_food_amount
+  - "How much does your household spend on food each month?": mo_food_amount
     datatype: currency
     min: 0
   - "How much are your household utilities a month?": mo_utility_amount
@@ -890,7 +915,7 @@ id: Assets
 question: |
   Assets
 subquestion: |
-  These questions are asking about your current assets. If you don't have any money or value in the asset asked, just enter 0 (zero). If you are married, this includes your spouses assets too.
+  These questions are asking about your current assets. If you don’t own an asset, or if what you own has no money value, just enter 0 (zero). If you are married, this includes your spouses assets too.
 fields:
   - "How much in total do you have in all your bank accounts?": bank_amount
     datatype: currency
@@ -1040,9 +1065,9 @@ id: Installment Contracts and Other Debts
 question: |
   Installment Contracts and Other Debts
 subquestion: |
-  These questions are about any debts you are supposed to pay regular monthly installments on, (such as for a car, television, mortgage, to banks, credit card companies, or for doctor bills, etc.) If you are married, this includes your spouse's debts too.
+  These questions are about any debts you are supposed to be making payments on, (such as for a car, television, mortgage, to banks, credit card companies, or for doctor bills, etc.) If you are married, this includes your spouse's debts too.
 fields:
-  - "Do you have any regular monthly payments (such as for a car, credit card, or medical bill)?": installment_payments
+  - "Do you have any debts that you should be making payments on (such as for a car, credit card, or medical bill)?": installment_payments
     datatype: yesnoradio    
   - "What is the creditor's name on your first debt (who do you pay each month)?": creditor1_name
     maxlength: 99
@@ -1088,7 +1113,7 @@ fields:
     show if:
       variable: installment_payments
       is: True
-  - "Do you have another contract or monthly installment payment?": installment2_payments
+  - "Do you have another debt you should be making payments on?": installment2_payments
     datatype: yesnoradio
     show if:
       variable: installment_payments
@@ -1137,7 +1162,7 @@ fields:
     show if:
       variable: installment2_payments
       is: True
-  - "Do you have an additional contract or monthly installment payment?": installment3_payments
+  - "Do you have an additional debt that you should be making payments on?": installment3_payments
     datatype: yesnoradio
     show if:
       variable: installment2_payments
@@ -1186,7 +1211,7 @@ fields:
     show if:
       variable: installment3_payments
       is: True
-  - "Do you have another contract or monthly installment payment?": installment4_payments
+  - "Do you have another debt you should be making payments on?": installment4_payments
     datatype: yesnoradio
     show if:
       variable: installment3_payments
@@ -1235,7 +1260,7 @@ fields:
     show if:
       variable: installment4_payments
       is: True
-  - "Do you have an additional contract or monthly installment payment?": installment5_payments
+  - "Do you have an additional debt you should be making payments on?": installment5_payments
     datatype: yesnoradio
     show if:
       variable: installment4_payments
@@ -1333,7 +1358,7 @@ fields:
     show if:
       variable: installment6_payments
       is: True
-  - "Do you have another contract or monthly installment payment?": installment7_payments
+  - "Do you have another debt you should be making payments on?": installment7_payments
     datatype: yesnoradio
     show if:
       variable: installment6_payments
@@ -1382,7 +1407,7 @@ fields:
     show if:
       variable: installment7_payments
       is: True
-  - "Do you have another contract or monthly installment payment?": installment8_payments
+  - "Do you have another debt you should be making payments on?": installment8_payments
     datatype: yesnoradio
     show if:
       variable: installment7_payments
@@ -2204,8 +2229,8 @@ columns:
       row_item.name.full() if defined("row_item.name.first") else ""
   - Address: |
       row_item.address.block() if defined("row_item.address.address") else ""
-  - Phone number: |
-      row_item.phone_number if defined("row_item.phone_number") else ""
+  #- Phone number: |
+  #    row_item.phone_number if defined("row_item.phone_number") else ""
   - Birthdate: |
       row_item.birthdate if defined("row_item.birthdate") else ""
   - Signature: |
@@ -2337,8 +2362,8 @@ attachment:
       - "users1_address_on_one_line": ${ users[0].address.on_one_line() }
       - "is_married_yes": ${ is_married }
       - "is_married_no": ${ not is_married }
-      - "users1_phone_number": ${ users[0].phone_number.format('US') }
-      - "users1_birthdate": ${ users[0].birthdate.format() }
+      - "users1_phone_number": ${ this_or_na('users[0].phone_number') }
+      - "users1_birthdate": ${ users[0].birthdate.format('MM-DD-YYYY') }
       - "spouses_name_full": ${ this_or_na('spouses[0]') }
       - "dependents1_age_1": ${ this_or_na('dependents1_age_1') }
       - "users1_current_kind_of_job__1": ${ this_or_na('users1_current_kind_of_job') }
