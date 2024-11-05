@@ -54,7 +54,6 @@ objects:
   - spouses: ALPeopleList.using(ask_number=True,target_number=1)
   - spouses_current_employer: ALPeopleList
   - spouses__past_employer: ALPeopleList
-  
 ---
 sections:
   - review_va5655_new_fields: Review your answers
@@ -81,7 +80,8 @@ code: |
     currently_have_job
     if currently_have_job == False:
     # If User isn't currently employed
-      users1_past_kind_of_job 
+      users1_past_kind_of_job
+      users1_other_income
     else:
     # If User is currently employed
       users1_mo_salary_amount
@@ -664,13 +664,12 @@ fields:
       variable: currently_have_job
       is: True
 ---
-
 id: Your additional employment within the last two years
 question: |
-  Your additional employment within the last two (2) years
+  Your employment within the last two (2) years
 #if: employed_two_years or users1_other_job
 fields:
-  - "What kind of work did you do (or are doing) at this job?": users1_past_kind_of_job
+  - "What kind of work did you do (or are doing) at this prior job?": users1_past_kind_of_job
     maxlength: 19
   - "When did you start this job? Please use MM/YYYY format.": users1_past_start_date_mmyyyy
     maxlength: 7
@@ -679,11 +678,22 @@ fields:
     show if:
       code: |
         currently_have_job
-  - "If you are no longer at this job, when did this job end? Please use the MM/YYYY format.": users1_past_end_date_mmyyyy
-    datatype: date
+  # Use `currently_have_job` to make sure these two only exist together
+  - "When did this job end? Please use the MM/YYYY format.": users1_past_end_date_mmyyyy
+    datatype: text
     show if:
-      variable: users1_still_at_job
-      is: False
+      code: |
+        currently_have_job
+    js show if: |
+      val('users1_still_at_job') === false
+  # Not invited to the same party
+  - "When did this job end? Please use the MM/YYYY format.": users1_past_end_date_mmyyyy
+    show if: 
+      code: |
+        currently_have_job == False
+    #show if: 
+      #variable: users1_still_at_job
+      #is: False
   - "What is this employer's name?": users1_past_employer_name
     maxlength: 16
   - "What is this employer's address?": users1_past_employer__address_on_one_line
@@ -771,9 +781,10 @@ id: Your Income
 question: |
   Your Income
 subquestion: |
-  These questions are only about your current monthly income and deductions from employment. We will get to other people's income and deductions later if that applies to your situation. 
+  We want to know about your current monthly income and deductions from this job. We will get to other income and jobs later if that applies to your situation. 
   
-  If you get VA benefits, Social Security, or other kinds of income other than from employment, please do not include it. We'll ask about that later.
+  Don’t include VA benefits, Social Security, or other kinds of income. We’ll ask about those later too.
+  
 fields:
   - "What is your *current* gross monthly pay (your pay before anything is taken out for taxes, retirement, etc.) for the job you have now?": users1_mo_salary_amount
     datatype: currency
