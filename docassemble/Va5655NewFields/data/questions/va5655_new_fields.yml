@@ -12,6 +12,7 @@ default screen parts:
 ---  
 features:
    navbar-brand: Stateside-Legal-logopng.png
+   popover trigger: hover
 ---
 metadata:
   title: >-
@@ -2290,6 +2291,11 @@ edit:
 confirm: True
 
 ---
+---
+#Exit button after the user is done with the interview
+code: |
+  exit_button2 = [{'action': 'https://statesidelegal.org', 'label': 'Exit', 'icon': 'sign-out-alt', 'color': 'danger'}]
+---
 id: download va5655_new_fields
 event: va5655_new_fields_download
 question: |
@@ -2308,6 +2314,9 @@ subquestion: |
   ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
 
 progress: 100
+
+action buttons:
+  code: exit_button2
 ---
 # ALDocument objects specify the metadata for each template
 objects:
@@ -2330,28 +2339,7 @@ attachment:
   skip undefined: True
   tagged pdf: True
 
-#---
-# main order
-#mandatory: True
-#code: |
-  #do_chair
-  #download_screen
-#---
-# interview order
-#code: |
-  #foobar_page
-  #do_defaults
-  #do_chair = True
-#---
-#code: |
-  #bar
-  #frog
-  #jumbo
-  #do_defaults = "w/e"
-#---
-#code: |
-  #frog = 0
- 
+
 ---
 attachment:
   name: va5655 new fields
